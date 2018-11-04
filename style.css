@@ -1,0 +1,11 @@
+.checkbox-label {
+    display: inline;
+}
+
+li {
+    list-style: none;
+}
+
+#num-emails-label, #num-emails-input {
+  display: none;
+}
