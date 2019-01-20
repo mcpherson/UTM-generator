@@ -5,39 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>UTM Generator</title>
+  <link rel="stylesheet" href="skeleton.css">
+  <link rel="stylesheet" href="normalize.css">
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Anonymous+Pro" rel="stylesheet">
 </head>
 <body>
-  <h1 id="page-title">boomtime UTM Generator</h1>
+  <img src="bt-logo.jpg" id="bt-logo">
+  <h1 id="page-title">&nbsp;UTM <span id="title-red">Generator</span></h1>
+  <p id="author">MMCPH 2019</p>
   <hr>
-  <form action="" id="UTM-params">
-    <ul id="campaign-type-select">
-      <li class="campaign-type-item">
-        <input type="checkbox" id="build-select">
-        <label for="build-select" class="checkbox-label">Build</label>
-      </li>
-      <br>
-      <li class="campaign-type-item">
-        <input type="checkbox" id="engage-select">
-        <label for="engage-select" class="checkbox-label">Engage</label>
-      </li>
-    </ul>
-    <!--not displayed until 'Engage' is checked-->
-    <label for="num-emails" class="num-emails" id="num-emails-label">How many emails?</label>
-    <input type="number" name="num-emails" id="num-emails-input" class="num-emails">
-    <ul id="email-list">
-      <li class="email-titles">
-        <label for="email-title-1" id="email-title-label-1">Title 1:</label>
-        <input type="text" name="email-title-1" id="email-title-1">
-      </li>
-      <!--checkEngage() inserts here-->
-    </ul>
-  </form>
-  <script src="app.js"></script>
+  <div class="container">
+    <div class="row">
+      <div class="eight columns">
+        <input type="button" id="build-select" value="BUILD">
+        <input type="button" id="engage-select" value="ENGAGE">
+        <br><br>
+        <form action="" id="UTM-params">
+          <!--not displayed until 'Engage' input is clicked-->
+          <label for="engage-title" id="engage-title-label">TITLE OF ENGAGE STREAM (OPTIONAL)</label>
+          <input type="text" name="engage-title" id="engage-title">
+          <label for="num-emails" id="num-engage-emails-label">NUMBER OF EMAILS</label>
+          <input type="number" name="num-engage-emails" id="num-engage-emails-input">
+          <!--not displayed until 'Build' input is clicked-->
+          <label for="num-emails" id="num-build-emails-label">NUMBER OF EMAILS</label>
+          <input type="number" name="num-build-emails" id="num-build-emails-input">
+          <!--^-->
+          <ul id="email-list">
+            <li class="email-titles">
+              <label for="email-title-1" id="email-title-label-1">TITLE 1</label>
+              <input type="text" name="email-title-1" id="email-title-1">
+            </li>
+            <!--checkEngage() inserts here-->
+          </ul>
+        </form>
+        <script src="app.js"></script>
+      </div>
+      <div class="four columns">
+        <div id="output">
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    
+  </footer>
 </body>
 </html>
-
-select build/engage
-    number of emails in engage
-content: header, footer, image, call to action, body link
-URLS (+add another button) ~

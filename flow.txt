@@ -1,0 +1,10 @@
+Required inputs:
+  URL
+    check structure (regex)
+  build or engage?
+    BUILD:
+      Multiple emails?
+        +title fields
+    ENGAGE:
+      # of engage emails
+        +title fields

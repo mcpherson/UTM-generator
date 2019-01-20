@@ -1,11 +1,59 @@
-.checkbox-label {
-    display: inline;
+label {
+  font-family: 'Anonymous Pro', monospace;
+  margin-top: 10px;
+}
+
+.container {
+  width: 93vw;
+}
+
+#build-select, #build-select {
+  display: inline;
+  margin-right: 20px;
+}
+
+input[type="button"] {
+  font-family: 'Anonymous Pro', monospace;
+  font-size: 18px;
+}
+
+input[type="text"], input[type="number"] {
+  width: 100%;
 }
 
 li {
     list-style: none;
 }
 
-#num-emails-label, #num-emails-input {
+#num-engage-emails-label, #num-engage-emails-input, #num-build-emails-label, #num-build-emails-input, #engage-title, #engage-title-label {
   display: none;
+}
+
+#bt-logo {
+  height: 40px;
+  margin-top: 25px;
+  margin-left: 35px;
+  display: inline-block;
+}
+
+#page-title {
+  font-size: 59px;
+  display: inline-block;
+  font-family: 'Anonymous Pro', monospace;
+  margin: 5px 0 5px 0;
+}
+
+#title-red {
+  color: #BC3339;
+}
+
+hr {
+  margin: 5px 0 5px 0;
+}
+
+#author {
+  float: right;
+  margin: 2px;
+  font-size: 12px;
+  font-family: 'Anonymous Pro', monospace;
 }
