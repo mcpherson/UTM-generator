@@ -1,8 +1,8 @@
 // buttons
-const engageSelectBtn = document.getElementById('engage-select');
-const buildSelectBtn = document.getElementById('build-select');
-const generateBtn = document.getElementById('generate');
-const clearBtn = document.getElementById('generate');
+const engageSelectBtn = document.getElementById('engage-select'),
+      buildSelectBtn  = document.getElementById('build-select'),
+      generateBtn     = document.getElementById('generate'),
+      clearBtn        = document.getElementById('clear-utms');
 
 // button listeners
 engageSelectBtn.addEventListener('click', engageDisplay);
@@ -50,6 +50,9 @@ function engageDisplay() {
   // display engage elements
   engageTitle.style.display = 'block';
   engageTitleLabel.style.display = 'inline';
+
+  // clear emailNamesFormatted[]
+  emailNamesFormatted = [];
   
 }
 
@@ -69,6 +72,9 @@ function buildDisplay() {
   // hide engage elements
   engageTitle.style.display = 'none';
   engageTitleLabel.style.display = 'none';
+
+  // clear emailNamesFormatted[]
+  emailNamesFormatted = [];
   
 }
 
@@ -189,39 +195,66 @@ let headerUTMs = [],
 // generate UTM codes from provided params
 function generateUTMs() {
 
+  // reset UTM arrays to prevent multiple click duplication
+  headerUTMs = [];
+  footerUTMs = [];
+  imageUTMs  = [];
+  bodyUTMs   = [];
+  sigUTMs    = [];
+
   // enforce trailing / on URL
   let urlInputValue = urlInput.value;
   let urlInputLength = urlInputValue.length;
   let urlLastChar = urlInputValue.charAt(urlInputLength - 1);
   if(urlLastChar !== "/") {
     urlInputValue = urlInputValue + '/';
-    console.log(urlInputValue);
   }
   
+  // check BUILD or ENGAGE and reassign var accordingly
+  let typeCheck = "";
+
+  if (buildSelectBtn.classList.contains('selected')) {
+    typeCheck = "build-";
+  } else {
+    // grab engage stream title and to add to UTM
+    let engageStreamTitle = engageTitle.value;
+    let engageTitleTrimmed = engageStreamTitle.trim();
+    let engageTitleFormatted = engageTitleTrimmed.replace(/ /g, "-");
+    typeCheck = `engage-${engageTitleFormatted}-`;
+  }
+
   // generate UTMs for header
   emailNamesFormatted.forEach((name) => {
-    let newUTM = `${urlInputValue}`
+    let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=header`;
+    headerUTMs.push(newUTM);
   });
 
   // generate UTMs for footer
   emailNamesFormatted.forEach((name) => {
-
+    let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=footer`;
+    footerUTMs.push(newUTM);
   });
   
   // generate UTMs for image
   emailNamesFormatted.forEach((name) => {
-
+    let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=image`;
+    imageUTMs.push(newUTM);
   });
   
   // generate UTMs for body link
   emailNamesFormatted.forEach((name) => {
-
+    let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body`;
+    bodyUTMs.push(newUTM);
   });
   
   // generate UTMs for signature
   emailNamesFormatted.forEach((name) => {
-
+    let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=signature`;
+    sigUTMs.push(newUTM);
   });
+
+  // clear formatted names array to prevent duplication from multiple calls
+  emailNamesFormatted = [];
   
 }
 
@@ -236,5 +269,10 @@ function displayUTMs() {
 
 // clear out generated UTMs
 function clearUTMs() {
-
+  headerUTMs = [];
+  footerUTMs = [];
+  imageUTMs = [];
+  bodyUTMs = [];
+  sigUTMs = [];
+  console.log('c');
 }
