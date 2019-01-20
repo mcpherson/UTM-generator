@@ -135,8 +135,45 @@ function displayNumNameFields() {
 
 
 
+// live nodeList of all <li> tags
+let emailNameList = document.getElementsByTagName('li');
+
 // generate UTM codes from input values
 function generateUTMs() {
+
+  // enforces selection of either BUILD or ENGAGE
+  if (!buildSelectBtn.classList.contains('selected') && !engageSelectBtn.classList.contains('selected')) {
+    alert('Please select either BUILD or ENGAGE.');
+    return;
+  }
+
+  // init array for email name storage
+  let emailNames = [];
+
+  // pulls values out of nested inputs in emailNameList[]
+  for (i=0; i<emailNameList.length; i++) {
+    let nodeItem = emailNameList.item(i)
+
+    emailNames.push(nodeItem.firstElementChild.nextSibling.nextSibling.value);
+  }
+
+  // init array for formatted email names
+  let emailNamesFormatted = [];
+
+  // formats names for URLs
+  emailNames.forEach((name) => {
+
+    // trim any silliness
+    nameTrimmed = name.trim();
+
+    // replace spaces with hyphens
+    let nameFormatted = nameTrimmed.replace(/ /g, "-");
+
+    emailNamesFormatted.push(nameFormatted);
+
+  });
+  
+  console.log(emailNamesFormatted);
   
 }
 
