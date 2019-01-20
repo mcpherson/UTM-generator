@@ -20,3 +20,9 @@ click engage:
 change number on input:
   push #newEmails to array
   slice via array.length
+
+
+concat:
+
+name="email-title-1"
+name="email-title-${i}" 

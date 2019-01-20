@@ -18,14 +18,17 @@
   <div class="container">
     <div class="row">
       <div class="seven columns">
-        <input type="button" class="four columns" id="build-select" value="BUILD">
-        <input type="button" class="four columns" id="engage-select" value="ENGAGE">
-        <input type="button" class="four columns" id="generate" value="GENERATE">
-        <br><br>
-        <form action="" id="UTM-params">
+        <input type="button" class="six columns" id="build-select" value="BUILD">
+        <input type="button" class="six columns" id="engage-select" value="ENGAGE">
+        
+        <form id="UTM-params" autocomplete="nope">
+          <!-- URL input field -->
+          <label for="url-input" id="url-input-label">URL</label>
+          <input type="url" name="url-input" id="url-input" data-lpignore="true" autocomplete="nope">
+
           <!-- not displayed until 'Engage' input is clicked -->
-          <label for="engage-title" id="engage-title-label">TITLE OF ENGAGE STREAM (OPTIONAL)</label>
-          <input type="text" name="engage-title" id="engage-title">
+          <label for="engage-title" id="engage-title-label" style="float: left;">TITLE OF ENGAGE STREAM (OPTIONAL)</label>
+          <input type="text" name="engage-title" id="engage-title" data-lpignore="true" autocomplete="nope">
           <!--^-->
           
           <!-- number of emails input -->
@@ -35,10 +38,14 @@
           <ul id="email-list">
             <li class="email-titles">
               <label for="email-title-1" id="email-title-1-label">TITLE</label>
-              <input type="text" name="email-title-1" id="email-title-1">
+              <input type="text" name="email-title-1" id="email-title-1" data-lpignore="true" autocomplete="nope">
             </li>
             <!-- displayNumNameFields() inserts here -->
           </ul>
+          <div class="row">
+            <input type="button" class="six columns" id="generate" value="GENERATE">
+            <input type="button" class="six columns" id="clear-utms" value="CLEAR">
+          </div>
         </form>
         <script src="app.js"></script>
       </div>

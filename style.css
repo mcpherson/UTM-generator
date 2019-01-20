@@ -1,6 +1,7 @@
 label {
   font-family: 'Anonymous Pro', monospace;
   margin-top: 10px;
+  margin-bottom: 0;
 }
 
 .container {
@@ -13,13 +14,22 @@ input[type="button"] {
   font-size: 18px;
 }
 
+input#build-select, input#engage-select {
+  margin-bottom: 10px;
+}
+
 input#generate {
   background-color: #BC3339 !important;
   outline-color: black;
-  color: black;
+  color: white;
 }
 
-input[type="text"], input[type="number"] {
+input#clear-utms {
+  color: #BC3339;
+  border: 1px solid #BC3339;
+}
+
+input[type="text"], input[type="number"], input[type="url"] {
   width: 100%;
 }
 
