@@ -1,10 +1,12 @@
-// type select buttons
+// buttons
 const engageSelect = document.getElementById('engage-select');
 const buildSelect = document.getElementById('build-select');
+const generate = document.getElementById('generate');
 
-// type select button listeners
+// button listeners
 engageSelect.addEventListener('click', engageDisplay);
 buildSelect.addEventListener('click', buildDisplay);
+generate.addEventListener('click', generateUTMs);
 
 // engage stream title input
 const engageTitle = document.getElementById('engage-title');
@@ -20,6 +22,9 @@ numEmailsInput.addEventListener('change', displayNumNameFields);
 // base title input
 const emailTitle = document.getElementById('email-title-1');
 const emailTitleLabel = document.getElementById('email-title-1-label');
+
+// list where extra email fields are inserted
+var emailsList = document.getElementById("email-list");
 
 
 
@@ -49,75 +54,21 @@ function buildDisplay() {
 
 
 
-// array of new email entries to be added
-var newEmailEntries = [];
-
-// display appropriate number of name fields
-function displayNumNameFieldss() {
-
-  // remove number from label for 1 email
-  if(numEmailsInput.value == 1) {
-    emailTitleLabel.innerHTML = "TITLE";
-  } else {
-    emailTitleLabel.innerHTML = "TITLE 1"
-  }
-
-  // 'gotcha' for the cheeky ones
-  if(numEmailsInput.value > 42) {
-    alert("You don't need that many emails.")
-  }
-
-  // list where extra email fields are inserted
-  var emailsList = document.getElementById("email-list");
-
-  // cuts array down to specified number of emails
-  newEmailEntries.length = ((numEmailsInput.value) - 1);
-
-  // display defined number of name fields
-  newEmailEntries.forEach(function(newEmailEntry) {
-  console.log('t');
-    // create new <li> to append to
-    let newEmail = document.createElement("li");
-
-    let i = 2
-
-    let newNameInput = `
-    <label for="email-title-${i}" id="email-title-${i}-label">TITLE ${i}</label>
-    <input type="text" name="email-title-${i}" id="email-title-${i}">`;
-
-    // appends defined number of entries to array
-    newEmailEntries.push(newNameInput);
-
-    // set content of new <li>
-    newEmail.innerHTML = newEmailEntries[i];
-
-    // append <li> to <ul>
-    emailsList.appendChild(newEmail);
-
-    i++;
-  });
-
-  
-}
-
-
-
+// display appropriate number of email title fields
 function displayNumNameFields() {
 
   // 'gotcha' for the cheeky ones
   if(numEmailsInput.value > 42) {
     alert("You don't need that many emails.")
+    numEmailsInput.value = 1;
   }
-
-  // list where extra email fields are inserted
-  var emailsList = document.getElementById("email-list");
   
   // clear name inputs to prevent duplication
   while(emailsList.hasChildNodes()) {
     emailsList.removeChild(emailsList.lastChild);
   }
 
-  // adds new inputs depending on value of numEmailsInput
+  // adds new inputs to DOM depending on value of numEmailsInput
   for (i=1; i<((Number(numEmailsInput.value)) + 1); i++) {
 
     newEmail = document.createElement('li');
@@ -129,5 +80,23 @@ function displayNumNameFields() {
     
   }
 
+  // Remove redundant '1' from title input lable when only one email is needed
+  if(Number(numEmailsInput.value) === 1) {
+    document.getElementById('email-title-1-label').innerHTML = "TITLE";
+  }
+
 }
 
+
+
+// generate UTM codes from input values
+function generateUTMs() {
+
+}
+
+
+
+// display generated UTM codes in DOM
+function displayUTMs() {
+
+}
