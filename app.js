@@ -38,14 +38,19 @@ var emailsList = document.getElementById("email-list");
 
 // called when 'engage' is clicked
 function engageDisplay() {
+
+  // add/remove class for selection
+  if (!engageSelectBtn.classList.contains('selected')) {
+    engageSelectBtn.classList.toggle('selected');
+    if (buildSelectBtn.classList.contains('selected')) {
+      buildSelectBtn.classList.remove('selected');
+    }
+  }
   
   // display engage elements
   engageTitle.style.display = 'block';
   engageTitleLabel.style.display = 'inline';
-  // engageTitleLabel.style.marginBottom = '5px !important';
   
-  // display appropriate number of name fields
-  displayNumNameFields();
 }
 
 
@@ -53,12 +58,18 @@ function engageDisplay() {
 // called when 'build' is clicked 
 function buildDisplay() {
 
+  // add/remove class for selection
+  if (!buildSelectBtn.classList.contains('selected')) {
+    buildSelectBtn.classList.toggle('selected');
+    if (engageSelectBtn.classList.contains('selected')) {
+      engageSelectBtn.classList.remove('selected');
+    }
+  }
+
   // hide engage elements
   engageTitle.style.display = 'none';
   engageTitleLabel.style.display = 'none';
   
-  // display appropriate number of name fields
-  displayNumNameFields();
 }
 
 
@@ -126,7 +137,7 @@ function displayNumNameFields() {
 
 // generate UTM codes from input values
 function generateUTMs() {
-
+  
 }
 
 

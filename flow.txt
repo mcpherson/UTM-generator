@@ -24,5 +24,4 @@ change number on input:
 
 concat:
 
-name="email-title-1"
-name="email-title-${i}" 
+URL + [check for /, remove if exists] /?utm_source=boomtime&utm_medium=email + &utm_campaign= + (build- || engage-) + name + &utm_content= (header && footer && body-link && image && signature)

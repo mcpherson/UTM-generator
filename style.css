@@ -22,11 +22,13 @@ input#generate {
   background-color: #BC3339 !important;
   outline-color: black;
   color: white;
+  margin-top: 10px;
 }
 
 input#clear-utms {
   color: #BC3339;
   border: 1px solid #BC3339;
+  margin-top: 10px;
 }
 
 input[type="text"], input[type="number"], input[type="url"] {
