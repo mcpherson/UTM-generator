@@ -7,14 +7,16 @@ label {
   width: 93vw;
 }
 
-#build-select, #build-select {
-  display: inline;
-  margin-right: 20px;
-}
-
 input[type="button"] {
+  display: inline;
   font-family: 'Anonymous Pro', monospace;
   font-size: 18px;
+}
+
+input#generate {
+  background-color: #BC3339 !important;
+  outline-color: black;
+  color: black;
 }
 
 input[type="text"], input[type="number"] {
@@ -25,7 +27,7 @@ li {
     list-style: none;
 }
 
-#num-engage-emails-label, #num-engage-emails-input, #num-build-emails-label, #num-build-emails-input, #engage-title, #engage-title-label {
+#engage-title, #engage-title-label {
   display: none;
 }
 
@@ -43,7 +45,11 @@ li {
   margin: 5px 0 5px 0;
 }
 
-#title-red {
+a {
+  text-decoration: none;
+}
+
+.red-text {
   color: #BC3339;
 }
 

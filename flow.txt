@@ -8,3 +8,15 @@ Required inputs:
     ENGAGE:
       # of engage emails
         +title fields
+
+
+BEHAVIOR:
+
+click engage: 
+  set attr class='selected' on engage
+  rm attr class from build
+
+
+change number on input:
+  push #newEmails to array
+  slice via array.length

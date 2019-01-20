@@ -12,36 +12,37 @@
 </head>
 <body>
   <img src="bt-logo.jpg" id="bt-logo">
-  <h1 id="page-title">&nbsp;UTM <span id="title-red">Generator</span></h1>
-  <p id="author">MMCPH 2019</p>
-  <hr>
+  <h1 id="page-title">&nbsp;UTM <span class="red-text">Generator</span></h1>
+  <p id="author"><strong><a href="https://github.com/mmcph" target="_blank"><span class="red-text">MMCPH</span></a> 2019</strong></p>
+  <hr><br>
   <div class="container">
     <div class="row">
-      <div class="eight columns">
-        <input type="button" id="build-select" value="BUILD">
-        <input type="button" id="engage-select" value="ENGAGE">
+      <div class="seven columns">
+        <input type="button" class="four columns" id="build-select" value="BUILD">
+        <input type="button" class="four columns" id="engage-select" value="ENGAGE">
+        <input type="button" class="four columns" id="generate" value="GENERATE">
         <br><br>
         <form action="" id="UTM-params">
-          <!--not displayed until 'Engage' input is clicked-->
+          <!-- not displayed until 'Engage' input is clicked -->
           <label for="engage-title" id="engage-title-label">TITLE OF ENGAGE STREAM (OPTIONAL)</label>
           <input type="text" name="engage-title" id="engage-title">
-          <label for="num-emails" id="num-engage-emails-label">NUMBER OF EMAILS</label>
-          <input type="number" name="num-engage-emails" id="num-engage-emails-input">
-          <!--not displayed until 'Build' input is clicked-->
-          <label for="num-emails" id="num-build-emails-label">NUMBER OF EMAILS</label>
-          <input type="number" name="num-build-emails" id="num-build-emails-input">
           <!--^-->
+          
+          <!-- number of emails input -->
+          <label for="num-emails" id="num-emails-label">NUMBER OF EMAILS</label>
+          <input type="number" value="1" min="1" max="42" name="num-emails" id="num-emails-input">
+
           <ul id="email-list">
             <li class="email-titles">
-              <label for="email-title-1" id="email-title-label-1">TITLE 1</label>
+              <label for="email-title-1" id="email-title-1-label">TITLE</label>
               <input type="text" name="email-title-1" id="email-title-1">
             </li>
-            <!--checkEngage() inserts here-->
+            <!-- displayNumNameFields() inserts here -->
           </ul>
         </form>
         <script src="app.js"></script>
       </div>
-      <div class="four columns">
+      <div class="five columns">
         <div id="output">
 
         </div>
