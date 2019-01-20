@@ -57,9 +57,18 @@ function buildDisplay() {
 // display appropriate number of email title fields
 function displayNumNameFields() {
 
+  if(Number(numEmailsInput.value) === 42) {
+    document.body.innerHTML = "UNRESOLVED FINITE/INFINITE PARADOX ENCOUNTERED. YOU ARE NOT PREPARED TO TRANSCEND.";
+    function booted() {
+      setTimeout(function(){location.reload();}, 4200);
+    }
+    booted();
+    return;
+  }
+
   // 'gotcha' for the cheeky ones
-  if(numEmailsInput.value > 42) {
-    alert("You don't need that many emails.")
+  if(numEmailsInput.value > 41) {
+    alert("You don't need that many emails. Go ahead and click 'OK' - no fancy DOM-based alert message for you.")
     numEmailsInput.value = 1;
   }
   
