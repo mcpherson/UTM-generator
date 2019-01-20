@@ -7,7 +7,7 @@ const clearBtn = document.getElementById('generate');
 // button listeners
 engageSelectBtn.addEventListener('click', engageDisplay);
 buildSelectBtn.addEventListener('click', buildDisplay);
-generateBtn.addEventListener('click', generateUTMs);
+generateBtn.addEventListener('click', generateEmailTitles);
 clearBtn.addEventListener('click', clearUTMs);
 
 // url input
@@ -138,8 +138,11 @@ function displayNumNameFields() {
 // live nodeList of all <li> tags
 let emailNameList = document.getElementsByTagName('li');
 
-// generate UTM codes from input values
-function generateUTMs() {
+// init array for formatted email names
+let emailNamesFormatted = [];
+
+// generate formatted email titles from input values
+function generateEmailTitles() {
 
   // enforces selection of either BUILD or ENGAGE
   if (!buildSelectBtn.classList.contains('selected') && !engageSelectBtn.classList.contains('selected')) {
@@ -157,14 +160,11 @@ function generateUTMs() {
     emailNames.push(nodeItem.firstElementChild.nextSibling.nextSibling.value);
   }
 
-  // init array for formatted email names
-  let emailNamesFormatted = [];
-
   // formats names for URLs
   emailNames.forEach((name) => {
 
     // trim any silliness
-    nameTrimmed = name.trim();
+    let nameTrimmed = name.trim();
 
     // replace spaces with hyphens
     let nameFormatted = nameTrimmed.replace(/ /g, "-");
@@ -173,7 +173,55 @@ function generateUTMs() {
 
   });
   
-  console.log(emailNamesFormatted);
+  generateUTMs();
+
+}
+
+
+
+// init UTM arrays
+let headerUTMs = [],
+    footerUTMs = [],
+    imageUTMs  = [],
+    bodyUTMs   = [],
+    sigUTMs    = [];
+
+// generate UTM codes from provided params
+function generateUTMs() {
+
+  // enforce trailing / on URL
+  let urlInputValue = urlInput.value;
+  let urlInputLength = urlInputValue.length;
+  let urlLastChar = urlInputValue.charAt(urlInputLength - 1);
+  if(urlLastChar !== "/") {
+    urlInputValue = urlInputValue + '/';
+    console.log(urlInputValue);
+  }
+  
+  // generate UTMs for header
+  emailNamesFormatted.forEach((name) => {
+    let newUTM = `${urlInputValue}`
+  });
+
+  // generate UTMs for footer
+  emailNamesFormatted.forEach((name) => {
+
+  });
+  
+  // generate UTMs for image
+  emailNamesFormatted.forEach((name) => {
+
+  });
+  
+  // generate UTMs for body link
+  emailNamesFormatted.forEach((name) => {
+
+  });
+  
+  // generate UTMs for signature
+  emailNamesFormatted.forEach((name) => {
+
+  });
   
 }
 
