@@ -75,3 +75,28 @@ hr {
   font-size: 12px;
   font-family: 'Anonymous Pro', monospace;
 }
+
+p.utm-display-label {
+  /* display: none; */
+  font-size: 10px;
+  text-align: center;
+}
+
+div.two {
+  margin-right: 7px;
+}
+
+.output-item {
+  width: 100%;
+  margin-bottom: 18px;
+  /* padding-right: 13px !important; */
+  /* padding-left: 15px !important; */
+  transition: background-color;
+  transition-timing-function: ease-in-out;
+  transition-duration: .3s;
+}
+
+.output-item:hover {
+  background-color: #BC3339;
+  color: white;
+}

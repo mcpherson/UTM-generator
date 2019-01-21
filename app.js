@@ -34,6 +34,9 @@ const emailTitleLabel = document.getElementById('email-title-1-label');
 // list where extra email fields are inserted
 var emailsList = document.getElementById("email-list");
 
+// UTM output location
+const outputDiv = document.getElementById('output');
+
 
 
 // called when 'engage' is clicked
@@ -50,6 +53,10 @@ function engageDisplay() {
   // display engage elements
   engageTitle.style.display = 'block';
   engageTitleLabel.style.display = 'inline';
+
+  // apply border color to active button and remove from inactive
+  engageSelectBtn.style.border = '1px solid #BC3339';
+  buildSelectBtn.style.border = '1px solid #BBB';
 
   // clear emailNamesFormatted[]
   emailNamesFormatted = [];
@@ -72,6 +79,10 @@ function buildDisplay() {
   // hide engage elements
   engageTitle.style.display = 'none';
   engageTitleLabel.style.display = 'none';
+
+  // apply border color to active button and remove from inactive
+  buildSelectBtn.style.border = '1px solid #BC3339';
+  engageSelectBtn.style.border = '1px solid #BBB';
 
   // clear emailNamesFormatted[]
   emailNamesFormatted = [];
@@ -243,13 +254,13 @@ function generateUTMs() {
   
   // generate UTMs for body link
   emailNamesFormatted.forEach((name) => {
-    let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body`;
+    let newUTM = `<a href="${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body" target="_blank">`;
     bodyUTMs.push(newUTM);
   });
   
   // generate UTMs for signature
   emailNamesFormatted.forEach((name) => {
-    let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=signature`;
+    let newUTM = `<a href="${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=signature" target="_blank">`;
     sigUTMs.push(newUTM);
   });
 
@@ -263,6 +274,11 @@ function generateUTMs() {
 // display generated UTM codes in DOM
 function displayUTMs() {
 
+  // display labels
+  const displayLabels = document.getElementsByClassName('utm-display-label');
+  for (i=0; i<displayLabels.length; i++) {
+    displayLabels[i].style.display = 'block';
+  }
 }
 
 
@@ -275,4 +291,10 @@ function clearUTMs() {
   bodyUTMs = [];
   sigUTMs = [];
   console.log('c');
+
+  // hide labels
+  const displayLabels = document.getElementsByClassName('utm-display-label');
+  for (i=0; i<displayLabels.length; i++) {
+    displayLabels[i].style.display = 'none';
+  }
 }

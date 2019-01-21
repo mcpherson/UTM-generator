@@ -25,3 +25,11 @@ change number on input:
 concat:
 
 URL + [check for /, remove if exists] /?utm_source=boomtime&utm_medium=email + &utm_campaign= + (build- || engage-) + name + &utm_content= (header && footer && body-link && image && signature)
+
+copy:
+
+render offscreen/hidden <p> tags with foreach()
+render buttons w/unique IDs
+  onclick="copyValue();"
+    use ID of clicked button to grab <p> by ID
+      run execCommand('copy') on selected <p>
