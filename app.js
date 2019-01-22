@@ -16,13 +16,18 @@ const urlInput = document.getElementById('url-input');
 // url input listener
 urlInput.addEventListener('blur', validURL);
 
+// cta input
+const ctaInput = document.getElementById('cta-url-input');
+
+// cta switch
+const ctaSwitch = document.getElementById('cta-toggle');
+
 // engage stream title input
 const engageTitle = document.getElementById('engage-title');
 const engageTitleLabel = document.getElementById('engage-title-label');
 
 // number of emails inputs
 const numEmailsInput = document.getElementById('num-emails-input');
-const numEmailsLabel = document.getElementById('num-emails-label');
 
 // listens for change in value of numEmailsInput
 numEmailsInput.addEventListener('change', displayNumNameFields);
@@ -36,6 +41,17 @@ var emailsList = document.getElementById("email-list");
 
 // UTM output location
 const outputDiv = document.getElementById('output');
+
+// hidden output area where list of <p>s to be copied from are 'stored'
+const hiddenOutput = document.getElementById('hidden-output');
+
+// hidden lists
+const hiddenHeaderList = document.getElementById('hidden-header-list'),
+      hiddenFooterList = document.getElementById('hidden-footer-list'),
+      hiddenImageList  = document.getElementById('hidden-image-list'),
+      hiddenBodyList   = document.getElementById('hidden-body-list'),
+      hiddenCTAList    = document.getElementById('hidden-cta-list'),
+      hiddenSigList    = document.getElementById('hidden-sig-list');
 
 
 
@@ -95,6 +111,9 @@ function buildDisplay() {
 function validURL() {
   if (urlInput.matches(':invalid')) {
     alert('The URL you have entered is invalid.');
+  }
+  if (ctaInput.matches(':invalid')) {
+    alert('The URL you have entered is invalid.')
   }
 }
 
@@ -185,8 +204,14 @@ function generateEmailTitles() {
 
     // replace spaces with hyphens
     let nameFormatted = nameTrimmed.replace(/ /g, "-");
+    
+    // .replace(/;/g, '%3B').replace(/,/g, '%2C').replace(/\//g, '%2F').replace(/\?/g, '%3F').replace(/:/g, '%3A').replace(/@/g, '%40').replace(/&/g, '%26').replace(/=/g, '%3D').replace(/\+/g, '%2B').replace(/\$/g, '%24').replace('.', '').replace(/!/g, '%21').replace(/~/g, '%7E').replace(/\*/g, '%2A').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/#/g, '%23');
+    // You saw nothing...
 
-    emailNamesFormatted.push(nameFormatted);
+    // URI encode (encodes special characters)
+    let nameEncoded = escape(nameFormatted);
+
+    emailNamesFormatted.push(nameEncoded);
 
   });
   
@@ -201,6 +226,7 @@ let headerUTMs = [],
     footerUTMs = [],
     imageUTMs  = [],
     bodyUTMs   = [],
+    ctaUTMs    = [],
     sigUTMs    = [];
 
 // generate UTM codes from provided params
@@ -211,14 +237,39 @@ function generateUTMs() {
   footerUTMs = [];
   imageUTMs  = [];
   bodyUTMs   = [];
+  ctaUTMs    = [];
   sigUTMs    = [];
 
-  // enforce trailing / on URL
+  // reset hidden area
+  hiddenHeaderList.innerHTML = '';
+  hiddenFooterList.innerHTML = '';
+  hiddenImageList.innerHTML  = '';
+  hiddenBodyList.innerHTML   = '';
+  hiddenCTAList.innerHTML    = '';
+  hiddenSigList.innerHTML    = '';
+  
+  // enforce mandatory fields
   let urlInputValue = urlInput.value;
+  let ctaInputValue = ctaInput.value;
+  
+  if (urlInputValue === '') {
+    alert('Enter a URL.');
+  } else if (ctaInputValue === '') {
+    alert('Enter a CTA URL.');
+  } 
+
+  // enforce trailing / on URLs
   let urlInputLength = urlInputValue.length;
   let urlLastChar = urlInputValue.charAt(urlInputLength - 1);
+
   if(urlLastChar !== "/") {
     urlInputValue = urlInputValue + '/';
+  }
+  
+  let ctaInputLength = ctaInputValue.length;
+  let ctaLastChar = ctaInputValue.charAt(ctaInputLength - 1);
+  if(ctaLastChar !== "/") {
+    ctaInputValue = ctaInputValue + '/';
   }
   
   // check BUILD or ENGAGE and reassign var accordingly
@@ -246,26 +297,115 @@ function generateUTMs() {
     footerUTMs.push(newUTM);
   });
   
-  // generate UTMs for image
+  // generate UTMs || CTA UTMs for image
+  if (ctaSwitch.checked) {
+    emailNamesFormatted.forEach((name) => {
+      let newUTM = `${ctaInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=image`;
+      imageUTMs.push(newUTM);
+    });
+  } else { 
+    emailNamesFormatted.forEach((name) => {
+      let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=image`;
+      imageUTMs.push(newUTM);
+    });
+  }
+  
+  // generate UTMs || CTA UTMs for body link
+  if (ctaSwitch.checked) {
+    emailNamesFormatted.forEach((name) => {
+      let newUTM = `<a href="${ctaInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body-link" target="_blank">`;
+      bodyUTMs.push(newUTM);
+    });
+  } else {
+    emailNamesFormatted.forEach((name) => {
+      let newUTM = `<a href="${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body-link" target="_blank">`;
+      bodyUTMs.push(newUTM);
+    });
+  }
+
+  // generate UTMs for CTA
   emailNamesFormatted.forEach((name) => {
-    let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=image`;
-    imageUTMs.push(newUTM);
+    let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body`;
+    ctaUTMs.push(newUTM);
   });
   
-  // generate UTMs for body link
-  emailNamesFormatted.forEach((name) => {
-    let newUTM = `<a href="${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body" target="_blank">`;
-    bodyUTMs.push(newUTM);
-  });
-  
-  // generate UTMs for signature
-  emailNamesFormatted.forEach((name) => {
-    let newUTM = `<a href="${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=signature" target="_blank">`;
-    sigUTMs.push(newUTM);
-  });
+  // generate UTMs || CTA UTMs for signature
+  if (ctaSwitch.checked) {
+    emailNamesFormatted.forEach((name) => {
+      let newUTM = `<a href="${ctaInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=signature" target="_blank">`;
+      sigUTMs.push(newUTM);
+    });
+  } else {
+    emailNamesFormatted.forEach((name) => {
+      let newUTM = `<a href="${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=signature" target="_blank">`;
+      sigUTMs.push(newUTM);
+    });
+  }
 
   // clear formatted names array to prevent duplication from multiple calls
   emailNamesFormatted = [];
+  
+  renderHiddenOutputs();
+
+}
+
+
+
+function renderHiddenOutputs() {
+
+  // append hidden header utms to list
+  headerUTMs.forEach((utm, i) => {
+    newHiddenOutput = document.createElement('span');
+    newHiddenOutput.innerHTML = `
+    <p id="header-utm-${i+1}-hidden">${utm}</p>`;
+
+    hiddenHeaderList.appendChild(newHiddenOutput);
+  });
+
+  // append hidden footer utms to list
+  footerUTMs.forEach((utm, i) => {
+    newHiddenOutput = document.createElement('span');
+    newHiddenOutput.innerHTML = `
+    <p id="footer-utm-${i+1}-hidden">${utm}</p>`;
+
+    hiddenFooterList.appendChild(newHiddenOutput);
+  });
+
+  // append hidden image utms to list
+  imageUTMs.forEach((utm, i) => {
+    newHiddenOutput = document.createElement('span');
+    newHiddenOutput.innerHTML = `
+    <p id="image-utm-${i+1}-hidden">${utm}</p>`;
+
+    hiddenImageList.appendChild(newHiddenOutput);
+  });
+
+  // append hidden body utms to list
+  bodyUTMs.forEach((utm, i) => {
+    newHiddenOutput = document.createElement('span');
+    newHiddenOutput.innerHTML = `
+    <p id="body-utm-${i+1}-hidden">${utm}</p>`;
+
+    hiddenBodyList.appendChild(newHiddenOutput);
+  });
+
+  // append hidden cta utms to list
+  ctaUTMs.forEach((utm, i) => {
+    newHiddenOutput = document.createElement('span');
+    newHiddenOutput.innerHTML = `
+    <p id="cta-utm-${i+1}-hidden">${utm}</p>`;
+
+    hiddenCTAList.appendChild(newHiddenOutput);
+  });
+
+  // append hidden sig utms to list
+  sigUTMs.forEach((utm, i) => {
+    newHiddenOutput = document.createElement('span');
+    newHiddenOutput.innerHTML = `
+    <p id="sig-utm-${i+1}-hidden">${utm}</p>`;
+
+    hiddenSigList.appendChild(newHiddenOutput);
+  });
   
 }
 
@@ -289,6 +429,7 @@ function clearUTMs() {
   footerUTMs = [];
   imageUTMs = [];
   bodyUTMs = [];
+  ctaUTMs = [];
   sigUTMs = [];
   console.log('c');
 
@@ -298,3 +439,5 @@ function clearUTMs() {
     displayLabels[i].style.display = 'none';
   }
 }
+
+

@@ -4,10 +4,6 @@ label {
   margin-bottom: 0;
 }
 
-.container {
-  width: 93vw;
-}
-
 input[type="button"] {
   display: inline;
   font-family: 'Anonymous Pro', monospace;
@@ -78,17 +74,21 @@ hr {
 
 p.utm-display-label {
   /* display: none; */
-  font-size: 10px;
+  font-size: 20px;
   text-align: center;
+  font-family: 'Anonymous Pro', monospace;
+  margin-top: 20px;
 }
 
 div.two {
-  margin-right: 7px;
+  /* margin-right: 7px; */
 }
 
 .output-item {
   width: 100%;
-  margin-bottom: 18px;
+  height: 75px;
+  margin-bottom: 10px;
+  font-size: 30px;
   /* padding-right: 13px !important; */
   /* padding-left: 15px !important; */
   transition: background-color;
@@ -100,3 +100,14 @@ div.two {
   background-color: #BC3339;
   color: white;
 }
+
+#cta-toggle {
+  display: inline-block;
+}
+
+#cta-toggle-label {
+  margin-top: 14px;
+  display: inline-block;
+
+}
+

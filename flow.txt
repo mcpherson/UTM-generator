@@ -33,3 +33,7 @@ render buttons w/unique IDs
   onclick="copyValue();"
     use ID of clicked button to grab <p> by ID
       run execCommand('copy') on selected <p>
+
+
+
+use form/input instead? solution for not rendering a - grab inner html vs textContent?

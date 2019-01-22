@@ -11,9 +11,10 @@
   <link href="https://fonts.googleapis.com/css?family=Anonymous+Pro" rel="stylesheet">
 </head>
 <body>
-  <img src="bt-logo.jpg" id="bt-logo">
-  <h1 id="page-title">&nbsp;UTM <span class="red-text">Generator</span></h1>
-  <p id="author"><strong><a href="https://github.com/mmcph" target="_blank"><span class="red-text">MMCPH</span></a> 2019</strong></p>
+  <p id="author"><strong><a href="https://github.com/mmcph" target="_blank"><span class="red-text">MMCPH</span></a> 2019&nbsp;</strong></p>
+  <div class="container">
+    <h1 id="page-title">UTM <span class="red-text">Generator</span></h1>
+  </div>
   <hr><br>
   <div class="container">
     <div class="row">
@@ -22,15 +23,10 @@
         <input type="button" class="six columns" id="engage-select" value="ENGAGE">
         
         <form id="UTM-params" autocomplete="nope">
-          <!-- URL input field -->
+          <!-- URL input fields -->
           <label for="url-input" id="url-input-label">URL</label>
           <input type="url" name="url-input" id="url-input" data-lpignore="true" autocomplete="nope">
-
-          <!-- not displayed until 'Engage' input is clicked -->
-          <label for="engage-title" id="engage-title-label" style="float: left;">TITLE OF ENGAGE STREAM (OPTIONAL)</label>
-          <input type="text" name="engage-title" id="engage-title" data-lpignore="true" autocomplete="nope">
-          <!--^-->
-          
+      
           <!-- number of emails input -->
           <label for="num-emails" id="num-emails-label">NUMBER OF EMAILS</label>
           <input type="number" value="1" min="1" max="41" name="num-emails" id="num-emails-input">
@@ -47,61 +43,100 @@
             <input type="button" class="six columns" id="clear-utms" value="CLEAR">
           </div>
         </form>
-        <script src="app.js"></script>
       </div>
       <div class="six columns">
-        <div id="output">
-          <div class="two columns">
-            <p class="utm-display-label">HEADER</p>
-            <div id="header-display">
-                <input type="button" class="output-item" value="1">
-                <input type="button" class="output-item" value="2">
-                <input type="button" class="output-item" value="3">
-                <input type="button" class="output-item" value="4">
-            </div>
+        <input type="checkbox" name="cta-toggle" id="cta-toggle" data-lpignore="true" autocomplete="nope">
+        <label for="cta-toggle" id="cta-toggle-label">&nbsp;USE CTA URL FOR IMAGE / BODY / SIG</label>
+        <label for="cta-url-input" id="cta-url-input-label">CTA URL</label>
+        <input type="url" name="cta-url-input" id="cta-url-input" data-lpignore="true" autocomplete="nope">
+        <!-- not displayed until 'Engage' input is clicked -->
+        <label for="engage-title" id="engage-title-label" style="float: left;">TITLE OF ENGAGE STREAM (OPTIONAL)</label>
+        <input type="text" name="engage-title" id="engage-title" data-lpignore="true" autocomplete="nope">
+        <!--^-->
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <div id="output">
+        <div class="two columns">
+          <p class="utm-display-label">HEADER</p>
+          <div id="header-display">
+            <button class="output-item">1</button>
+            <button class="output-item">2</button>
+            <button class="output-item">3</button>
+            <button class="output-item">40</button>
           </div>
-          <div class="two columns">
-            <p class="utm-display-label">FOOTER</p>
-            <div id="footer-display">
-                <input type="button" class="output-item" value="1">
-                <input type="button" class="output-item" value="2">
-                <input type="button" class="output-item" value="3">
-                <input type="button" class="output-item" value="4">
-            </div>
+        </div>
+        <div class="two columns">
+          <p class="utm-display-label">FOOTER</p>
+          <div id="footer-display">
+            <button class="output-item">1</button>
+            <button class="output-item">2</button>
+            <button class="output-item">3</button>
+            <button class="output-item">40</button>
           </div>
-          <div class="two columns">
-            <p class="utm-display-label">&nbsp;IMAGE</p>
-            <div id="image-display">
-                <input type="button" class="output-item" value="1">
-                <input type="button" class="output-item" value="2">
-                <input type="button" class="output-item" value="3">
-                <input type="button" class="output-item" value="4">
-            </div>
+        </div>
+        <div class="two columns">
+          <p class="utm-display-label">IMAGE</p>
+          <div id="image-display">
+            <button class="output-item">1</button>
+            <button class="output-item">2</button>
+            <button class="output-item">3</button>
+            <button class="output-item">40</button>
           </div>
-          <div class="two columns">
-            <p class="utm-display-label">&nbsp;&nbsp;BODY</p>
-            <div id="body-display">
-                <input type="button" class="output-item" value="1">
-                <input type="button" class="output-item" value="2">
-                <input type="button" class="output-item" value="3">
-                <input type="button" class="output-item" value="4">
-            </div>
+        </div>
+        <div class="two columns">
+          <p class="utm-display-label">BODY</p>
+          <div id="body-display">
+            <button class="output-item">1</button>
+            <button class="output-item">2</button>
+            <button class="output-item">3</button>
+            <button class="output-item">40</button>
           </div>
-          <div class="two columns">
-            <p class="utm-display-label">&nbsp;&nbsp;&nbsp;SIG</p>
-            <div id="sig-display">
-                <input type="button" class="output-item" value="1">
-                <input type="button" class="output-item" value="2">
-                <input type="button" class="output-item" value="3">
-                <input type="button" class="output-item" value="4">
-            </div>
+        </div>
+        <div class="two columns">
+          <p class="utm-display-label">CTA</p>
+          <div id="cta-display">
+            <button class="output-item">1</button>
+            <button class="output-item">2</button>
+            <button class="output-item">3</button>
+            <button class="output-item">40</button>
+          </div>
+        </div>
+        <div class="two columns">
+          <p class="utm-display-label">SIG</p>
+          <div id="sig-display">
+            <button class="output-item">1</button>
+            <button class="output-item">2</button>
+            <button class="output-item">3</button>
+            <button class="output-item">40</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <footer>
-    
-  </footer>
+  <div id="hidden-output">
+    <p id="hidden-header-list">
+      
+    </p>
+    <p id="hidden-footer-list">
+
+    </p>
+    <p id="hidden-image-list">
+
+    </p>
+    <p id="hidden-body-list">
+
+    </p>
+    <p id="hidden-cta-list">
+
+    </p>
+    <p id="hidden-sig-list">
+
+    </p>
+  </div>
+  <script src="app.js"></script>
 </body>
 </html>
