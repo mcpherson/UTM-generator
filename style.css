@@ -12,6 +12,7 @@ input[type="button"] {
 
 input#build-select, input#engage-select {
   margin-bottom: 10px;
+  margin-top: 6px;
 }
 
 input#generate {
@@ -73,7 +74,7 @@ hr {
 }
 
 p.utm-display-label {
-  /* display: none; */
+  display: none;
   font-size: 20px;
   text-align: center;
   font-family: 'Anonymous Pro', monospace;
@@ -103,11 +104,24 @@ div.two {
 
 #cta-toggle {
   display: inline-block;
+  margin-left: 16px;
 }
 
 #cta-toggle-label {
-  margin-top: 14px;
+  margin: 6px 0;
+  padding: 6px 0;
   display: inline-block;
-
+  width: 100%;
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
 }
 
+#hidden-output {
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+}
+
+#cta-url-input-label {
+  margin-top: 4px;
+}

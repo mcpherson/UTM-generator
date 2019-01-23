@@ -53,6 +53,14 @@ const hiddenHeaderList = document.getElementById('hidden-header-list'),
       hiddenCTAList    = document.getElementById('hidden-cta-list'),
       hiddenSigList    = document.getElementById('hidden-sig-list');
 
+// display areas
+const headerDisplay = document.getElementById('header-display'),
+      footerDisplay = document.getElementById('footer-display'),
+      imageDisplay  = document.getElementById('image-display'),
+      bodyDisplay   = document.getElementById('body-display'),
+      ctaDisplay    = document.getElementById('cta-display'),
+      sigDisplay    = document.getElementById('sig-display');
+
 
 
 // called when 'engage' is clicked
@@ -124,7 +132,7 @@ function displayNumNameFields() {
 
   // thanks for reading my code!
   if(Number(numEmailsInput.value) === 42) {
-    document.body.innerHTML = "<h1 style='text-align:center;'>UNRESOLVED FINITE / INFINITE PARADOX ENCOUNTERED.</h1> <h1 style='text-align:center;'>YOU ARE NOT PREPARED TO ASCEND.</h1> <h1 style='text-align:center;'>DIMENSIONAL LOCK REINITIALIZING ...</h1>";
+    document.body.innerHTML = "<h1 style='text-align:center;'>UNRESOLVED FINITE / INFINITE PARADOX ENCOUNTERED.</h1><h1 style='text-align:center;'>YOU ARE NOT PREPARED TO ASCEND.</h1><h1 style='text-align:center;'>DIMENSIONAL LOCK REINITIALIZING ...</h1>";
     function lockout() {
       setTimeout(function() {location.reload();}, 5000);
     }
@@ -180,7 +188,13 @@ let emailNamesFormatted = [];
 // generate formatted email titles from input values
 function generateEmailTitles() {
 
-  // enforces selection of either BUILD or ENGAGE
+  let nameArray = Array.from(emailNameList);
+
+  nameArray.forEach((name, i) => {
+
+  });
+
+  // enforces selection of either BUILD or ENGAGE TURNON
   if (!buildSelectBtn.classList.contains('selected') && !engageSelectBtn.classList.contains('selected')) {
     alert('Please select either BUILD or ENGAGE.');
     return;
@@ -248,20 +262,21 @@ function generateUTMs() {
   hiddenCTAList.innerHTML    = '';
   hiddenSigList.innerHTML    = '';
   
-  // enforce mandatory fields
+  // enforce mandatory fields TURNON
   let urlInputValue = urlInput.value;
   let ctaInputValue = ctaInput.value;
   
   if (urlInputValue === '') {
     alert('Enter a URL.');
+    return;
   } else if (ctaInputValue === '') {
     alert('Enter a CTA URL.');
+    return;
   } 
 
   // enforce trailing / on URLs
   let urlInputLength = urlInputValue.length;
   let urlLastChar = urlInputValue.charAt(urlInputLength - 1);
-
   if(urlLastChar !== "/") {
     urlInputValue = urlInputValue + '/';
   }
@@ -313,31 +328,31 @@ function generateUTMs() {
   // generate UTMs || CTA UTMs for body link
   if (ctaSwitch.checked) {
     emailNamesFormatted.forEach((name) => {
-      let newUTM = `<a href="${ctaInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body-link" target="_blank">`;
+      let newUTM = `\<a href="${ctaInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body-link" target="_blank">`;
       bodyUTMs.push(newUTM);
     });
   } else {
     emailNamesFormatted.forEach((name) => {
-      let newUTM = `<a href="${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body-link" target="_blank">`;
+      let newUTM = `\<a href="${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body-link" target="_blank">`;
       bodyUTMs.push(newUTM);
     });
   }
 
   // generate UTMs for CTA
   emailNamesFormatted.forEach((name) => {
-    let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body`;
+    let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=CTA`;
     ctaUTMs.push(newUTM);
   });
   
   // generate UTMs || CTA UTMs for signature
   if (ctaSwitch.checked) {
     emailNamesFormatted.forEach((name) => {
-      let newUTM = `<a href="${ctaInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=signature" target="_blank">`;
+      let newUTM = `\<a href="${ctaInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=signature" target="_blank">`;
       sigUTMs.push(newUTM);
     });
   } else {
     emailNamesFormatted.forEach((name) => {
-      let newUTM = `<a href="${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=signature" target="_blank">`;
+      let newUTM = `\<a href="${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=signature" target="_blank">`;
       sigUTMs.push(newUTM);
     });
   }
@@ -357,7 +372,7 @@ function renderHiddenOutputs() {
   headerUTMs.forEach((utm, i) => {
     newHiddenOutput = document.createElement('span');
     newHiddenOutput.innerHTML = `
-    <p id="header-utm-${i+1}-hidden">${utm}</p>`;
+    <textarea id="header-utm-${i+1}-hidden" class="header-utm header-output-${i+1}">${utm}</textarea>`;
 
     hiddenHeaderList.appendChild(newHiddenOutput);
   });
@@ -366,7 +381,7 @@ function renderHiddenOutputs() {
   footerUTMs.forEach((utm, i) => {
     newHiddenOutput = document.createElement('span');
     newHiddenOutput.innerHTML = `
-    <p id="footer-utm-${i+1}-hidden">${utm}</p>`;
+    <textarea id="footer-utm-${i+1}-hidden" class="footer-utm footer-output-${i+1}">${utm}</textarea>`;
 
     hiddenFooterList.appendChild(newHiddenOutput);
   });
@@ -375,7 +390,7 @@ function renderHiddenOutputs() {
   imageUTMs.forEach((utm, i) => {
     newHiddenOutput = document.createElement('span');
     newHiddenOutput.innerHTML = `
-    <p id="image-utm-${i+1}-hidden">${utm}</p>`;
+    <textarea id="image-utm-${i+1}-hidden" class="image-utm image-output-${i+1}">${utm}</textarea>`;
 
     hiddenImageList.appendChild(newHiddenOutput);
   });
@@ -384,7 +399,7 @@ function renderHiddenOutputs() {
   bodyUTMs.forEach((utm, i) => {
     newHiddenOutput = document.createElement('span');
     newHiddenOutput.innerHTML = `
-    <p id="body-utm-${i+1}-hidden">${utm}</p>`;
+    <textarea id="body-utm-${i+1}-hidden" class="body-utm body-output-${i+1}">${utm}</textarea>`;
 
     hiddenBodyList.appendChild(newHiddenOutput);
   });
@@ -393,7 +408,7 @@ function renderHiddenOutputs() {
   ctaUTMs.forEach((utm, i) => {
     newHiddenOutput = document.createElement('span');
     newHiddenOutput.innerHTML = `
-    <p id="cta-utm-${i+1}-hidden">${utm}</p>`;
+    <textarea id="cta-utm-${i+1}-hidden" class="cta-utm cta-output-${i+1}">${utm}</textarea>`;
 
     hiddenCTAList.appendChild(newHiddenOutput);
   });
@@ -402,23 +417,235 @@ function renderHiddenOutputs() {
   sigUTMs.forEach((utm, i) => {
     newHiddenOutput = document.createElement('span');
     newHiddenOutput.innerHTML = `
-    <p id="sig-utm-${i+1}-hidden">${utm}</p>`;
+    <textarea id="sig-utm-${i+1}-hidden" class="sig-utm sig-output-${i+1}">${utm}</textarea>`;
 
     hiddenSigList.appendChild(newHiddenOutput);
   });
+
+  displayUTMs();
   
 }
 
 
 
+// listeners on button columns - click to copy UTM
+const headerCol = document.getElementById('header-column'),
+      footerCol = document.getElementById('footer-column'),
+      imageCol  = document.getElementById('image-column'),
+      bodyCol   = document.getElementById('body-column'),
+      ctaCol    = document.getElementById('cta-column'),
+      sigCol    = document.getElementById('sig-column');
+
+headerCol.addEventListener('click', (e) => {
+  e.preventDefault();
+  let tar = String(e.target.id).charAt(14);
+  let hiddenList = document.getElementsByClassName('header-utm');
+  let hiddenArray = Array.from(hiddenList);
+  hiddenArray.forEach((item, i) => {
+    if (item.classList.contains(`header-output-${tar}`)) {
+      let copyTar = document.getElementById(`header-utm-${i+1}-hidden`);
+      let copyClasses = copyTar.classList;
+      let copyClass = copyClasses.item(1);
+      if (copyClass = String(copyTar.id)) {
+        copyTar.focus({preventScroll: true});
+        copyTar.select();
+        document.execCommand('copy');
+      } 
+    }
+  });
+    
+
+  
+});
+
+footerCol.addEventListener('click', (e) => {
+  e.preventDefault();
+  let tar = String(e.target.id).charAt(14);
+  let hiddenList = document.getElementsByClassName('footer-utm');
+  let hiddenArray = Array.from(hiddenList);
+  hiddenArray.forEach((item, i) => {
+    if (item.classList.contains(`footer-output-${tar}`)) {
+      let copyTar = document.getElementById(`footer-utm-${i+1}-hidden`);
+      let copyClasses = copyTar.classList;
+      let copyClass = copyClasses.item(1);
+      if (copyClass = String(copyTar.id)) {
+        copyTar.focus({preventScroll: true});
+        copyTar.select();
+        document.execCommand('copy');
+      } 
+    }
+  });
+    
+ 
+  
+});
+
+imageCol.addEventListener('click', (e) => {
+  e.preventDefault();
+  let tar = String(e.target.id).charAt(13);
+  let hiddenList = document.getElementsByClassName('image-utm');
+  let hiddenArray = Array.from(hiddenList);
+  hiddenArray.forEach((item, i) => {
+    if (item.classList.contains(`image-output-${tar}`)) {
+      let copyTar = document.getElementById(`image-utm-${i+1}-hidden`);
+      let copyClasses = copyTar.classList;
+      let copyClass = copyClasses.item(1);
+      if (copyClass = String(copyTar.id)) {
+        copyTar.focus({preventScroll: true});
+        copyTar.select();
+        document.execCommand('copy');
+      } 
+    }
+  });
+    
+  
+  
+});
+
+bodyCol.addEventListener('click', (e) => {
+  e.preventDefault();
+  let tar = String(e.target.id).charAt(12);
+  let hiddenList = document.getElementsByClassName('body-utm');
+  let hiddenArray = Array.from(hiddenList);
+  hiddenArray.forEach((item, i) => {
+    if (item.classList.contains(`body-output-${tar}`)) {
+      let copyTar = document.getElementById(`body-utm-${i+1}-hidden`);
+      let copyClasses = copyTar.classList;
+      let copyClass = copyClasses.item(1);
+      if (copyClass = String(copyTar.id)) {
+        copyTar.focus({preventScroll: true});
+        copyTar.select();
+        document.execCommand('copy');
+      } 
+    }
+  });
+    
+  
+  
+});
+
+ctaCol.addEventListener('click', (e) => {
+  e.preventDefault();
+  let tar = String(e.target.id).charAt(11);
+  let hiddenList = document.getElementsByClassName('cta-utm');
+  let hiddenArray = Array.from(hiddenList);
+  hiddenArray.forEach((item, i) => {
+    if (item.classList.contains(`cta-output-${tar}`)) {
+      let copyTar = document.getElementById(`cta-utm-${i+1}-hidden`);
+      let copyClasses = copyTar.classList;
+      let copyClass = copyClasses.item(1);
+      if (copyClass = String(copyTar.id)) {
+        copyTar.focus({preventScroll: true});
+        copyTar.select();
+        document.execCommand('copy');
+      } 
+    }
+  });
+    
+  
+  
+});
+
+sigCol.addEventListener('click', (e) => {
+  e.preventDefault();
+  let tar = String(e.target.id).charAt(11);
+  let hiddenList = document.getElementsByClassName('sig-utm');
+  let hiddenArray = Array.from(hiddenList);
+  hiddenArray.forEach((item, i) => {
+    if (item.classList.contains(`sig-output-${tar}`)) {
+      let copyTar = document.getElementById(`sig-utm-${i+1}-hidden`);
+      let copyClasses = copyTar.classList;
+      let copyClass = copyClasses.item(1);
+      if (copyClass = String(copyTar.id)) {
+        copyTar.focus({preventScroll: true});
+        copyTar.select();
+        document.execCommand('copy');
+      } 
+    }
+  });
+  
+  
+
+});
+// footerCol
+// imageCol 
+// bodyCol  
+// ctaCol   
+// sigCol   
+
 // display generated UTM codes in DOM
 function displayUTMs() {
 
-  // display labels
+  // clear out previously displayed buttons 
+  headerDisplay.innerHTML = '';
+  footerDisplay.innerHTML = '';
+  imageDisplay.innerHTML  = '';
+  bodyDisplay.innerHTML   = '';
+  ctaDisplay.innerHTML    = '';
+  sigDisplay.innerHTML    = '';
+
+  // render display column labels
   const displayLabels = document.getElementsByClassName('utm-display-label');
   for (i=0; i<displayLabels.length; i++) {
     displayLabels[i].style.display = 'block';
   }
+
+  // append header utm buttons to div
+  headerUTMs.forEach((utm, i) => {
+    newOutput = document.createElement('div');
+    newOutput.innerHTML = `
+    <button class="output-item" id="header-output-${i+1}">${i+1}</button>`;
+
+    headerDisplay.appendChild(newOutput);
+  });
+
+  // append footer utm buttons to div
+  footerUTMs.forEach((utm, i) => {
+    newOutput = document.createElement('div');
+    newOutput.innerHTML = `
+    <button class="output-item" id="footer-output-${i+1}">${i+1}</button>`;
+
+    footerDisplay.appendChild(newOutput);
+  });
+
+  // append image utm buttons to div
+  imageUTMs.forEach((utm, i) => {
+    newOutput = document.createElement('div');
+    newOutput.innerHTML = `
+    <button class="output-item" id="image-output-${i+1}">${i+1}</button>`;
+
+    imageDisplay.appendChild(newOutput);
+  });
+
+  // append body utm buttons to div
+  bodyUTMs.forEach((utm, i) => {
+    newOutput = document.createElement('div');
+    newOutput.innerHTML = `
+    <button class="output-item" id="body-output-${i+1}">${i+1}</button>`;
+
+    bodyDisplay.appendChild(newOutput);
+  });
+
+  // append cta utm buttons to div
+  ctaUTMs.forEach((utm, i) => {
+    newOutput = document.createElement('div');
+    newOutput.innerHTML = `
+    <button class="output-item" id="cta-output-${i+1}">${i+1}</button>`;
+
+    ctaDisplay.appendChild(newOutput);
+  });
+
+  // append sig utm buttons to div
+  sigUTMs.forEach((utm, i) => {
+    newOutput = document.createElement('div');
+    newOutput.innerHTML = `
+    <button class="output-item" id="sig-output-${i+1}">${i+1}</button>`;
+
+    sigDisplay.appendChild(newOutput);
+  });
+
+//SCROLL HERE
+
 }
 
 
@@ -427,10 +654,10 @@ function displayUTMs() {
 function clearUTMs() {
   headerUTMs = [];
   footerUTMs = [];
-  imageUTMs = [];
-  bodyUTMs = [];
-  ctaUTMs = [];
-  sigUTMs = [];
+  imageUTMs  = [];
+  bodyUTMs   = [];
+  ctaUTMs    = [];
+  sigUTMs    = [];
   console.log('c');
 
   // hide labels
@@ -439,5 +666,7 @@ function clearUTMs() {
     displayLabels[i].style.display = 'none';
   }
 }
+
+
 
 

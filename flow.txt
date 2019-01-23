@@ -37,3 +37,11 @@ render buttons w/unique IDs
 
 
 use form/input instead? solution for not rendering a - grab inner html vs textContent?
+
+header output 1 clicked
+must equal text classname
+
+grab classname el
+
+
+REMOVE TARGET BLANKS

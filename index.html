@@ -45,8 +45,10 @@
         </form>
       </div>
       <div class="six columns">
-        <input type="checkbox" name="cta-toggle" id="cta-toggle" data-lpignore="true" autocomplete="nope">
-        <label for="cta-toggle" id="cta-toggle-label">&nbsp;USE CTA URL FOR IMAGE / BODY / SIG</label>
+        <label for="cta-toggle" id="cta-toggle-label">
+          <input type="checkbox" name="cta-toggle" id="cta-toggle" data-lpignore="true" autocomplete="nope">
+          <span class="label-body">&nbsp;USE CTA URL FOR IMAGE / BODY / SIG</span>
+        </label>
         <label for="cta-url-input" id="cta-url-input-label">CTA URL</label>
         <input type="url" name="cta-url-input" id="cta-url-input" data-lpignore="true" autocomplete="nope">
         <!-- not displayed until 'Engage' input is clicked -->
@@ -60,58 +62,40 @@
   <div class="container">
     <div class="row">
       <div id="output">
-        <div class="two columns">
+        <div class="two columns" id="header-column">
           <p class="utm-display-label">HEADER</p>
           <div id="header-display">
-            <button class="output-item">1</button>
-            <button class="output-item">2</button>
-            <button class="output-item">3</button>
-            <button class="output-item">40</button>
+            
           </div>
         </div>
-        <div class="two columns">
+        <div class="two columns" id="footer-column">
           <p class="utm-display-label">FOOTER</p>
           <div id="footer-display">
-            <button class="output-item">1</button>
-            <button class="output-item">2</button>
-            <button class="output-item">3</button>
-            <button class="output-item">40</button>
+            
           </div>
         </div>
-        <div class="two columns">
+        <div class="two columns" id="image-column">
           <p class="utm-display-label">IMAGE</p>
           <div id="image-display">
-            <button class="output-item">1</button>
-            <button class="output-item">2</button>
-            <button class="output-item">3</button>
-            <button class="output-item">40</button>
+            
           </div>
         </div>
-        <div class="two columns">
+        <div class="two columns" id="body-column">
           <p class="utm-display-label">BODY</p>
           <div id="body-display">
-            <button class="output-item">1</button>
-            <button class="output-item">2</button>
-            <button class="output-item">3</button>
-            <button class="output-item">40</button>
+            
           </div>
         </div>
-        <div class="two columns">
+        <div class="two columns" id="cta-column">
           <p class="utm-display-label">CTA</p>
           <div id="cta-display">
-            <button class="output-item">1</button>
-            <button class="output-item">2</button>
-            <button class="output-item">3</button>
-            <button class="output-item">40</button>
+            
           </div>
         </div>
-        <div class="two columns">
+        <div class="two columns" id="sig-column">
           <p class="utm-display-label">SIG</p>
           <div id="sig-display">
-            <button class="output-item">1</button>
-            <button class="output-item">2</button>
-            <button class="output-item">3</button>
-            <button class="output-item">40</button>
+            
           </div>
         </div>
       </div>
