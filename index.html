@@ -9,52 +9,69 @@
   <link rel="stylesheet" href="normalize.css">
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css?family=Anonymous+Pro" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Work+Sans:500" rel="stylesheet">
+
 </head>
 <body>
   <p id="author"><strong><a href="https://github.com/mmcph" target="_blank"><span class="red-text">MMCPH</span></a> 2019&nbsp;</strong></p>
   <div class="container">
-    <h1 id="page-title">UTM <span class="red-text">Generator</span></h1>
+    <img src="title.jpg" alt="title" id="bt-logo">
   </div>
   <hr><br>
   <div class="container">
     <div class="row">
       <div class="six columns">
-        <input type="button" class="six columns" id="build-select" value="BUILD">
-        <input type="button" class="six columns" id="engage-select" value="ENGAGE">
-        
+        <label for="business-input" id="business-input-label">YOUR BUSINESS</label>
+        <input type="text" name="business-input" id="business-input" data-lpignore="true" autocomplete="nope" value="boomtime">
+
+        <div class="row">
+          <input type="button" class="six columns" id="build-select" value="BUILD">
+          <input type="button" class="six columns" id="engage-select" value="ENGAGE">
+        </div>
+
         <form id="UTM-params" autocomplete="nope">
           <!-- URL input fields -->
-          <label for="url-input" id="url-input-label">URL</label>
+          <label for="url-input" id="url-input-label">MAIN URL</label>
           <input type="url" name="url-input" id="url-input" data-lpignore="true" autocomplete="nope">
       
           <!-- number of emails input -->
           <label for="num-emails" id="num-emails-label">NUMBER OF EMAILS</label>
-          <input type="number" value="1" min="1" max="41" name="num-emails" id="num-emails-input">
+          <input type="number" value="1" min="1" max="41" name="num-emails" id="num-emails-input" autocomplete="nope">
 
           <ul id="email-list">
-            <li class="email-titles">
-              <label for="email-title-1" id="email-title-1-label">TITLE</label>
+            <li class="email-title">
+              <label for="email-title-1" id="email-title-1-label">EMAIL TITLE</label>
               <input type="text" name="email-title-1" id="email-title-1" data-lpignore="true" autocomplete="nope">
             </li>
             <!-- displayNumNameFields() inserts here -->
           </ul>
-          <div class="row">
-            <input type="button" class="six columns" id="generate" value="GENERATE">
-            <input type="button" class="six columns" id="clear-utms" value="CLEAR">
-          </div>
+          
         </form>
       </div>
-      <div class="six columns">
+      <div class="six columns push-down">
+        <div class="row">
+          <input type="button" class="six columns" id="generate" value="GENERATE">
+          <input type="button" class="six columns" id="clear-utms" value="CLEAR">
+        </div>
+        <div class="row">
+          <input type="button" class="six columns" id="docs-select" value="DOCS">
+          <input type="button" class="six columns" id="dark-select" value="DARK">
+        </div>
+
+        <label for="engage-title" id="engage-title-label" style="float: left;">TITLE OF ENGAGE STREAM (OPTIONAL)</label>
+        <input type="text" name="engage-title" id="engage-title" data-lpignore="true" autocomplete="nope" disabled="true">
+
         <label for="cta-toggle" id="cta-toggle-label">
           <input type="checkbox" name="cta-toggle" id="cta-toggle" data-lpignore="true" autocomplete="nope">
           <span class="label-body">&nbsp;USE CTA URL FOR IMAGE / BODY / SIG</span>
         </label>
-        <label for="cta-url-input" id="cta-url-input-label">CTA URL</label>
-        <input type="url" name="cta-url-input" id="cta-url-input" data-lpignore="true" autocomplete="nope">
-        <!-- not displayed until 'Engage' input is clicked -->
-        <label for="engage-title" id="engage-title-label" style="float: left;">TITLE OF ENGAGE STREAM (OPTIONAL)</label>
-        <input type="text" name="engage-title" id="engage-title" data-lpignore="true" autocomplete="nope">
-        <!--^-->
+
+        <ul id="cta-urls">
+          <li class="cta-url">
+            <label for="cta-url-1" id="cta-url-1-label">CTA URL</label>
+            <input type="url" name="cta-url-input-1" id="cta-url-input-1" data-lpignore="true" autocomplete="nope">
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -121,6 +138,7 @@
 
     </p>
   </div>
+  <textarea name="" id="focus-hack" cols="1" rows="1" style="visibility:hidden;"></textarea>
   <script src="app.js"></script>
 </body>
 </html>

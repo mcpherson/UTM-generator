@@ -10,24 +10,31 @@ buildSelectBtn.addEventListener('click', buildDisplay);
 generateBtn.addEventListener('click', generateEmailTitles);
 clearBtn.addEventListener('click', clearUTMs);
 
+// business name input
+const businessInput = document.getElementById('business-input');
+let businessName = businessInput.value;
+
 // url input
 const urlInput = document.getElementById('url-input');
+urlInput.value = '';
 
 // url input listener
 urlInput.addEventListener('blur', validURL);
 
 // cta input
-const ctaInput = document.getElementById('cta-url-input');
+const ctaInput = document.getElementById('cta-url-input-1');
+ctaInput.value = '';
 
 // cta switch
 const ctaSwitch = document.getElementById('cta-toggle');
 
 // engage stream title input
 const engageTitle = document.getElementById('engage-title');
-const engageTitleLabel = document.getElementById('engage-title-label');
+
 
 // number of emails inputs
 const numEmailsInput = document.getElementById('num-emails-input');
+numEmailsInput.value = 1;
 
 // listens for change in value of numEmailsInput
 numEmailsInput.addEventListener('change', displayNumNameFields);
@@ -36,8 +43,9 @@ numEmailsInput.addEventListener('change', displayNumNameFields);
 const emailTitle = document.getElementById('email-title-1');
 const emailTitleLabel = document.getElementById('email-title-1-label');
 
-// list where extra email fields are inserted
+// lists where extra email fields are inserted
 var emailsList = document.getElementById("email-list");
+var ctaURLs = document.getElementById("cta-urls");
 
 // UTM output location
 const outputDiv = document.getElementById('output');
@@ -73,14 +81,12 @@ function engageDisplay() {
       buildSelectBtn.classList.remove('selected');
     }
   }
-  
-  // display engage elements
-  engageTitle.style.display = 'block';
-  engageTitleLabel.style.display = 'inline';
 
   // apply border color to active button and remove from inactive
   engageSelectBtn.style.border = '1px solid #BC3339';
   buildSelectBtn.style.border = '1px solid #BBB';
+  engageTitle.removeAttribute('disabled');
+  engageTitle.style.backgroundColor = '#fff';
 
   // clear emailNamesFormatted[]
   emailNamesFormatted = [];
@@ -100,13 +106,11 @@ function buildDisplay() {
     }
   }
 
-  // hide engage elements
-  engageTitle.style.display = 'none';
-  engageTitleLabel.style.display = 'none';
-
   // apply border color to active button and remove from inactive
   buildSelectBtn.style.border = '1px solid #BC3339';
   engageSelectBtn.style.border = '1px solid #BBB';
+  engageTitle.setAttribute('disabled', true);
+  engageTitle.style.backgroundColor = '#ddd';
 
   // clear emailNamesFormatted[]
   emailNamesFormatted = [];
@@ -131,7 +135,7 @@ function validURL() {
 function displayNumNameFields() {
 
   // thanks for reading my code!
-  if(Number(numEmailsInput.value) === 42) {
+  if (Number(numEmailsInput.value) === 42) {
     document.body.innerHTML = "<h1 style='text-align:center;'>UNRESOLVED FINITE / INFINITE PARADOX ENCOUNTERED.</h1><h1 style='text-align:center;'>YOU ARE NOT PREPARED TO ASCEND.</h1><h1 style='text-align:center;'>DIMENSIONAL LOCK REINITIALIZING ...</h1>";
     function lockout() {
       setTimeout(function() {location.reload();}, 5000);
@@ -147,14 +151,18 @@ function displayNumNameFields() {
   }
 
   // for the true trolls out there
-  if(Number(numEmailsInput.value) === 0 || Number(numEmailsInput.value) < 0) {
+  if (Number(numEmailsInput.value) === 0 || Number(numEmailsInput.value) < 0) {
     alert("Well, I guess your job is done, then.")
     numEmailsInput.value = 1;
   }
   
-  // clear name inputs to prevent duplication
-  while(emailsList.hasChildNodes()) {
+  // clear name/cta inputs to prevent duplication
+  while (emailsList.hasChildNodes()) {
     emailsList.removeChild(emailsList.lastChild);
+  }
+
+  while (ctaURLs.hasChildNodes()) {
+    ctaURLs.removeChild(ctaURLs.lastChild);
   }
 
   // adds new inputs to DOM depending on value of numEmailsInput
@@ -162,25 +170,40 @@ function displayNumNameFields() {
 
     newEmail = document.createElement('li');
     newEmail.innerHTML = `
-    <label for="email-title-${i}" id="email-title-${i}-label">TITLE ${i}</label>
-    <input type="text" name="email-title-${i}" id="email-title-${i}" data-lpignore="true">`;
+    <label for="email-title-${i}" id="email-title-${i}-label">EMAIL TITLE ${i}</label>
+    <input type="text" name="email-title-${i}" class="email-title" id="email-title-${i}" data-lpignore="true">`;
+    
+    newEmail.setAttribute('autocomplete', 'new-password');
 
     emailsList.appendChild(newEmail);
     
-    newEmail.setAttribute('autocomplete', 'new-password')
+
+    newCTA = document.createElement('li');
+    newCTA.innerHTML = `
+    <label for="cta-url-${i}" id="cta-url-${i}-label">CTA URL ${i}</label>
+    <input type="url" name="cta-url-input-${i}" class="cta-url" id="cta-url-input-${i}" data-lpignore="true">`;
+
+    newCTA.setAttribute('autocomplete', 'new-password');
+
+    ctaURLs.appendChild(newCTA);
+    
   }
 
-  // Remove redundant '1' from title input lable when only one email is needed
-  if(Number(numEmailsInput.value) === 1) {
-    document.getElementById('email-title-1-label').innerHTML = "TITLE";
+  // Remove redundant '1' from title input label when only one email is needed
+  if (Number(numEmailsInput.value) === 1) {
+    document.getElementById('email-title-1-label').innerHTML = "EMAIL TITLE";
+    document.getElementById('cta-url-1-label').innerHTML = "CTA URL";
   }
 
 }
 
 
 
-// live nodeList of all <li> tags
-let emailNameList = document.getElementsByTagName('li');
+// live nodeList of all email-title <li> tags
+let emailNameList = document.getElementsByClassName('email-title');
+
+// live nodeList of all cta-url <li> tags
+let ctaURLList = document.getElementsByClassName('cta-url');
 
 // init array for formatted email names
 let emailNamesFormatted = [];
@@ -189,6 +212,8 @@ let emailNamesFormatted = [];
 function generateEmailTitles() {
 
   let nameArray = Array.from(emailNameList);
+  let ctaArray = Array.from(ctaURLList);
+
 
   nameArray.forEach((name, i) => {
 
@@ -202,6 +227,9 @@ function generateEmailTitles() {
 
   // init array for email name storage
   let emailNames = [];
+
+  // init array for cta url storage
+  let ctas = [];
 
   // pulls values out of nested inputs in emailNameList[]
   for (i=0; i<emailNameList.length; i++) {
@@ -272,7 +300,10 @@ function generateUTMs() {
   } else if (ctaInputValue === '') {
     alert('Enter a CTA URL.');
     return;
-  } 
+  } else if (businessName === '') {
+    alert('Enter your business\'s name.');
+    return;
+  }
 
   // enforce trailing / on URLs
   let urlInputLength = urlInputValue.length;
@@ -293,34 +324,41 @@ function generateUTMs() {
   if (buildSelectBtn.classList.contains('selected')) {
     typeCheck = "build-";
   } else {
-    // grab engage stream title and to add to UTM
-    let engageStreamTitle = engageTitle.value;
-    let engageTitleTrimmed = engageStreamTitle.trim();
-    let engageTitleFormatted = engageTitleTrimmed.replace(/ /g, "-");
-    typeCheck = `engage-${engageTitleFormatted}-`;
+
+    if (engageTitle.value != '') {
+      // grab engage stream title and to add to UTM
+      let engageStreamTitle = engageTitle.value;
+      let engageTitleTrimmed = engageStreamTitle.trim();
+      let engageTitleFormatted = engageTitleTrimmed.replace(/ /g, "-");
+      typeCheck = `engage-${engageTitleFormatted}-`;
+
+      } else {
+      
+      typeCheck = `engage-`;
+    }
   }
 
   // generate UTMs for header
   emailNamesFormatted.forEach((name) => {
-    let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=header`;
+    let newUTM = `${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=header`;
     headerUTMs.push(newUTM);
   });
 
   // generate UTMs for footer
   emailNamesFormatted.forEach((name) => {
-    let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=footer`;
+    let newUTM = `${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=footer`;
     footerUTMs.push(newUTM);
   });
   
   // generate UTMs || CTA UTMs for image
   if (ctaSwitch.checked) {
     emailNamesFormatted.forEach((name) => {
-      let newUTM = `${ctaInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=image`;
+      let newUTM = `${ctaInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=image`;
       imageUTMs.push(newUTM);
     });
   } else { 
     emailNamesFormatted.forEach((name) => {
-      let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=image`;
+      let newUTM = `${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=image`;
       imageUTMs.push(newUTM);
     });
   }
@@ -328,37 +366,39 @@ function generateUTMs() {
   // generate UTMs || CTA UTMs for body link
   if (ctaSwitch.checked) {
     emailNamesFormatted.forEach((name) => {
-      let newUTM = `\<a href="${ctaInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body-link" target="_blank">`;
+      let newUTM = `\<a href="${ctaInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body-link" target="_blank">`;
       bodyUTMs.push(newUTM);
     });
   } else {
     emailNamesFormatted.forEach((name) => {
-      let newUTM = `\<a href="${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body-link" target="_blank">`;
+      let newUTM = `\<a href="${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body-link" target="_blank">`;
       bodyUTMs.push(newUTM);
     });
   }
 
   // generate UTMs for CTA
   emailNamesFormatted.forEach((name) => {
-    let newUTM = `${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=CTA`;
+    let newUTM = `${ctaInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=CTA`;
     ctaUTMs.push(newUTM);
   });
   
   // generate UTMs || CTA UTMs for signature
   if (ctaSwitch.checked) {
     emailNamesFormatted.forEach((name) => {
-      let newUTM = `\<a href="${ctaInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=signature" target="_blank">`;
+      let newUTM = `\<a href="${ctaInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=signature" target="_blank">`;
       sigUTMs.push(newUTM);
     });
   } else {
     emailNamesFormatted.forEach((name) => {
-      let newUTM = `\<a href="${urlInputValue}?utm_source=boomtime&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=signature" target="_blank">`;
+      let newUTM = `\<a href="${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=signature" target="_blank">`;
       sigUTMs.push(newUTM);
     });
   }
 
   // clear formatted names array to prevent duplication from multiple calls
   emailNamesFormatted = [];
+
+  window.scroll(0,10000);
   
   renderHiddenOutputs();
 
@@ -447,14 +487,18 @@ headerCol.addEventListener('click', (e) => {
       let copyClasses = copyTar.classList;
       let copyClass = copyClasses.item(1);
       if (copyClass = String(copyTar.id)) {
-        copyTar.focus({preventScroll: true});
+        copyTar.focus({preventScroll:true});
         copyTar.select();
         document.execCommand('copy');
+        copyTar.blur();
       } 
     }
+    // if (navigator.userAgent.indexOf("Firefox") != -1 ) {
+    //   window.scroll(0, 10000);
+    // }
   });
     
-
+  window.scroll(0, 10000);
   
 });
 
@@ -469,14 +513,15 @@ footerCol.addEventListener('click', (e) => {
       let copyClasses = copyTar.classList;
       let copyClass = copyClasses.item(1);
       if (copyClass = String(copyTar.id)) {
-        copyTar.focus({preventScroll: true});
+        copyTar.focus({preventScroll:true});
         copyTar.select();
         document.execCommand('copy');
+        copyTar.blur();
       } 
     }
   });
     
- 
+  window.scroll(0, 10000);
   
 });
 
@@ -491,14 +536,15 @@ imageCol.addEventListener('click', (e) => {
       let copyClasses = copyTar.classList;
       let copyClass = copyClasses.item(1);
       if (copyClass = String(copyTar.id)) {
-        copyTar.focus({preventScroll: true});
+        copyTar.focus({preventScroll:true});
         copyTar.select();
         document.execCommand('copy');
+        copyTar.blur();
       } 
     }
   });
     
-  
+  window.scroll(0, 10000);
   
 });
 
@@ -513,14 +559,15 @@ bodyCol.addEventListener('click', (e) => {
       let copyClasses = copyTar.classList;
       let copyClass = copyClasses.item(1);
       if (copyClass = String(copyTar.id)) {
-        copyTar.focus({preventScroll: true});
+        copyTar.focus({preventScroll:true});
         copyTar.select();
         document.execCommand('copy');
+        copyTar.blur();
       } 
     }
   });
     
-  
+  window.scroll(0, 10000);
   
 });
 
@@ -535,14 +582,15 @@ ctaCol.addEventListener('click', (e) => {
       let copyClasses = copyTar.classList;
       let copyClass = copyClasses.item(1);
       if (copyClass = String(copyTar.id)) {
-        copyTar.focus({preventScroll: true});
+        copyTar.focus({preventScroll:true});
         copyTar.select();
         document.execCommand('copy');
+        copyTar.blur();
       } 
     }
   });
     
-  
+  window.scroll(0, 10000);
   
 });
 
@@ -557,21 +605,19 @@ sigCol.addEventListener('click', (e) => {
       let copyClasses = copyTar.classList;
       let copyClass = copyClasses.item(1);
       if (copyClass = String(copyTar.id)) {
-        copyTar.focus({preventScroll: true});
+        copyTar.focus({preventScroll:true});
         copyTar.select();
         document.execCommand('copy');
+        copyTar.blur();
       } 
     }
   });
   
-  
+  window.scroll(0, 10000);
 
 });
-// footerCol
-// imageCol 
-// bodyCol  
-// ctaCol   
-// sigCol   
+
+
 
 // display generated UTM codes in DOM
 function displayUTMs() {

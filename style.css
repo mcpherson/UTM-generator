@@ -4,15 +4,28 @@ label {
   margin-bottom: 0;
 }
 
+label#url-input-label {
+  display: block;
+}
+
 input[type="button"] {
   display: inline;
   font-family: 'Anonymous Pro', monospace;
   font-size: 18px;
 }
 
-input#build-select, input#engage-select {
-  margin-bottom: 10px;
-  margin-top: 6px;
+input#build-select, input#engage-select, input#docs-select, input#dark-select {
+  display: inline-block;
+  margin-top: 35px;
+}
+
+#dark-select {
+  color: white;
+  background-color: #404040;
+}
+
+.push-down {
+  margin-top: 24px;
 }
 
 input#generate {
@@ -30,28 +43,28 @@ input#clear-utms {
 
 input[type="text"], input[type="number"], input[type="url"] {
   width: 100%;
+  color: #BC3339;
+  font-family: 'Work Sans', sans-serif;
 }
 
 li {
     list-style: none;
 }
 
-#engage-title, #engage-title-label {
-  display: none;
-}
-
 #bt-logo {
-  height: 40px;
-  margin-top: 25px;
-  margin-left: 35px;
-  display: inline-block;
+  max-height: 90px;
+  margin-top: 15px;
 }
 
 #page-title {
-  font-size: 59px;
+  font-size: 200px;
   display: inline-block;
-  font-family: 'Anonymous Pro', monospace;
-  margin: 5px 0 5px 0;
+  font-family: 'Work Sans', sans-serif;
+  margin: 0 0 8px 0;
+}
+
+.centered {
+  align-content: center;
 }
 
 a {
@@ -60,6 +73,10 @@ a {
 
 .red-text {
   color: #BC3339;
+}
+
+#gray-text {
+  color: #404040;
 }
 
 hr {
@@ -79,10 +96,6 @@ p.utm-display-label {
   text-align: center;
   font-family: 'Anonymous Pro', monospace;
   margin-top: 20px;
-}
-
-div.two {
-  /* margin-right: 7px; */
 }
 
 .output-item {
@@ -108,7 +121,7 @@ div.two {
 }
 
 #cta-toggle-label {
-  margin: 6px 0;
+  margin: 33px 0 1px 0;
   padding: 6px 0;
   display: inline-block;
   width: 100%;
@@ -122,6 +135,7 @@ div.two {
   left: -9999px !important;
 }
 
-#cta-url-input-label {
-  margin-top: 4px;
+.centered {
+  margin:0 auto;
 }
+
