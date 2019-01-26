@@ -14,64 +14,129 @@
 </head>
 <body>
   <p id="author"><strong><a href="https://github.com/mmcph" target="_blank"><span class="red-text">MMCPH</span></a> 2019&nbsp;</strong></p>
-  <div class="container">
+  <div class="container" id="pushdown">
     <img src="title.jpg" alt="title" id="bt-logo">
   </div>
   <hr><br>
   <div class="container">
+
     <div class="row">
+
       <div class="six columns">
+
+        <!-- business name -->
         <label for="business-input" id="business-input-label">YOUR BUSINESS</label>
         <input type="text" name="business-input" id="business-input" data-lpignore="true" autocomplete="nope" value="boomtime">
 
+        <!-- engage title -->
+        <label for="engage-title" id="engage-title-label" style="float: left;">TITLE OF ENGAGE STREAM (OPTIONAL)</label>
+        <input type="text" name="engage-title" id="engage-title" data-lpignore="true" autocomplete="nope" disabled="true">
+      
+        <!-- number of emails input -->
+        <label for="num-emails" id="num-emails-label">NUMBER OF EMAILS</label>
+        <input type="number" value="1" min="1" max="41" name="num-emails" id="num-emails-input" autocomplete="nope">
+
+        <!-- title display -->
+        <ul id="titles">
+          <li class="title">
+            <label for="title-1" id="title-1-label">TITLE</label>
+            <input type="text" name="title-1" id="title-1" data-lpignore="true" autocomplete="nope">
+          </li>
+          <!-- new titles insert here -->
+        </ul>
+      </div>
+
+      <div class="six columns">
+
+        <!-- build/engage select -->
         <div class="row">
           <input type="button" class="six columns" id="build-select" value="BUILD">
           <input type="button" class="six columns" id="engage-select" value="ENGAGE">
         </div>
 
-        <form id="UTM-params" autocomplete="nope">
-          <!-- URL input fields -->
-          <label for="url-input" id="url-input-label">MAIN URL</label>
-          <input type="url" name="url-input" id="url-input" data-lpignore="true" autocomplete="nope">
-      
-          <!-- number of emails input -->
-          <label for="num-emails" id="num-emails-label">NUMBER OF EMAILS</label>
-          <input type="number" value="1" min="1" max="41" name="num-emails" id="num-emails-input" autocomplete="nope">
-
-          <ul id="email-list">
-            <li class="email-title">
-              <label for="email-title-1" id="email-title-1-label">EMAIL TITLE</label>
-              <input type="text" name="email-title-1" id="email-title-1" data-lpignore="true" autocomplete="nope">
-            </li>
-            <!-- displayNumNameFields() inserts here -->
-          </ul>
-          
-        </form>
-      </div>
-      <div class="six columns push-down">
-        <div class="row">
-          <input type="button" class="six columns" id="generate" value="GENERATE">
-          <input type="button" class="six columns" id="clear-utms" value="CLEAR">
-        </div>
+        <!-- docs/dark -->
         <div class="row">
           <input type="button" class="six columns" id="docs-select" value="DOCS">
           <input type="button" class="six columns" id="dark-select" value="DARK">
         </div>
 
-        <label for="engage-title" id="engage-title-label" style="float: left;">TITLE OF ENGAGE STREAM (OPTIONAL)</label>
-        <input type="text" name="engage-title" id="engage-title" data-lpignore="true" autocomplete="nope" disabled="true">
+        <!-- number of urls input -->
+        <label for="num-urls" id="num-urls-label">NUMBER OF URLS</label>
+        <input type="number" value="1" min="1" max="41" name="num-urls" id="num-urls-input" autocomplete="nope">
 
-        <label for="cta-toggle" id="cta-toggle-label">
-          <input type="checkbox" name="cta-toggle" id="cta-toggle" data-lpignore="true" autocomplete="nope">
-          <span class="label-body">&nbsp;USE CTA URL FOR IMAGE / BODY / SIG</span>
-        </label>
-
-        <ul id="cta-urls">
-          <li class="cta-url">
-            <label for="cta-url-1" id="cta-url-1-label">CTA URL</label>
-            <input type="url" name="cta-url-input-1" id="cta-url-input-1" data-lpignore="true" autocomplete="nope">
+        <!-- url display -->
+        <ul id="urls">
+          <li class="url">
+            <label for="url-1" id="url-1-label">URL</label>
+            <div class="row">
+              <input type="url" name="url-1" id="url-1" class="url-input" data-lpignore="true" autocomplete="nope">
+              <input type="button" id="gen-1" class="gen" value="GEN">
+            </div>
           </li>
+          
+            
+          <!-- new urls insert here -->
         </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="four columns">
+        <ul id="titles">
+          <li class="title">
+            <label for="title-1" id="title-1-label">TITLE</label>
+            <input type="text" name="title-1" id="title-1" data-lpignore="true" autocomplete="nope">
+          </li>
+          <!-- new titles insert here -->
+        </ul>
+      </div>
+      <div class="eight columns">
+        <ul id="urls">
+          <li class="url">
+            <label for="url-1" id="url-1-label">URL</label>
+            <div class="row">
+              <input type="url" name="url-1" id="url-1" class="url-input" data-lpignore="true" autocomplete="nope">
+              <input type="button" id="gen-1" class="gen" value="GEN">
+            </div>
+          </li>
+          <!-- new urls insert here -->
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="two columns">
+        <label for="header-btn-">HDR 1
+          <input type="button" id="header-btn-" class="-btn">
+        </label>
+      </div>
+      <div class="two columns">
+        <label for="footer-btn-">FTR 1
+          <input type="button" id="footer-btn-" class="-btn">
+        </label>
+      </div>
+      <div class="two columns">
+        <label for="image-btn-">IMG 1
+          <input type="button" id="image-btn-" class="-btn">
+        </label>
+      </div>
+      <div class="two columns">
+        <label for="body-btn-">BDY 1
+          <input type="button" id="body-btn-" class="-btn">
+        </label>
+      </div>
+      <div class="two columns">
+        <label for="cta-btn-">CTA 1
+          <input type="button" id="cta-btn-" class="-btn">
+        </label>
+      </div>
+      <div class="two columns">
+        <label for="sig-btn-">SIG 1
+          <input type="button" id="sig-btn-" class="-btn">
+        </label>
       </div>
     </div>
   </div>
@@ -119,6 +184,28 @@
     </div>
   </div>
   <div id="hidden-output">
+    <div id="utm-1">
+      <textarea name="utm-1-header" id="utm-1-header" cols="300" rows="1">
+        ${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${title}&utm_content=header
+      </textarea>
+      <textarea name="utm-1-footer" id="utm-1-footer" cols="300" rows="1">
+        ${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${title}&utm_content=footer
+      </textarea>
+      <textarea name="utm-1-image" id="utm-1-image" cols="300" rows="1">
+        ${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${title}&utm_content=image
+      </textarea>
+      <textarea name="utm-1-body" id="utm-1-body" cols="300" rows="1">
+        ${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${title}&utm_content=body-link
+      </textarea>
+      <textarea name="utm-1-cta" id="utm-1-cta" cols="300" rows="1">
+        ${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${title}&utm_content=CTA
+      </textarea>
+      <textarea name="utm-1-sig" id="utm-1-sig" cols="300" rows="1">
+        ${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${title}&utm_content=signature
+      </textarea>
+    </div>
+
+
     <p id="hidden-header-list">
       
     </p>
@@ -138,7 +225,8 @@
 
     </p>
   </div>
-  <textarea name="" id="focus-hack" cols="1" rows="1" style="visibility:hidden;"></textarea>
-  <script src="app.js"></script>
+  
+  <!-- <script src="app.js"></script> -->
+  <script src="app-v2.js"></script>
 </body>
 </html>

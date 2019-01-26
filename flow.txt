@@ -41,7 +41,62 @@ use form/input instead? solution for not rendering a - grab inner html vs textCo
 header output 1 clicked
 must equal text classname
 
-grab classname el
+
 
 
 REMOVE TARGET BLANKS
+
+select url button
+  grab id via click event
+    grab lastchar
+      switch (lastchar) {
+        case 1:
+
+          [break;]
+
+        case 2:
+      
+
+
+
+
+      }
+
+titles[]
+urls[]
+utms[]
+
+
+displayTitleFields()
+  for(titles.length)
+    gen fields
+
+displayURLFields()
+  for(urls.length)
+    gen fields
+    gen buttons
+
+listener
+  grab id#
+  grab url# content
+  gen utms 
+    
+  push to utms[]
+
+
+
+
+numURLs displays buttons
+  delegate
+  grab id#
+  grab url# content
+  gen utms 
+  push to utms[]
+  genOutputs()
+
+genOutputs()
+  foreach(utm)
+
+titles.foreach((title, i) => {
+  
+});

@@ -1,3 +1,7 @@
+*:focus {
+  outline: none;
+}
+
 label {
   font-family: 'Anonymous Pro', monospace;
   margin-top: 10px;
@@ -19,13 +23,23 @@ input#build-select, input#engage-select, input#docs-select, input#dark-select {
   margin-top: 35px;
 }
 
+#engage-title {
+  background-color: #D1D1D1;
+}
+
+#engage-title-label {
+  color: #D1D1D1;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  color: #BC3339 !important;
+  
+}
+
 #dark-select {
   color: white;
   background-color: #404040;
-}
-
-.push-down {
-  margin-top: 24px;
 }
 
 input#generate {
@@ -51,32 +65,19 @@ li {
     list-style: none;
 }
 
+#url-input:-webkit-autofill {
+  background-color: white !important;
+}
+
 #bt-logo {
-  max-height: 90px;
-  margin-top: 15px;
-}
-
-#page-title {
-  font-size: 200px;
-  display: inline-block;
-  font-family: 'Work Sans', sans-serif;
-  margin: 0 0 8px 0;
-}
-
-.centered {
-  align-content: center;
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  padding-top: 15px;
 }
 
 a {
   text-decoration: none;
-}
-
-.red-text {
-  color: #BC3339;
-}
-
-#gray-text {
-  color: #404040;
 }
 
 hr {
@@ -88,6 +89,10 @@ hr {
   margin: 2px;
   font-size: 12px;
   font-family: 'Anonymous Pro', monospace;
+}
+
+.red-text {
+  color: #BC3339;
 }
 
 p.utm-display-label {
@@ -137,5 +142,22 @@ p.utm-display-label {
 
 .centered {
   margin:0 auto;
+}
+
+.gen {
+  border-color: #D1D1D1;
+  width: 10% !important;
+  display: inline-block;
+  float: right;
+  padding-left: 7px !important;
+  padding-right: 36px !important;
+  background-color: #BC3339 !important;
+  color: #fff !important;
+}
+
+.url-input {
+  width: 85% !important;
+  float: left;
+  display: inline-block !important;
 }
 
