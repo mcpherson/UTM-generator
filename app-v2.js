@@ -10,9 +10,18 @@ darkSelectBtn.addEventListener('click', () => {
   
 });
 
-// business name input
-const businessInput = document.getElementById('business-input');
-let businessName = businessInput.value;
+// ERROR FIELDS
+msgArea = document.getElementById('message');
+msgText = document.getElementById('message-text')
+
+// FADE ERROR IN/OUT
+function displayMsg() {
+  scrollTo(top);
+  msgArea.focus();
+  setTimeout(() => {
+    msgArea.blur();
+  }, 3000);
+}
 
 
 
@@ -23,8 +32,8 @@ let businessName = businessInput.value;
 
 
 
-// url input listener
-// urlInput.addEventListener('blur', validURL);
+
+
 
 
 
@@ -34,8 +43,8 @@ let businessName = businessInput.value;
 const engageSelectBtn = document.getElementById('engage-select');
 
 // engage stream title input
-const engageTitle = document.getElementById('engage-title');
-const engageTitleLabel = document.getElementById('engage-title-label');
+const prefix = document.getElementById('prefix');
+const prefixLabel = document.getElementById('prefix-label');
 
 // switch to engage behavior
 engageSelectBtn.addEventListener('click', () => {
@@ -51,12 +60,16 @@ engageSelectBtn.addEventListener('click', () => {
   // apply border color to active button and remove from inactive
   engageSelectBtn.style.border = '1px solid #BC3339';
   buildSelectBtn.style.border = '1px solid #BBB';
-  engageTitle.removeAttribute('disabled');
-  engageTitle.style.backgroundColor = '#fff';
-  engageTitleLabel.style.color = 'black';
 
-  // clear titlesFormatted[]
-  titlesFormatted = [];
+  // alter input
+  prefix.removeAttribute('disabled');
+  prefix.style.backgroundColor = '#fff';
+  prefixLabel.style.color = 'black';
+  prefixLabel.textContent = 'ENGAGE STREAM';
+  prefix.focus();
+
+  // hide 'choose one'
+  document.getElementById('choose').style.color = '#fff';
 
 });
 
@@ -79,17 +92,22 @@ buildSelectBtn.addEventListener('click', () => {
   // apply border color to active button and remove from inactive
   buildSelectBtn.style.border = '1px solid #BC3339';
   engageSelectBtn.style.border = '1px solid #BBB';
-  engageTitle.setAttribute('disabled', true);
-  engageTitle.value = '';
-  engageTitle.style.backgroundColor = '#d1d1d1';
-  engageTitleLabel.style.color = '#d1d1d1';
 
-  // clear titlesFormatted[]
-  titlesFormatted = [];
+  // alter input
+  prefix.removeAttribute('disabled');
+  prefix.style.backgroundColor = '#fff';
+  prefixLabel.style.color = 'black';
+  prefixLabel.textContent = 'BUILD CATEGORY';
+  prefix.focus();
+
+  // hide 'choose one'
+  document.getElementById('choose').style.color = '#ffffff';
 
 });
 
 
+
+// INSERT/REMOVE NEW TITLE FIELDS
 
 // number of emails input
 const numEmailsInput = document.getElementById('num-emails-input');
@@ -118,7 +136,9 @@ numEmailsInput.addEventListener('change', () => {
   // 'gotcha' for the cheeky ones
   if(numEmailsInput.value > 41) {
     
-    // DISPLAY ALERT
+    msgText.textContent = "*MINDTRICK* YOU DON'T NEED THAT MANY EMAILS.";
+
+    displayMsg();
 
     numEmailsInput.value = 1;
   }
@@ -126,7 +146,9 @@ numEmailsInput.addEventListener('change', () => {
   // for the true trolls out there
   if (Number(numEmailsInput.value) === 0 || Number(numEmailsInput.value) < 0) {
     
-    // DISPLAY ALERT
+    msgText.textContent = "LOOKS LIKE YOUR WORK HERE IS DONE.";
+
+    displayMsg();
 
     numEmailsInput.value = 1;
   }
@@ -142,9 +164,7 @@ numEmailsInput.addEventListener('change', () => {
     newTitle = document.createElement('li');
     newTitle.innerHTML = `
     <label for="title-${i}" id="title-${i}-label">TITLE ${i}</label>
-    <input type="text" name="title-${i}" id="title-${i}" data-lpignore="true" autocomplete="nope">`;
-    
-    newTitle.setAttribute('class', 'title');
+    <input type="text" name="title-${i}" id="title-${i}" class="title" data-lpignore="true" autocomplete="nope">`;
 
     titlesList.appendChild(newTitle);
     
@@ -152,12 +172,14 @@ numEmailsInput.addEventListener('change', () => {
 
   // Remove redundant '1' from title input label when only one email is needed
   if (Number(numEmailsInput.value) === 1) {
-    document.getElementById('title-1-label').innerHTML = "TITLE";
+    document.getElementById('title-1-label').innerHTML = "TITLE&nbsp;&nbsp;";
   }
 
 });
 
 
+
+// INSERT/REMOVE NEW URLS FIELDS
 
 // number of URLs input
 const numURLsInput = document.getElementById('num-urls-input');
@@ -186,7 +208,9 @@ numURLsInput.addEventListener('change', () => {
   // 'gotcha' for the cheeky ones
   if(numURLsInput.value > 41) {
     
-    // DISPLAY ALERT
+    msgText.textContent = "AREN'T YOU GOING A BIT OVERBOARD?";
+
+    displayMsg();
 
     numURLsInput.value = 1;
   }
@@ -194,7 +218,9 @@ numURLsInput.addEventListener('change', () => {
   // for the true trolls out there
   if (Number(numURLsInput.value) === 0 || Number(numURLsInput.value) < 0) {
     
-    // DISPLAY ALERT
+    msgText.textContent = "DOES NOT COMPUTE.";
+
+    displayMsg();
 
     numURLsInput.value = 1;
   }
@@ -209,7 +235,7 @@ numURLsInput.addEventListener('change', () => {
 
     newURL = document.createElement('li');
     newURL.innerHTML = `
-      <label for="url-${i}" id="url-${i}-label">URL ${i}</label>
+      <label for="url-${i}" id="url-${i}-label">URL ${i}<pre>&#9;</pre>&nbsp;&nbsp;</label>
       <div class="row">
         <input type="url" name="url-${i}" id="url-${i}" class="url-input" data-lpignore="true" autocomplete="nope">
         <input type="button" id="gen-${i}" class="gen" value="GEN">
@@ -223,66 +249,147 @@ numURLsInput.addEventListener('change', () => {
 
   // Remove redundant '1' from URL input label when only one URL is needed
   if (Number(numURLsInput.value) === 1) {
-    document.getElementById('url-1-label').innerHTML = "URL";
+    document.getElementById('url-1-label').innerHTML = "URL<pre>&#9;</pre>&nbsp;&nbsp;";
   }
 
 });
 
 
 
-// generate UTMs
+// GENERATE TITLES
 
-// live nodeList of all title <li> tags
+// live nodeList of all title <input> tags
 let titleList = document.getElementsByClassName('title');
 
 // init array for formatted email names
 let titlesFormatted = [];
 
+function generateTitles() {
+
+  // clear out previous titles
+  titlesFormatted = [];
+
+  // init array for email name storage
+  let emailTitles = [];
+
+
+  // pulls values out of nested inputs in titleList[]
+  for (i=0; i<titleList.length; i++) {
+    let nodeItem = titleList.item(i)
+
+    emailTitles.push(nodeItem.value);
+  }
+
+  // formats names for URLs
+  emailTitles.forEach((name) => {
+
+    // trim any silliness
+    let nameTrimmed = name.trim();
+
+    // replace spaces with hyphens
+    let nameFormatted = nameTrimmed.replace(/ /g, "-");
+    
+    // .replace(/;/g, '%3B').replace(/,/g, '%2C').replace(/\//g, '%2F').replace(/\?/g, '%3F').replace(/:/g, '%3A').replace(/@/g, '%40').replace(/&/g, '%26').replace(/=/g, '%3D').replace(/\+/g, '%2B').replace(/\$/g, '%24').replace('.', '').replace(/!/g, '%21').replace(/~/g, '%7E').replace(/\*/g, '%2A').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/#/g, '%23');
+    // You saw nothing...
+
+    // URI encode (encodes special characters)
+    let nameEncoded = escape(nameFormatted);
+
+    titlesFormatted.push(nameEncoded);
+
+  });
+  
+
+
+}
+
+
+
+// FORMAT AND STORE URLS BROKEN
+
+// init array for url storage
+let validURLs = [];
+
+// grab all active URL inputs
+let urlList = document.getElementsByClassName('url-input');
+
+function formatURLs() {
+
+  // unvalidated URLs
+  let baseURLs = [];
+
+  // reset arrays to prevent duplication
+  baseURLs = [];
+  validURLs = [];
+
+  // check validity and store
+  for (i=0; i<urlList.length; i++) {
+    let nodeItem = urlList.item(i);
+
+    baseURLs.push(nodeItem.value);
+  }
+  console.log(baseURLs);
+  console.log(titlesFormatted);
+
+  baseURLs.forEach((item) => {
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    if(!pattern.test(item)) {
+
+      // DISPLAY ALERT
+      console.log('invalid url');
+
+      return false;
+    } else {
+      
+      let validURL = item;
+      validURLs.push(validURL);
+
+    }
+  });
+
+  console.log(validURLs);
+  // generateUTMs();
+
+}
+
+
+
+
+
+
+// GENERATE UTMS
+
+
+
+// business name input
+const businessInput = document.getElementById('business-input');
+let businessName = businessInput.value;
+
 // listener on URL list - generates UTMs from clicked GEN button
 document.getElementById('urls').addEventListener('click', (e) => {
 
+  // enforce required fields
+
+  // enforces selection of either BUILD or ENGAGE TURNON
+  // if (!buildSelectBtn.classList.contains('selected') && !engageSelectBtn.classList.contains('selected')) {
+  //   
+  //   DISPLAY ALERT
+  //
+  //   return;
+  // }
+
+
   if (e.target.classList.contains('gen')) {
     
-    // generate/format email titles
+    generateTitles();
 
-    // let titleArray = Array.from(titleList);
+    formatURLs();
 
-    // enforces selection of either BUILD or ENGAGE TURNON
-    // if (!buildSelectBtn.classList.contains('selected') && !engageSelectBtn.classList.contains('selected')) {
-    //   alert('Please select either BUILD or ENGAGE.');
-    //   return;
-    // }
-
-    // init array for email name storage
-    let emailTitles = [];
-
-    // pulls values out of nested inputs in titleList[]
-    for (i=0; i<titleList.length; i++) {
-      let nodeItem = titleList.item(i)
-  
-      emailTitles.push(nodeItem.firstElementChild.nextElementSibling.value);
-    }
-
-    // formats names for URLs
-    emailTitles.forEach((title) => {
-
-      // trim any silliness
-      let titleTrimmed = title.trim();
-
-      // replace spaces with hyphens
-      let titleFormatted = titleTrimmed.replace(/ /g, "-");
-      
-      // .replace(/;/g, '%3B').replace(/,/g, '%2C').replace(/\//g, '%2F').replace(/\?/g, '%3F').replace(/:/g, '%3A').replace(/@/g, '%40').replace(/&/g, '%26').replace(/=/g, '%3D').replace(/\+/g, '%2B').replace(/\$/g, '%24').replace('.', '').replace(/!/g, '%21').replace(/~/g, '%7E').replace(/\*/g, '%2A').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/#/g, '%23');
-      // You saw nothing...
-
-      // URI encode (encodes special characters)
-      let titleEncoded = escape(titleFormatted);
-
-      titlesFormatted.push(titleEncoded);
-
-    });
-
-    console.log(titlesFormatted);
     // generateUTMs();
 
   }
@@ -291,135 +398,38 @@ document.getElementById('urls').addEventListener('click', (e) => {
 
 
 
-// live nodeList of all url <li> tags
-let URLList = document.getElementsByClassName('url');
 
-let urlArray = Array.from(URLList);
 
-// init array for  url storage
-let urls = [];
 
-// init UTM arrays
-let headerUTMs = [],
-    footerUTMs = [],
-    imageUTMs  = [],
-    bodyUTMs   = [],
-    ctaUTMs    = [],
-    sigUTMs    = [];
 
-// generate UTM codes from provided params
-function generateUTMs() {
 
-  // reset UTM arrays to prevent multiple click duplication
-  headerUTMs = [];
-  footerUTMs = [];
-  imageUTMs  = [];
-  bodyUTMs   = [];
-  ctaUTMs    = [];
-  sigUTMs    = [];
 
-  // reset hidden area
-  hiddenHeaderList.innerHTML = '';
-  hiddenFooterList.innerHTML = '';
-  hiddenImageList.innerHTML  = '';
-  hiddenBodyList.innerHTML   = '';
-  hiddenCTAList.innerHTML    = '';
-  hiddenSigList.innerHTML    = '';
-  
-  // enforce mandatory fields TURNON
-  // let urlInputValue = urlInput.value;
-  // let ctaInputValue = ctaInput.value;
-  
-  // if (urlInputValue === '') {
-  //   alert('Enter a URL.');
-  //   return;
-  // } else if (ctaInputValue === '') {
-  //   alert('Enter a CTA URL.');
-  //   return;
-  // } else if (businessName === '') {
-  //   alert('Enter your business\'s name.');
-  //   return;
-  // }
+// GENERATE UTM CODES
 
-  // enforce trailing / on URLs
-  let urlInputLength = urlInputValue.length;
-  let urlLastChar = urlInputValue.charAt(urlInputLength - 1);
-  if(urlLastChar !== "/") {
-    urlInputValue = urlInputValue + '/';
-  }
-  
-  let ctaInputLength = ctaInputValue.length;
-  let ctaLastChar = ctaInputValue.charAt(ctaInputLength - 1);
-  if(ctaLastChar !== "/") {
-    ctaInputValue = ctaInputValue + '/';
-  }
-  
-  // check BUILD or ENGAGE and reassign var accordingly
-  let typeCheck = "";
+// init UTM object to store UTMs for each title (arrays)
+let UTMStore = {};
 
-  if (buildSelectBtn.classList.contains('selected')) {
-    typeCheck = "build-";
-  } else {
+// listens for click on <ul> to determine which URL to generate for
+document.getElementById('urls').addEventListener('click', (e) => {
 
-    if (engageTitle.value != '') {
-      // grab engage stream title and to add to UTM
-      let engageStreamTitle = engageTitle.value;
-      let engageTitleTrimmed = engageStreamTitle.trim();
-      let engageTitleFormatted = engageTitleTrimmed.replace(/ /g, "-");
-      typeCheck = `engage-${engageTitleFormatted}-`;
+  // grab last character of clicked ID
+  let clicked = String(e.target.id);
+  let lastChar = clicked.charAt(clicked.length-1);
 
-      } else {
-      
-      typeCheck = `engage-`;
+  // grab all active URL inputs
+  let inputList = document.getElementsByClassName('url-input');
+  let inputArray = Array.from(inputList);
+
+  // generate UTMs for clicked URL
+  inputArray.forEach((item, i) => {
+    if (item.classList.contains(`url-${lastChar}`)) {
+      titlesFormatted.forEach((name) => {
+        let UTMGroup = [];
+        let newUTM = `${validURLs[i]}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=header`;
+        UTMGroup.push(newUTM);
+        UTMStore.push(UTMGroup);
+      });
     }
-  }
-
-  
-
-  // generate UTMs for header
-  titlesFormatted.forEach((name) => {
-    let newUTM = `${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=header`;
-    headerUTMs.push(newUTM);
   });
 
-  // generate UTMs for footer
-  titlesFormatted.forEach((name) => {
-    let newUTM = `${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=footer`;
-    footerUTMs.push(newUTM);
-  });
-  
-  // generate UTMs for image
-  titlesFormatted.forEach((name) => {
-    let newUTM = `${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=image`;
-    imageUTMs.push(newUTM);
-  });
-  
-  
-  // generate UTMs for body link
-  titlesFormatted.forEach((name) => {
-    let newUTM = `\<a href="${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=body-link" target="_blank">`;
-    bodyUTMs.push(newUTM);
-  });
-  
-
-  // generate UTMs for CTA
-  titlesFormatted.forEach((name) => {
-    let newUTM = `${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=CTA`;
-    ctaUTMs.push(newUTM);
-  });
-  
-  // generate UTMs for signature
-  titlesFormatted.forEach((name) => {
-    let newUTM = `\<a href="${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=signature" target="_blank">`;
-    sigUTMs.push(newUTM);
-  });
-  
-
-  // clear formatted names array to prevent duplication from multiple calls
-  titlesFormatted = [];
-
-  window.scroll(0,10000);
-  
-  renderHiddenOutputs();
-
-}
+});

@@ -13,21 +13,22 @@ label#url-input-label {
 }
 
 input[type="button"] {
-  display: inline;
+  /* display: inline; */
   font-family: 'Anonymous Pro', monospace;
   font-size: 18px;
 }
 
-input#build-select, input#engage-select, input#docs-select, input#dark-select {
+input#docs-select, 
+input#dark-select {
   display: inline-block;
-  margin-top: 35px;
+  margin-top: 34px;
 }
 
-#engage-title {
+#prefix {
   background-color: #D1D1D1;
 }
 
-#engage-title-label {
+#prefix-label {
   color: #D1D1D1;
 }
 
@@ -55,7 +56,9 @@ input#clear-utms {
   margin-top: 10px;
 }
 
-input[type="text"], input[type="number"], input[type="url"] {
+input[type="text"], 
+input[type="number"], 
+input[type="url"] {
   width: 100%;
   color: #BC3339;
   font-family: 'Work Sans', sans-serif;
@@ -122,7 +125,7 @@ p.utm-display-label {
 
 #cta-toggle {
   display: inline-block;
-  margin-left: 16px;
+  /* margin-left: 16px; */
 }
 
 #cta-toggle-label {
@@ -150,7 +153,7 @@ p.utm-display-label {
   display: inline-block;
   float: right;
   padding-left: 7px !important;
-  padding-right: 36px !important;
+  padding-right: 5px !important;
   background-color: #BC3339 !important;
   color: #fff !important;
 }
@@ -161,3 +164,85 @@ p.utm-display-label {
   display: inline-block !important;
 }
 
+.utm-btn {
+  width: 100%;
+}
+
+.hdr {
+  background-color: #BC3339;
+  color: #fff;
+  font-family: 'Anonymous Pro', monospace;
+}
+
+.ftr {
+  background-color: #A3353A;
+  color: #fff;
+  font-family: 'Anonymous Pro', monospace;
+}
+
+.img {
+  background-color: #8A383B;
+  color: #fff;
+  font-family: 'Anonymous Pro', monospace;
+}
+
+.bdy {
+  background-color: #713A3D;
+  color: #fff;
+  font-family: 'Anonymous Pro', monospace;
+}
+
+.cta {
+  background-color: #583D3E;
+  color: #fff;
+  font-family: 'Anonymous Pro', monospace;
+}
+
+
+.sig {
+  background-color: #404040;
+  color: #fff;
+  font-family: 'Anonymous Pro', monospace;
+}
+
+label {
+  text-align: center;
+}
+
+pre {
+  display: inline;
+}
+
+/* @media (max-width: 865px) {
+  input,
+  label,
+  button {
+    font-size: 10px;
+  }
+
+} */
+
+/* NEED JS */
+
+#message {
+  max-width: 100%;
+  margin: 23px 0 11px 0;
+  /* border: 1px solid #fff; */
+  border-radius: 4px;
+  display: block; 
+  height: 38px; 
+  text-align:center; 
+  line-height:38px;
+  transition: background-color;
+  transition-timing-function: ease-out;
+  transition-duration: .3s;
+}
+
+#message:focus {
+  background-color: #BC3339;
+}
+
+span {
+  font-family: 'Anonymous Pro', monospace;
+  color: #fff;
+}

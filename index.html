@@ -24,35 +24,37 @@
 
       <div class="six columns">
 
-        <!-- business name -->
-        <label for="business-input" id="business-input-label">YOUR BUSINESS</label>
-        <input type="text" name="business-input" id="business-input" data-lpignore="true" autocomplete="nope" value="boomtime">
+        <!-- build/engage select -->
+        <div class="row">
+        <label for="choose-label" id="choose">
+          CHOOSE ONE
+          <form action="" id="choose-label">
+            <input type="button" class="six columns" id="build-select" value="BUILD">
+            <input type="button" class="six columns" id="engage-select" value="ENGAGE">
+          </form>
+        </label>
+        
+          
+        </div>
 
-        <!-- engage title -->
-        <label for="engage-title" id="engage-title-label" style="float: left;">TITLE OF ENGAGE STREAM (OPTIONAL)</label>
-        <input type="text" name="engage-title" id="engage-title" data-lpignore="true" autocomplete="nope" disabled="true">
+        <!-- title prefix -->
+        <label for="prefix" id="prefix-label">BUILD/ENGAGE PREFIX</label>
+        <input type="text" name="prefix" id="prefix" data-lpignore="true" autocomplete="nope" disabled="true">
+
+        <div class="row">
+          <label for="num-emails" id="num-emails-label" class="six columns">
+            NUMBER OF EMAILS
+            <input type="number" value="1" min="1" max="41" name="num-emails" id="num-emails-input" autocomplete="nope">
+          </label>
+          <label for="num-urls" id="num-urls-label" class="six columns">
+            NUMBER OF URLS
+            <input type="number" value="1" min="1" max="41" name="num-urls" id="num-urls-input" autocomplete="nope">
+          </label>
+        </div>
       
-        <!-- number of emails input -->
-        <label for="num-emails" id="num-emails-label">NUMBER OF EMAILS</label>
-        <input type="number" value="1" min="1" max="41" name="num-emails" id="num-emails-input" autocomplete="nope">
-
-        <!-- title display -->
-        <ul id="titles">
-          <li class="title">
-            <label for="title-1" id="title-1-label">TITLE</label>
-            <input type="text" name="title-1" id="title-1" data-lpignore="true" autocomplete="nope">
-          </li>
-          <!-- new titles insert here -->
-        </ul>
       </div>
 
       <div class="six columns">
-
-        <!-- build/engage select -->
-        <div class="row">
-          <input type="button" class="six columns" id="build-select" value="BUILD">
-          <input type="button" class="six columns" id="engage-select" value="ENGAGE">
-        </div>
 
         <!-- docs/dark -->
         <div class="row">
@@ -60,32 +62,25 @@
           <input type="button" class="six columns" id="dark-select" value="DARK">
         </div>
 
-        <!-- number of urls input -->
-        <label for="num-urls" id="num-urls-label">NUMBER OF URLS</label>
-        <input type="number" value="1" min="1" max="41" name="num-urls" id="num-urls-input" autocomplete="nope">
+        <!-- error / message display -->
+        <label for="message" id="message-label" class=""></label>
+        <div id="message" class="twelve columns" value="" style="display: block; height: 38px; text-align:center; line-height:38px;" tabindex="1">
+          <span id="message-text"></span>
+        </div>
+        
+        <!-- business name -->
+        <label for="business-input" id="business-input-label">YOUR BUSINESS</label>
+        <input type="text" name="business-input" id="business-input" data-lpignore="true" autocomplete="nope" value="boomtime">
 
-        <!-- url display -->
-        <ul id="urls">
-          <li class="url">
-            <label for="url-1" id="url-1-label">URL</label>
-            <div class="row">
-              <input type="url" name="url-1" id="url-1" class="url-input" data-lpignore="true" autocomplete="nope">
-              <input type="button" id="gen-1" class="gen" value="GEN">
-            </div>
-          </li>
-          
-            
-          <!-- new urls insert here -->
-        </ul>
       </div>
     </div>
 
     <div class="row">
       <div class="four columns">
         <ul id="titles">
-          <li class="title">
-            <label for="title-1" id="title-1-label">TITLE</label>
-            <input type="text" name="title-1" id="title-1" data-lpignore="true" autocomplete="nope">
+          <li>
+            <label for="title-1" id="title-1-label">TITLE&nbsp;&nbsp;</label>
+            <input type="text" name="title-1" id="title-1" class="title" data-lpignore="true" autocomplete="nope">
           </li>
           <!-- new titles insert here -->
         </ul>
@@ -93,7 +88,7 @@
       <div class="eight columns">
         <ul id="urls">
           <li class="url">
-            <label for="url-1" id="url-1-label">URL</label>
+            <label for="url-1" id="url-1-label">URL<pre>&#9;</pre>&nbsp;&nbsp;</label>
             <div class="row">
               <input type="url" name="url-1" id="url-1" class="url-input" data-lpignore="true" autocomplete="nope">
               <input type="button" id="gen-1" class="gen" value="GEN">
@@ -109,80 +104,27 @@
   <div class="container">
     <div class="row">
       <div class="two columns">
-        <label for="header-btn-">HDR 1
-          <input type="button" id="header-btn-" class="-btn">
-        </label>
+        <button id="header-btn-1" class="utm-btn hdr">HDR 1</button>
       </div>
       <div class="two columns">
-        <label for="footer-btn-">FTR 1
-          <input type="button" id="footer-btn-" class="-btn">
-        </label>
+        <button id="footer-btn-1" class="utm-btn ftr">FTR 1</button>
       </div>
       <div class="two columns">
-        <label for="image-btn-">IMG 1
-          <input type="button" id="image-btn-" class="-btn">
-        </label>
+        <button id="image-btn-1" class="utm-btn img">IMG 1</button>
       </div>
       <div class="two columns">
-        <label for="body-btn-">BDY 1
-          <input type="button" id="body-btn-" class="-btn">
-        </label>
+        <button id="body-btn-1" class="utm-btn bdy">BDY 1</button>
       </div>
       <div class="two columns">
-        <label for="cta-btn-">CTA 1
-          <input type="button" id="cta-btn-" class="-btn">
-        </label>
+        <button id="cta-btn-1" class="utm-btn cta">CTA 1</button>
       </div>
       <div class="two columns">
-        <label for="sig-btn-">SIG 1
-          <input type="button" id="sig-btn-" class="-btn">
-        </label>
+        <button id="sig-btn-1" class="utm-btn sig">SIG 1</button>
       </div>
     </div>
   </div>
   <hr>
-  <div class="container">
-    <div class="row">
-      <div id="output">
-        <div class="two columns" id="header-column">
-          <p class="utm-display-label">HEADER</p>
-          <div id="header-display">
-            
-          </div>
-        </div>
-        <div class="two columns" id="footer-column">
-          <p class="utm-display-label">FOOTER</p>
-          <div id="footer-display">
-            
-          </div>
-        </div>
-        <div class="two columns" id="image-column">
-          <p class="utm-display-label">IMAGE</p>
-          <div id="image-display">
-            
-          </div>
-        </div>
-        <div class="two columns" id="body-column">
-          <p class="utm-display-label">BODY</p>
-          <div id="body-display">
-            
-          </div>
-        </div>
-        <div class="two columns" id="cta-column">
-          <p class="utm-display-label">CTA</p>
-          <div id="cta-display">
-            
-          </div>
-        </div>
-        <div class="two columns" id="sig-column">
-          <p class="utm-display-label">SIG</p>
-          <div id="sig-display">
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  
   <div id="hidden-output">
     <div id="utm-1">
       <textarea name="utm-1-header" id="utm-1-header" cols="300" rows="1">
@@ -204,26 +146,6 @@
         ${urlInputValue}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${title}&utm_content=signature
       </textarea>
     </div>
-
-
-    <p id="hidden-header-list">
-      
-    </p>
-    <p id="hidden-footer-list">
-
-    </p>
-    <p id="hidden-image-list">
-
-    </p>
-    <p id="hidden-body-list">
-
-    </p>
-    <p id="hidden-cta-list">
-
-    </p>
-    <p id="hidden-sig-list">
-
-    </p>
   </div>
   
   <!-- <script src="app.js"></script> -->
