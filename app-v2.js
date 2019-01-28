@@ -19,31 +19,30 @@ function displayMsg(e, i) {
   scrollTo(top);
   msgArea.focus();
   
-  
-  
   setTimeout(() => {
     msgArea.blur();
 
     // focus on invalid url input
-    if (e.target.classList.contains('gen')) {
+    if (e) {
+      if (e.target.classList.contains('gen')) {
 
-      // grab URL inputs
-      let tarList = document.getElementsByClassName('url-input');
-      let tarArray = Array.from(tarList);
-      
-      tarArray.forEach((item) => {
-        if (item.classList.contains(`url-${i+1}`)) {
-          
-          item.focus();
+        // grab URL inputs
+        let tarList = document.getElementsByClassName('url-input');
+        let tarArray = Array.from(tarList);
+        
+        tarArray.forEach((item) => {
+          if (item.classList.contains(`url-${i+1}`)) {
+            
+            item.focus();
 
-        }
-      });
-    } else {
+          }
+        });
+      } else {
 
-      e.target.focus();
+        e.target.focus();
 
+      }
     }
-    
   }, 3000);
   
 }
@@ -91,6 +90,7 @@ engageSelectBtn.addEventListener('click', () => {
   prefix.style.backgroundColor = '#fff';
   prefixLabel.style.color = 'black';
   prefixLabel.textContent = 'ENGAGE STREAM';
+  prefix.value = '';
   prefix.focus();
 
   // hide 'choose one'
@@ -123,6 +123,7 @@ buildSelectBtn.addEventListener('click', () => {
   prefix.style.backgroundColor = '#fff';
   prefixLabel.style.color = 'black';
   prefixLabel.textContent = 'BUILD CATEGORY';
+  prefix.value = '';
   prefix.focus();
 
   // hide 'choose one'
@@ -296,7 +297,7 @@ let titleList = document.getElementsByClassName('title');
 // init array for formatted email names
 let titlesFormatted = [];
 
-function generateTitles() {
+function generateTitles(e) {
 
   // clear out previous titles
   titlesFormatted = [];
@@ -309,29 +310,70 @@ function generateTitles() {
   for (i=0; i<titleList.length; i++) {
     let nodeItem = titleList.item(i)
 
-    emailTitles.push(nodeItem.value);
+    emailTitles.push(nodeItem.value.toLowerCase());
   }
 
-  // formats names for URLs
-  emailTitles.forEach((name) => {
+  // grab prefix value for insertion
+  let prefixRaw = prefix.value.toUpperCase();
+  let prefixText = prefixRaw.trim();
+  let prefixFormatted = prefixText.replace(/ /g, "-");
+  let prefixEncoded = escape(prefixFormatted);
 
-    // trim any silliness
-    let nameTrimmed = name.trim();
+  if (buildSelectBtn.classList.contains('selected')) {
 
-    // replace spaces with hyphens
-    let nameFormatted = nameTrimmed.replace(/ /g, "-");
+    let prefixType = 'BUILD-';
+
+    // formats names for URLs
+    emailTitles.forEach((name) => {
+
+      // trim any silliness
+      let nameTrimmed = name.trim();
+
+      // replace spaces with hyphens
+      let nameFormatted = nameTrimmed.replace(/ /g, "-");
+
+      // URI encode (encodes special characters)
+      let nameEncoded = escape(nameFormatted);
+
+      // add prefix string
+      let nameComplete = `${prefixType}${prefixEncoded}-${nameEncoded}`;
+
+      titlesFormatted.push(nameComplete);
+
+    });
+
+  } else if (engageSelectBtn.classList.contains('selected')) {
+
+    let prefixType = 'ENGAGE-';
+
+    // formats names for URLs
+    emailTitles.forEach((name) => {
+
+      // trim any silliness
+      let nameTrimmed = name.trim();
+
+      // replace spaces with hyphens
+      let nameFormatted = nameTrimmed.replace(/ /g, "-");
+
+      // URI encode (encodes special characters)
+      let nameEncoded = escape(nameFormatted);
+
+      // add prefix string
+      let nameComplete = `${prefixType}${prefixEncoded}-${nameEncoded}`;
+
+      titlesFormatted.push(nameComplete);
+
+    });
     
-    // .replace(/;/g, '%3B').replace(/,/g, '%2C').replace(/\//g, '%2F').replace(/\?/g, '%3F').replace(/:/g, '%3A').replace(/@/g, '%40').replace(/&/g, '%26').replace(/=/g, '%3D').replace(/\+/g, '%2B').replace(/\$/g, '%24').replace('.', '').replace(/!/g, '%21').replace(/~/g, '%7E').replace(/\*/g, '%2A').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/#/g, '%23');
-    // You saw nothing...
+  } else {
 
-    // URI encode (encodes special characters)
-    let nameEncoded = escape(nameFormatted);
+    msgText.textContent = `SELECT BUILD OR ENGAGE.`;
 
-    titlesFormatted.push(nameEncoded);
+    displayMsg();
 
-  });
-  
+  }
 
+  generateUTMs(e);
 
 }
 
@@ -360,9 +402,8 @@ function formatURLs(e) {
 
     baseURLs.push(nodeItem.value);
   }
-  console.log(baseURLs);
-  console.log(titlesFormatted);
 
+  // validate URL (from stackoverflow)
   for (i=0; i<baseURLs.length; i++) {
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
@@ -380,37 +421,23 @@ function formatURLs(e) {
     } else {
       
       let validURL = baseURLs[i];
+
+      // enforce trailing / on URLs
+      let urlLastChar = validURL.charAt(validURL.length - 1);
+      if(urlLastChar !== "/") {
+        validURL = validURL + '/';
+      }
       validURLs.push(validURL);
 
     }
   }
-  // baseURLs.forEach((item, i) => {
-    // var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-    // '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
-    // '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-    // '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-    // '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-    // '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-    // if(!pattern.test(item)) {
-
-    //   msgText.textContent = `URL ${i+1} IS INVALID.`;
-
-    //   displayMsg(e);
-
-    //   return false;
-    // } else {
-      
-    //   let validURL = item;
-    //   validURLs.push(validURL);
-
-    // }
-  // });
 
   if (baseURLs.length !== validURLs.length) {
     validURLs = [];
   }
   console.log(validURLs);
-  // generateUTMs();
+ 
+  generateTitles(e);
 
 }
 
@@ -430,26 +457,18 @@ let businessName = businessInput.value;
 // listener on URL list - generates UTMs from clicked GEN button
 document.getElementById('urls').addEventListener('click', (e) => {
 
-  // enforce required fields
-
-  // enforces selection of either BUILD or ENGAGE TURNON
-  // if (!buildSelectBtn.classList.contains('selected') && !engageSelectBtn.classList.contains('selected')) {
-  //   
-  //   DISPLAY ALERT
-  //
-  //   return;
-  // }
+  
 
 
   if (e.target.classList.contains('gen')) {
-    
-    generateTitles();
 
+    UTMStore = [];
+    
     formatURLs(e);
-    
-    
 
-    // generateUTMs();
+    // generateTitles(e);
+
+    // generateUTMs(e);
 
   }
 
@@ -466,10 +485,9 @@ document.getElementById('urls').addEventListener('click', (e) => {
 // GENERATE UTM CODES
 
 // init UTM object to store UTMs for each title (arrays)
-let UTMStore = {};
+let UTMStore = [];
 
-// listens for click on <ul> to determine which URL to generate for
-document.getElementById('urls').addEventListener('click', (e) => {
+function generateUTMs(e) {
 
   // grab last character of clicked ID
   let clicked = String(e.target.id);
@@ -479,16 +497,40 @@ document.getElementById('urls').addEventListener('click', (e) => {
   let inputList = document.getElementsByClassName('url-input');
   let inputArray = Array.from(inputList);
 
+  // array of UTM content locations
+  const UTMContent = ['header', 'footer', 'image', 'body-link', 'CTA', 'signature'];
+
   // generate UTMs for clicked URL
   inputArray.forEach((item, i) => {
     if (item.classList.contains(`url-${lastChar}`)) {
       titlesFormatted.forEach((name) => {
         let UTMGroup = [];
-        let newUTM = `${validURLs[i]}?utm_source=${businessName}&utm_medium=email&utm_campaign=${typeCheck}${name}&utm_content=header`;
-        UTMGroup.push(newUTM);
+
+        UTMContent.forEach((item) => {
+          
+          let newUTM = '';
+
+          switch (item) {
+            case 'body-link':
+              newUTM = `<a href="${validURLs[i]}?utm_source=${businessName}&utm_medium=email&utm_campaign=${name}&utm_content=${item}" target="_blank">`;
+              UTMGroup.push(newUTM);
+              break;
+            case 'signature':
+              newUTM = `<a href="${validURLs[i]}?utm_source=${businessName}&utm_medium=email&utm_campaign=${name}&utm_content=${item}" target="_blank">`;
+              UTMGroup.push(newUTM);
+              break;
+            default:
+              newUTM = `${validURLs[i]}?utm_source=${businessName}&utm_medium=email&utm_campaign=${name}&utm_content=${item}`;
+              UTMGroup.push(newUTM);
+              break;
+          }
+          
+        });
+
         UTMStore.push(UTMGroup);
+
       });
     }
   });
-
-});
+  console.log(UTMStore);
+};
