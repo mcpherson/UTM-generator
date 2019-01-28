@@ -150,24 +150,37 @@ numEmailsInput.addEventListener('change', (e) => {
   // thanks for reading my code!
   if (Number(numEmailsInput.value) === 42) {
     
-    msgText.textContent = "YOU ARE NOT PREPARED.";
+    msgText.textContent = "TO KNOW ALL, YOU MUST UNDERSTAND NOTHING.";
 
     displayMsg(e);
 
     numEmailsInput.value = 1;
 
     return;
+  }
 
+  // almost got me...
+  if (numEmailsInput.value.toString() === '') {
+
+    msgText.textContent = "KEEP TRYING";
+
+    displayMsg(e);
+
+    numEmailsInput.value = 1;
+
+    return;
   }
 
   // 'gotcha' for the cheeky ones
-  if(numEmailsInput.value > 41) {
+  if(numEmailsInput.value > 20) {
     
     msgText.textContent = "*mindtrick* YOU DON'T NEED THAT MANY EMAILS.";
 
     displayMsg(e);
 
     numEmailsInput.value = 1;
+
+    return;
   }
 
   // for the true trolls out there
@@ -178,6 +191,8 @@ numEmailsInput.addEventListener('change', (e) => {
     displayMsg(e);
 
     numEmailsInput.value = 1;
+
+    return;
   }
   
   // clear title inputs to prevent duplication
@@ -225,25 +240,37 @@ numURLsInput.addEventListener('change', (e) => {
   // thanks for reading my code!
   if (Number(numURLsInput.value) === 42) {
     
-    msgText.textContent = "YOU ARE NOT PREPARED.";
+    msgText.textContent = "WHAT IS INFINITY TO THE FINITE?";
 
     displayMsg(e);
 
     numURLsInput.value = 1;
 
     return;
+  }
 
+  // almost got me...
+  if (numURLsInput.value.toString() === '') {
+
+    msgText.textContent = "WHO YOU FINNA TRY?";
+
+    displayMsg(e);
+
+    numURLsInput.value = 1;
+
+    return;
   }
 
   // 'gotcha' for the cheeky ones
-  if(numURLsInput.value > 41) {
+  if(numURLsInput.value > 20) {
     
     msgText.textContent = "AREN'T YOU GOING A BIT OVERBOARD?";
 
     displayMsg(e);
 
     numURLsInput.value = 1;
-    
+
+    return;
   }
 
   // for the true trolls out there
@@ -254,7 +281,9 @@ numURLsInput.addEventListener('change', (e) => {
     displayMsg(e);
 
     numURLsInput.value = 1;
-  }
+
+    return;
+  } 
   
   // clear URL inputs to prevent duplication
   while (URLs.hasChildNodes()) {
@@ -368,6 +397,8 @@ function generateTitles(e) {
     msgText.textContent = `SELECT BUILD OR ENGAGE.`;
 
     displayMsg();
+
+    return;
 
   }
 
