@@ -15,12 +15,37 @@ msgArea = document.getElementById('message');
 msgText = document.getElementById('message-text')
 
 // FADE ERROR IN/OUT
-function displayMsg() {
+function displayMsg(e, i) {
   scrollTo(top);
   msgArea.focus();
+  
+  
+  
   setTimeout(() => {
     msgArea.blur();
+
+    // focus on invalid url input
+    if (e.target.classList.contains('gen')) {
+
+      // grab URL inputs
+      let tarList = document.getElementsByClassName('url-input');
+      let tarArray = Array.from(tarList);
+      
+      tarArray.forEach((item) => {
+        if (item.classList.contains(`url-${i+1}`)) {
+          
+          item.focus();
+
+        }
+      });
+    } else {
+
+      e.target.focus();
+
+    }
+    
   }, 3000);
+  
 }
 
 
@@ -121,24 +146,27 @@ const emailTitleLabel = document.getElementById('title-1-label');
 var titlesList = document.getElementById("titles");
 
 // adds new title fields to list
-numEmailsInput.addEventListener('change', () => {
+numEmailsInput.addEventListener('change', (e) => {
 
   // thanks for reading my code!
   if (Number(numEmailsInput.value) === 42) {
-    document.body.innerHTML = "<h1 style='text-align:center;'>UNRESOLVED FINITE / INFINITE PARADOX ENCOUNTERED.</h1><h1 style='text-align:center;'>YOU ARE NOT PREPARED TO ASCEND.</h1><h1 style='text-align:center;'>DIMENSIONAL LOCK REINITIALIZING ...</h1>";
-    function lockout() {
-      setTimeout(function() {location.reload();}, 5000);
-    }
-    lockout();
+    
+    msgText.textContent = "YOU ARE NOT PREPARED.";
+
+    displayMsg(e);
+
+    numURLsInput.value = 1;
+
     return;
+
   }
 
   // 'gotcha' for the cheeky ones
   if(numEmailsInput.value > 41) {
     
-    msgText.textContent = "*MINDTRICK* YOU DON'T NEED THAT MANY EMAILS.";
+    msgText.textContent = "*mindtrick* YOU DON'T NEED THAT MANY EMAILS.";
 
-    displayMsg();
+    displayMsg(e);
 
     numEmailsInput.value = 1;
   }
@@ -148,7 +176,7 @@ numEmailsInput.addEventListener('change', () => {
     
     msgText.textContent = "LOOKS LIKE YOUR WORK HERE IS DONE.";
 
-    displayMsg();
+    displayMsg(e);
 
     numEmailsInput.value = 1;
   }
@@ -193,16 +221,19 @@ const urlLabel = document.getElementById('url-1-label');
 var URLs = document.getElementById("urls");
 
 // adds new URL fields to list
-numURLsInput.addEventListener('change', () => {
+numURLsInput.addEventListener('change', (e) => {
 
   // thanks for reading my code!
   if (Number(numURLsInput.value) === 42) {
-    document.body.innerHTML = "<h1 style='text-align:center;'>UNRESOLVED FINITE / INFINITE PARADOX ENCOUNTERED.</h1><h1 style='text-align:center;'>YOU ARE NOT PREPARED TO ASCEND.</h1><h1 style='text-align:center;'>DIMENSIONAL LOCK REINITIALIZING ...</h1>";
-    function lockout() {
-      setTimeout(function() {location.reload();}, 5000);
-    }
-    lockout();
+    
+    msgText.textContent = "YOU ARE NOT PREPARED.";
+
+    displayMsg(e);
+
+    numURLsInput.value = 1;
+
     return;
+
   }
 
   // 'gotcha' for the cheeky ones
@@ -210,9 +241,10 @@ numURLsInput.addEventListener('change', () => {
     
     msgText.textContent = "AREN'T YOU GOING A BIT OVERBOARD?";
 
-    displayMsg();
+    displayMsg(e);
 
     numURLsInput.value = 1;
+    
   }
 
   // for the true trolls out there
@@ -220,7 +252,7 @@ numURLsInput.addEventListener('change', () => {
     
     msgText.textContent = "DOES NOT COMPUTE.";
 
-    displayMsg();
+    displayMsg(e);
 
     numURLsInput.value = 1;
   }
@@ -237,7 +269,7 @@ numURLsInput.addEventListener('change', () => {
     newURL.innerHTML = `
       <label for="url-${i}" id="url-${i}-label">URL ${i}<pre>&#9;</pre>&nbsp;&nbsp;</label>
       <div class="row">
-        <input type="url" name="url-${i}" id="url-${i}" class="url-input" data-lpignore="true" autocomplete="nope">
+        <input type="url" name="url-${i}" id="url-${i}" class="url-input url-${i}" data-lpignore="true" autocomplete="nope">
         <input type="button" id="gen-${i}" class="gen" value="GEN">
       </div>`;
     
@@ -313,7 +345,7 @@ let validURLs = [];
 // grab all active URL inputs
 let urlList = document.getElementsByClassName('url-input');
 
-function formatURLs() {
+function formatURLs(e) {
 
   // unvalidated URLs
   let baseURLs = [];
@@ -331,27 +363,52 @@ function formatURLs() {
   console.log(baseURLs);
   console.log(titlesFormatted);
 
-  baseURLs.forEach((item) => {
+  for (i=0; i<baseURLs.length; i++) {
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
     '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
     '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
     '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
     '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-    if(!pattern.test(item)) {
+    if(!pattern.test(baseURLs[i])) {
 
-      // DISPLAY ALERT
-      console.log('invalid url');
+      msgText.textContent = `URL ${i+1} IS INVALID.`;
 
-      return false;
+      displayMsg(e, i);
+
+      break;
     } else {
       
-      let validURL = item;
+      let validURL = baseURLs[i];
       validURLs.push(validURL);
 
     }
-  });
+  }
+  // baseURLs.forEach((item, i) => {
+    // var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    // '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
+    // '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    // '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    // '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    // '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    // if(!pattern.test(item)) {
 
+    //   msgText.textContent = `URL ${i+1} IS INVALID.`;
+
+    //   displayMsg(e);
+
+    //   return false;
+    // } else {
+      
+    //   let validURL = item;
+    //   validURLs.push(validURL);
+
+    // }
+  // });
+
+  if (baseURLs.length !== validURLs.length) {
+    validURLs = [];
+  }
   console.log(validURLs);
   // generateUTMs();
 
@@ -388,7 +445,9 @@ document.getElementById('urls').addEventListener('click', (e) => {
     
     generateTitles();
 
-    formatURLs();
+    formatURLs(e);
+    
+    
 
     // generateUTMs();
 
