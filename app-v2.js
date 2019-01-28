@@ -1,4 +1,3 @@
-
 const docsSelectBtn = document.getElementById('docs-select');
 const darkSelectBtn = document.getElementById('dark-select');
 
@@ -10,23 +9,30 @@ darkSelectBtn.addEventListener('click', () => {
   
 });
 
-// ERROR FIELDS
+
+
+// DISPLAY ERROR MESSAGE
+
+// error fields
 msgArea = document.getElementById('message');
 msgText = document.getElementById('message-text')
 
-// FADE ERROR IN/OUT
 function displayMsg(e, i) {
+
   scrollTo(top);
+
+  // init CSS transition in
   msgArea.focus();
   
+  // init CSS transition out
   setTimeout(() => {
     msgArea.blur();
 
-    // focus on invalid url input
     if (e) {
+
+      // focus on invalid url input after error
       if (e.target.classList.contains('gen')) {
 
-        // grab URL inputs
         let tarList = document.getElementsByClassName('url-input');
         let tarArray = Array.from(tarList);
         
@@ -37,8 +43,10 @@ function displayMsg(e, i) {
 
           }
         });
+
       } else {
 
+        // focus on event source element
         e.target.focus();
 
       }
@@ -49,19 +57,7 @@ function displayMsg(e, i) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+// SELECT ENGAGE BEHAVIOR
 
 // engage select button
 const engageSelectBtn = document.getElementById('engage-select');
@@ -99,6 +95,8 @@ engageSelectBtn.addEventListener('click', () => {
 });
 
 
+
+// SELECT BUILD BEHAVIOR
 
 // build select button
 const buildSelectBtn  = document.getElementById('build-select');
@@ -156,7 +154,7 @@ numEmailsInput.addEventListener('change', (e) => {
 
     displayMsg(e);
 
-    numURLsInput.value = 1;
+    numEmailsInput.value = 1;
 
     return;
 
@@ -251,7 +249,7 @@ numURLsInput.addEventListener('change', (e) => {
   // for the true trolls out there
   if (Number(numURLsInput.value) === 0 || Number(numURLsInput.value) < 0) {
     
-    msgText.textContent = "DOES NOT COMPUTE.";
+    msgText.textContent = "KINDA DEFEATS THE PURPOSE...";
 
     displayMsg(e);
 
@@ -379,7 +377,7 @@ function generateTitles(e) {
 
 
 
-// FORMAT AND STORE URLS BROKEN
+// FORMAT AND STORE URLS
 
 // init array for url storage
 let validURLs = [];
@@ -417,7 +415,9 @@ function formatURLs(e) {
 
       displayMsg(e, i);
 
-      break;
+      baseURLs = [];
+      validURLs = [];
+      return;
     } else {
       
       let validURL = baseURLs[i];
@@ -432,10 +432,10 @@ function formatURLs(e) {
     }
   }
 
+  // reset validURLs if something went wrong
   if (baseURLs.length !== validURLs.length) {
     validURLs = [];
   }
-  console.log(validURLs);
  
   generateTitles(e);
 
@@ -443,12 +443,7 @@ function formatURLs(e) {
 
 
 
-
-
-
-// GENERATE UTMS
-
-
+// GENERATE UTM CODES
 
 // business name input
 const businessInput = document.getElementById('business-input');
@@ -457,35 +452,23 @@ let businessName = businessInput.value;
 // listener on URL list - generates UTMs from clicked GEN button
 document.getElementById('urls').addEventListener('click', (e) => {
 
-  
-
-
   if (e.target.classList.contains('gen')) {
 
     UTMStore = [];
     
+    // begins the chain (URLs -> titles -> UTMs)
     formatURLs(e);
-
-    // generateTitles(e);
-
-    // generateUTMs(e);
 
   }
 
 });
 
-
-
-
-
-
-
-
-
-// GENERATE UTM CODES
-
-// init UTM object to store UTMs for each title (arrays)
+// init UTM array to store UTMs for each title (arrays)
 let UTMStore = [];
+
+// arrays of UTM content locations/terms
+const UTMContent = ['header', 'footer', 'image', 'body-link', 'CTA', 'signature'];
+const UTMTerms = ['HDR', 'FTR', 'IMG', 'BDY', 'CTA', 'SIG'];
 
 function generateUTMs(e) {
 
@@ -496,9 +479,6 @@ function generateUTMs(e) {
   // grab all active URL inputs
   let inputList = document.getElementsByClassName('url-input');
   let inputArray = Array.from(inputList);
-
-  // array of UTM content locations
-  const UTMContent = ['header', 'footer', 'image', 'body-link', 'CTA', 'signature'];
 
   // generate UTMs for clicked URL
   inputArray.forEach((item, i) => {
@@ -532,5 +512,101 @@ function generateUTMs(e) {
       });
     }
   });
-  console.log(UTMStore);
+
+  generateHiddenOutputs();
+
 };
+
+
+
+// GENERATE HIDDEN OUTPUTS
+
+// hidden UTM output
+const hiddenOutput = document.getElementById('hidden-output');
+
+function generateHiddenOutputs() {
+
+  // reset hidden outputs
+  hiddenOutput.innerHTML = '';
+
+  // dig into UTMs to generate storage
+  UTMStore.forEach((item, inc) => {
+    
+    // add new title row
+    let newRow = document.createElement('pre');
+    newRow.id = `hidden-utms-${inc+1}`;
+    newRow.style.display = 'block';
+    hiddenOutput.appendChild(newRow);
+
+    // add UTMs to new title row
+    item.forEach((item, i) => {
+
+      let insertRow = document.getElementById(`hidden-utms-${inc+1}`);
+      let newText = document.createElement('textarea');
+      newText.classList.add(`hidden-utms-${i+1}-${UTMContent[i]}`);
+      newText.textContent = `${item}`
+      insertRow.appendChild(newText);
+      
+    });
+  });
+
+  generateButtons();
+
+}
+
+
+
+// GENERATE UTM COPY BUTTONS
+
+// div for insertion
+const outputArea = document.getElementById('output-area');
+
+function generateButtons() {
+
+  // reset outputs
+  outputArea.innerHTML = '';
+
+  // dig into UTMs to generate buttons
+  UTMStore.forEach((item, inc) => {
+    
+    // add new title row
+    let newRow = document.createElement('div');
+    newRow.id = `utms-${inc+1}`;
+    newRow.classList.add('row', 'push-down');
+    // newRow.style.display = 'block';
+    outputArea.appendChild(newRow);
+
+    // add UTM buttons to new title row
+    item.forEach((item, i) => {
+
+      let insertRow = document.getElementById(`utms-${inc+1}`);
+      let newDiv = document.createElement('div');
+      newDiv.classList.add('two', 'columns');
+      newDiv.innerHTML = `
+        <button id="${UTMTerms[i]}-btn-${i+1}" class="utm-btn ${UTMTerms[i]}">${UTMTerms[i]} ${inc+1}</button>`;
+      insertRow.appendChild(newDiv);
+      console.log('fuck');
+    });
+
+
+
+  });
+
+  // display scroll top button
+  scrollTop.style.display = 'block';
+
+  window.scroll(0, 10000);
+  // generateButtons();
+
+}
+
+
+
+// SCROLL TO TOP
+
+const scrollTop = document.getElementById('scroll-top');
+
+scrollTop.addEventListener('click', () => {
+  window.scroll(0, -10000);
+});
+

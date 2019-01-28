@@ -98,45 +98,6 @@ hr {
   color: #BC3339;
 }
 
-p.utm-display-label {
-  display: none;
-  font-size: 20px;
-  text-align: center;
-  font-family: 'Anonymous Pro', monospace;
-  margin-top: 20px;
-}
-
-.output-item {
-  width: 100%;
-  height: 75px;
-  margin-bottom: 10px;
-  font-size: 30px;
-  /* padding-right: 13px !important; */
-  /* padding-left: 15px !important; */
-  transition: background-color;
-  transition-timing-function: ease-in-out;
-  transition-duration: .3s;
-}
-
-.output-item:hover {
-  background-color: #BC3339;
-  color: white;
-}
-
-#cta-toggle {
-  display: inline-block;
-  /* margin-left: 16px; */
-}
-
-#cta-toggle-label {
-  margin: 33px 0 1px 0;
-  padding: 6px 0;
-  display: inline-block;
-  width: 100%;
-  border: 1px solid #D1D1D1;
-  border-radius: 4px;
-}
-
 #hidden-output {
   position: absolute !important;
   top: -9999px !important;
@@ -168,41 +129,60 @@ p.utm-display-label {
   width: 100%;
 }
 
-.hdr {
+.HDR {
   background-color: #BC3339;
   color: #fff;
   font-family: 'Anonymous Pro', monospace;
+  transition: background-color .5s, color .5s, border-color .5s;
 }
 
-.ftr {
+.FTR {
   background-color: #A3353A;
   color: #fff;
   font-family: 'Anonymous Pro', monospace;
+  transition: background-color .5s, color .5s, border-color .5s;
 }
 
-.img {
+.IMG {
   background-color: #8A383B;
   color: #fff;
   font-family: 'Anonymous Pro', monospace;
+  transition: background-color .5s, color .5s, border-color .5s;
 }
 
-.bdy {
+.BDY {
   background-color: #713A3D;
   color: #fff;
   font-family: 'Anonymous Pro', monospace;
+  transition: background-color .5s, color .5s, border-color .5s;
 }
 
-.cta {
+.CTA {
   background-color: #583D3E;
   color: #fff;
   font-family: 'Anonymous Pro', monospace;
+  transition: background-color .5s, color .5s, border-color .5s;
 }
 
 
-.sig {
+.SIG {
   background-color: #404040;
   color: #fff;
   font-family: 'Anonymous Pro', monospace;
+  transition: background-color .5s, color .5s, border-color .5s;
+  transition-timing-function: ease-in-out;
+
+}
+
+.HDR:hover,
+.FTR:hover,
+.IMG:hover,
+.BDY:hover,
+.CTA:hover,
+.SIG:hover {
+  background-color: #fff;
+  color: #000;
+  border-color: #BC3339;
 }
 
 label {
@@ -246,3 +226,25 @@ span {
   font-family: 'Anonymous Pro', monospace;
   color: #fff;
 }
+
+#output-area {
+  margin-bottom: 30px;
+}
+
+.push-down {
+  margin-top: 30px;
+}
+
+#scroll-top {
+  width: 50%;
+  margin: 0 auto 30px auto;
+  display: none;
+  font-family: 'Anonymous Pro', monospace;
+  background: linear-gradient(to top, #404040, #BC3339);
+  color: #fff;
+}
+
+#scroll-top:hover {
+  background: linear-gradient(to top, #BC3339, #404040);
+}
+
