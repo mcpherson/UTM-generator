@@ -162,7 +162,7 @@ numEmailsInput.addEventListener('change', (e) => {
   // almost got me...
   if (numEmailsInput.value.toString() === '') {
 
-    msgText.textContent = "KEEP TRYING";
+    msgText.textContent = "WHO YOU FINNA TRY?";
 
     displayMsg(e);
 
@@ -252,7 +252,7 @@ numURLsInput.addEventListener('change', (e) => {
   // almost got me...
   if (numURLsInput.value.toString() === '') {
 
-    msgText.textContent = "WHO YOU FINNA TRY?";
+    msgText.textContent = "KEEP TRYING...";
 
     displayMsg(e);
 
@@ -544,7 +544,8 @@ function generateUTMs(e) {
     }
   });
 
-  generateHiddenOutputs();
+  // generateHiddenOutputs();
+  generateButtons();
 
 };
 
@@ -553,37 +554,37 @@ function generateUTMs(e) {
 // GENERATE HIDDEN OUTPUTS
 
 // hidden UTM output
-const hiddenOutput = document.getElementById('hidden-output');
+// const hiddenOutput = document.getElementById('hidden-output');
 
-function generateHiddenOutputs() {
+// function generateHiddenOutputs() {
 
-  // reset hidden outputs
-  hiddenOutput.innerHTML = '';
+//   // reset hidden outputs
+//   hiddenOutput.innerHTML = '';
 
-  // dig into UTMs to generate storage
-  UTMStore.forEach((item, inc) => {
+//   // dig into UTMs to generate storage
+//   UTMStore.forEach((item, inc) => {
     
-    // add new title row
-    let newRow = document.createElement('pre');
-    newRow.id = `hidden-utms-${inc+1}`;
-    newRow.style.display = 'block';
-    hiddenOutput.appendChild(newRow);
+//     // add new title row
+//     let newRow = document.createElement('pre');
+//     newRow.id = `hidden-utms-${inc+1}`;
+//     newRow.style.display = 'block';
+//     hiddenOutput.appendChild(newRow);
 
-    // add UTMs to new title row
-    item.forEach((item, i) => {
+//     // add UTMs to new title row
+//     item.forEach((item, i) => {
 
-      let insertRow = document.getElementById(`hidden-utms-${inc+1}`);
-      let newText = document.createElement('textarea');
-      newText.classList.add(`hidden-utms-${i+1}-${UTMContent[i]}`);
-      newText.textContent = `${item}`
-      insertRow.appendChild(newText);
+//       let insertRow = document.getElementById(`hidden-utms-${inc+1}`);
+//       let newText = document.createElement('textarea');
+//       newText.classList.add(`hidden-utms-${i+1}-${UTMContent[i]}`);
+//       newText.textContent = `${item}`
+//       insertRow.appendChild(newText);
       
-    });
-  });
+//     });
+//   });
 
-  generateButtons();
+//   generateButtons();
 
-}
+// }
 
 
 
@@ -614,7 +615,7 @@ function generateButtons() {
       let newDiv = document.createElement('div');
       newDiv.classList.add('two', 'columns');
       newDiv.innerHTML = `
-        <button id="${UTMTerms[i]}-btn-${i+1}" class="utm-btn ${UTMTerms[i]}">${UTMTerms[i]} ${inc+1}</button>`;
+        <button id="${UTMTerms[i]}-btn-${inc+1}" class="utm-btn ${UTMTerms[i]}">${UTMTerms[i]} ${inc+1}</button>`;
       insertRow.appendChild(newDiv);
       console.log('fuck');
     });
@@ -627,9 +628,80 @@ function generateButtons() {
   scrollTop.style.display = 'block';
 
   window.scroll(0, 10000);
-  // generateButtons();
 
 }
+
+
+
+// COPY ON CLICK
+
+// output area
+const currentUTM = document.getElementById('current-utm');
+
+// listener on output
+outputArea.addEventListener('click', (e) => {
+
+  // event delegation
+  if (e.target.classList.contains('utm-btn')) {
+    
+    // grab info for copying from button ID 
+    let tarIDType = String(e.target.id).charAt(0);
+    let tarIDNum = (Number((e.target.id).charAt(((e.target.id).length)-1))-1);
+    
+    // determine which UTM to grab from UTMStore[]
+    switch (tarIDType) {
+      case "H":
+
+        let currentGroupH = UTMStore[tarIDNum];
+        currentUTM.textContent = currentGroupH[0];
+        break;
+    
+      case "F":
+    
+        let currentGroupF = UTMStore[tarIDNum];
+        currentUTM.textContent = currentGroupF[1];
+        break;
+    
+      case "I":
+    
+        let currentGroupI = UTMStore[tarIDNum];
+        currentUTM.textContent = currentGroupI[2];
+        break;
+      
+      case "B":
+    
+        let currentGroupB = UTMStore[tarIDNum];
+        currentUTM.textContent = currentGroupB[3];
+        break;
+    
+
+      case "C":
+    
+        let currentGroupC = UTMStore[tarIDNum];
+        currentUTM.textContent = currentGroupC[4];
+        break;
+    
+      case "S":
+    
+        let currentGroupS = UTMStore[tarIDNum];
+        currentUTM.textContent = currentGroupS[5];
+        break;
+      
+      default:
+        break;
+    }
+
+    // copy UTM to clipboard
+    currentUTM.focus({preventScroll:true});
+    currentUTM.select();
+    document.execCommand('copy');
+    currentUTM.blur();
+
+    window.scroll(0, 10000);
+
+  } 
+});
+    
 
 
 
