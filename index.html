@@ -20,6 +20,11 @@
   <hr><br>
   <div class="container">
 
+    <!-- error / message display -->
+    <div id="message" class="twelve columns" value="" style="display: block; height: 38px; text-align:center; line-height:38px;" tabindex="1">
+      <span id="message-text"></span>
+    </div>
+
     <div class="row">
 
       <div class="six columns">
@@ -35,12 +40,25 @@
           </form>
         </label>
         
-          
         </div>
 
         <!-- title prefix -->
-        <label for="prefix" id="prefix-label">BUILD/ENGAGE PREFIX</label>
+        <label for="prefix" id="prefix-label">CAMPAIGN PREFIX</label>
         <input type="text" name="prefix" id="prefix" data-lpignore="true" autocomplete="nope" disabled="true">
+
+        
+      
+      </div>
+
+      <div class="six columns">
+
+        <!-- docs/dark -->
+        <div class="row">
+          <input type="button" class="six columns" id="docs-select" value="DOCS (WIP)">
+          <input type="button" class="six columns" id="dark-select" value="DARK (WIP)">
+        </div>
+
+        
 
         <div class="row">
           <label for="num-emails" id="num-emails-label" class="six columns">
@@ -52,25 +70,10 @@
             <input type="number" value="1" min="1" max="20" name="num-urls" id="num-urls-input" autocomplete="nope">
           </label>
         </div>
-      
-      </div>
-
-      <div class="six columns">
-
-        <!-- docs/dark -->
-        <div class="row">
-          <input type="button" class="six columns" id="docs-select" value="DOCS">
-          <input type="button" class="six columns" id="dark-select" value="DARK">
-        </div>
-
-        <!-- error / message display -->
-        <div id="message" class="twelve columns" value="" style="display: block; height: 38px; text-align:center; line-height:38px;" tabindex="1">
-          <span id="message-text"></span>
-        </div>
         
         <!-- business name -->
-        <label for="business-input" id="business-input-label">YOUR BUSINESS</label>
-        <input type="text" name="business-input" id="business-input" data-lpignore="true" autocomplete="nope" value="boomtime">
+        <!-- <label for="business-input" id="business-input-label">YOUR BUSINESS</label> -->
+        <!-- <input type="text" name="business-input" id="business-input" data-lpignore="true" autocomplete="nope" value="boomtime"> -->
 
       </div>
     </div>
@@ -111,21 +114,16 @@
 
   <!-- scroll to top button -->
   <div class="container">
-    
-      
-        <button id="scroll-top">TO THE TOP</button>
-      
+       
+        <button id="scroll-top">TO THE TOP</button>    
     
   </div>
 
-  
-  
-  <!-- storage for copyable UTMs -->
+  <!-- storage for copyable UTM -->
   <div id="hidden-output">
     <textarea name="current-utm" id="current-utm" cols="30" rows="1"></textarea>
   </div>
   
-  <!-- <script src="app.js"></script> -->
   <script src="app-v2.js"></script>
 </body>
 </html>

@@ -98,5 +98,11 @@ genOutputs()
   foreach(utm)
 
 titles.foreach((title, i) => {
-  
+
 });
+
+UTMs are generated in the following formats:
+{url}/?utm_source={company name}&utm_medium=email&utm_campaign={BUILD/ENGAGE}-{PREFIX}-{TITLE}&utm_content={CONTENT}
+<a href="{url}/?utm_source={company name}&utm_medium=email&utm_campaign={BUILD/ENGAGE}-{PREFIX}-{TITLE}&utm_content={CONTENT}" target="_blank">
+
+{url}/?utm_source={company name}&utm_medium=FB-AD&utm_campaign={C-TYPE}-{C-NAME}-{?C-SLIDE}-

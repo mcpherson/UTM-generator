@@ -57,6 +57,43 @@ function displayMsg(e, i) {
 
 
 
+// SELECT BUILD BEHAVIOR
+
+// build select button
+const buildSelectBtn  = document.getElementById('build-select');
+
+// switch to build behavior
+buildSelectBtn.addEventListener('click', () => {
+
+  // add/remove class for selection
+  if (!buildSelectBtn.classList.contains('selected')) {
+    buildSelectBtn.classList.toggle('selected');
+    if (engageSelectBtn.classList.contains('selected') || otherSelectBtn.classList.contains('selected')) {
+      engageSelectBtn.classList.remove('selected');
+      otherSelectBtn.classList.remove('selected');
+    }
+  }
+
+  // apply border color to active button and remove from inactive
+  buildSelectBtn.style.border = '1px solid #BC3339';
+  engageSelectBtn.style.border = '1px solid #BBB';
+  otherSelectBtn.style.border = '1px solid #BBB';
+
+  // alter input
+  prefix.removeAttribute('disabled');
+  prefix.style.backgroundColor = '#fff';
+  prefixLabel.style.color = 'black';
+  prefixLabel.textContent = 'BUILD CATEGORY (e.g. NEWSLETTER)';
+  prefix.value = '';
+  prefix.focus();
+
+  // hide 'choose one'
+  document.getElementById('choose').style.color = '#ffffff';
+
+});
+
+
+
 // SELECT ENGAGE BEHAVIOR
 
 // engage select button
@@ -72,20 +109,22 @@ engageSelectBtn.addEventListener('click', () => {
   // add/remove class for selection
   if (!engageSelectBtn.classList.contains('selected')) {
     engageSelectBtn.classList.toggle('selected');
-    if (buildSelectBtn.classList.contains('selected')) {
+    if (buildSelectBtn.classList.contains('selected') || otherSelectBtn.classList.contains('selected')) {
       buildSelectBtn.classList.remove('selected');
+      otherSelectBtn.classList.remove('selected');
     }
   }
 
   // apply border color to active button and remove from inactive
   engageSelectBtn.style.border = '1px solid #BC3339';
   buildSelectBtn.style.border = '1px solid #BBB';
+  otherSelectBtn.style.border = '1px solid #BBB';
 
   // alter input
   prefix.removeAttribute('disabled');
   prefix.style.backgroundColor = '#fff';
   prefixLabel.style.color = 'black';
-  prefixLabel.textContent = 'ENGAGE STREAM';
+  prefixLabel.textContent = 'ENGAGE STREAM (e.g. INTRO)';
   prefix.value = '';
   prefix.focus();
 
@@ -96,31 +135,33 @@ engageSelectBtn.addEventListener('click', () => {
 
 
 
-// SELECT BUILD BEHAVIOR
+// SELECT OTHER BEHAVIOR
 
-// build select button
-const buildSelectBtn  = document.getElementById('build-select');
+// other select button
+const otherSelectBtn  = document.getElementById('other-select');
 
 // switch to build behavior
-buildSelectBtn.addEventListener('click', () => {
+otherSelectBtn.addEventListener('click', () => {
 
   // add/remove class for selection
-  if (!buildSelectBtn.classList.contains('selected')) {
-    buildSelectBtn.classList.toggle('selected');
-    if (engageSelectBtn.classList.contains('selected')) {
+  if (!otherSelectBtn.classList.contains('selected')) {
+    otherSelectBtn.classList.toggle('selected');
+    if (engageSelectBtn.classList.contains('selected') || buildSelectBtn.classList.contains('selected')) {
       engageSelectBtn.classList.remove('selected');
+      buildSelectBtn.classList.remove('selected');
     }
   }
 
   // apply border color to active button and remove from inactive
-  buildSelectBtn.style.border = '1px solid #BC3339';
+  otherSelectBtn.style.border = '1px solid #BC3339';
   engageSelectBtn.style.border = '1px solid #BBB';
+  buildSelectBtn.style.border = '1px solid #BBB';
 
   // alter input
   prefix.removeAttribute('disabled');
   prefix.style.backgroundColor = '#fff';
   prefixLabel.style.color = 'black';
-  prefixLabel.textContent = 'BUILD CATEGORY';
+  prefixLabel.textContent = 'OTHER IDENTIFIER (FB ADS SOON™)';
   prefix.value = '';
   prefix.focus();
 
@@ -150,7 +191,7 @@ numEmailsInput.addEventListener('change', (e) => {
   // thanks for reading my code!
   if (Number(numEmailsInput.value) === 42) {
     
-    msgText.textContent = "TO KNOW ALL, YOU MUST UNDERSTAND NOTHING.";
+    msgText.textContent = "WHAT IS INFINITY TO THE FINITE?";
 
     displayMsg(e);
 
@@ -240,7 +281,7 @@ numURLsInput.addEventListener('change', (e) => {
   // thanks for reading my code!
   if (Number(numURLsInput.value) === 42) {
     
-    msgText.textContent = "WHAT IS INFINITY TO THE FINITE?";
+    msgText.textContent = "TO KNOW ALL, YOU MUST UNDERSTAND NOTHING.";
 
     displayMsg(e);
 
@@ -353,7 +394,7 @@ function generateTitles(e) {
     // formats names for URLs
     emailTitles.forEach((name) => {
 
-      // trim any silliness
+      // trim any sillyness
       let nameTrimmed = name.trim();
 
       // replace spaces with hyphens
@@ -376,7 +417,7 @@ function generateTitles(e) {
     // formats names for URLs
     emailTitles.forEach((name) => {
 
-      // trim any silliness
+      // trim any sillyness
       let nameTrimmed = name.trim();
 
       // replace spaces with hyphens
@@ -391,10 +432,31 @@ function generateTitles(e) {
       titlesFormatted.push(nameComplete);
 
     });
-    
+
+  } else if (otherSelectBtn.classList.contains('selected')) {
+
+    // formats names for URLs
+    emailTitles.forEach((name) => {
+
+      // trim any sillyness
+      let nameTrimmed = name.trim();
+
+      // replace spaces with hyphens
+      let nameFormatted = nameTrimmed.replace(/ /g, "-");
+
+      // URI encode (encodes special characters)
+      let nameEncoded = escape(nameFormatted);
+
+      // add prefix string
+      let nameComplete = `${prefixEncoded}-${nameEncoded}`;
+
+      titlesFormatted.push(nameComplete);
+
+    });
+
   } else {
 
-    msgText.textContent = `SELECT BUILD OR ENGAGE.`;
+    msgText.textContent = `SELECT BUILD, ENGAGE, OR OTHER.`;
 
     displayMsg();
 
@@ -477,8 +539,9 @@ function formatURLs(e) {
 // GENERATE UTM CODES
 
 // business name input
-const businessInput = document.getElementById('business-input');
-let businessName = businessInput.value;
+// const businessInput = document.getElementById('business-input');
+// let businessName = businessInput.value;
+
 
 // listener on URL list - generates UTMs from clicked GEN button
 document.getElementById('urls').addEventListener('click', (e) => {
@@ -523,15 +586,15 @@ function generateUTMs(e) {
 
           switch (item) {
             case 'body-link':
-              newUTM = `<a href="${validURLs[i]}?utm_source=${businessName}&utm_medium=email&utm_campaign=${name}&utm_content=${item}" target="_blank">`;
+              newUTM = `<a href="${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}" target="_blank">`;
               UTMGroup.push(newUTM);
               break;
             case 'signature':
-              newUTM = `<a href="${validURLs[i]}?utm_source=${businessName}&utm_medium=email&utm_campaign=${name}&utm_content=${item}" target="_blank">`;
+              newUTM = `<a href="${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}" target="_blank">`;
               UTMGroup.push(newUTM);
               break;
             default:
-              newUTM = `${validURLs[i]}?utm_source=${businessName}&utm_medium=email&utm_campaign=${name}&utm_content=${item}`;
+              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}`;
               UTMGroup.push(newUTM);
               break;
           }
