@@ -10,12 +10,14 @@
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css?family=Anonymous+Pro" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Work+Sans:500" rel="stylesheet">
+  <link rel="shortcut icon" type="image/png" href="./favicon.ico"/>
 
 </head>
 <body>
   <p id="author"><strong><a href="https://github.com/mmcph" target="_blank"><span class="red-text">MMCPH</span></a> 2019&nbsp;</strong></p>
   <div class="container" id="pushdown">
     <img src="title.jpg" alt="title" id="bt-logo">
+    <!-- <img src="title-dark.jpg" alt="title" id="bt-logo"> -->
   </div>
   <hr><br>
   <div class="container">
@@ -34,18 +36,33 @@
         <label for="choose-label" id="choose">
           CHOOSE ONE
           <form action="" id="choose-label">
-            <input type="button" class="four columns" id="build-select" value="BUILD">
-            <input type="button" class="four columns" id="engage-select" value="ENGAGE">
-            <input type="button" class="four columns" id="other-select" value="OTHER">
+            <input type="button" class="three columns" id="build-select" value="BUILD">
+            <input type="button" class="three columns" id="engage-select" value="ENGAGE">
+            <input type="button" class="three columns" id="fb-select" value="FB AD">
+            <input type="button" class="three columns" id="other-select" value="OTHER">
           </form>
         </label>
         
         </div>
 
         <!-- title prefix -->
-        <label for="prefix" id="prefix-label">CAMPAIGN PREFIX</label>
-        <input type="text" name="prefix" id="prefix" data-lpignore="true" autocomplete="nope" disabled="true">
+        <div id="prefix-area">
+          <label for="prefix" id="prefix-label">CAMPAIGN PREFIX</label>
+          <input type="text" name="prefix" id="prefix" data-lpignore="true" autocomplete="nope" disabled="true">
 
+          <div id="fb-controls" class="row">
+            <div class="four columns">
+              <label for="fb-ad-type" id="fb-ad-label">AD TYPE</label>
+              <select name="fb-ad-type" id="fb-ad-type">
+                <option value="STATIC">STATIC</option>
+                <option value="BOOST">BOOST</option>
+                <option value="VIDEO">VIDEO</option>
+                <option value="CAROUSEL">CAROUSEL</option>
+                <option value="LEAD">LEAD</option>
+              </select>
+            </div>
+          </div>
+        </div>
         
       
       </div>
@@ -55,16 +72,17 @@
         <!-- docs/dark -->
         <div class="row">
           <input type="button" class="six columns" id="docs-select" value="DOCS (WIP)">
-          <input type="button" class="six columns" id="dark-select" value="DARK (WIP)">
+          <input type="button" class="six columns" id="clear-select" value="CLEAR">
+          <!-- <input type="button" class="six columns" id="dark-select" value="DARK (WIP)"> -->
         </div>
 
         
 
         <div class="row">
-          <label for="num-emails" id="num-emails-label" class="six columns">
-            NUMBER OF EMAILS
+          <div class="six columns">
+            <label for="num-emails" id="num-emails-label">NUMBER OF EMAILS</label>
             <input type="number" value="1" min="1" max="20" name="num-emails" id="num-emails-input" autocomplete="nope">
-          </label>
+          </div>
           <label for="num-urls" id="num-urls-label" class="six columns">
             NUMBER OF URLS
             <input type="number" value="1" min="1" max="20" name="num-urls" id="num-urls-input" autocomplete="nope">
@@ -108,15 +126,17 @@
   <hr>
 
   <!-- output for UTM copy buttons -->
+  <div class="container centered">
+    <h3 id="click-copy">CLICK TO COPY</h3>
+  </div>
+
   <div id="output-area" class="container">
     
   </div>
 
   <!-- scroll to top button -->
   <div class="container">
-       
-        <button id="scroll-top">TO THE TOP</button>    
-    
+    <button id="scroll-top">TO THE TOP</button>  
   </div>
 
   <!-- storage for copyable UTM -->

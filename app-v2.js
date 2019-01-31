@@ -5,9 +5,9 @@ docsSelectBtn.addEventListener('click', () => {
 
 });
 
-darkSelectBtn.addEventListener('click', () => {
+// darkSelectBtn.addEventListener('click', () => {
   
-});
+// });
 
 
 
@@ -68,9 +68,10 @@ buildSelectBtn.addEventListener('click', () => {
   // add/remove class for selection
   if (!buildSelectBtn.classList.contains('selected')) {
     buildSelectBtn.classList.toggle('selected');
-    if (engageSelectBtn.classList.contains('selected') || otherSelectBtn.classList.contains('selected')) {
+    if (engageSelectBtn.classList.contains('selected') || otherSelectBtn.classList.contains('selected') || fbSelectBtn.classList.contains('selected')) {
       engageSelectBtn.classList.remove('selected');
       otherSelectBtn.classList.remove('selected');
+      fbSelectBtn.classList.remove('selected');
     }
   }
 
@@ -78,6 +79,7 @@ buildSelectBtn.addEventListener('click', () => {
   buildSelectBtn.style.border = '1px solid #BC3339';
   engageSelectBtn.style.border = '1px solid #BBB';
   otherSelectBtn.style.border = '1px solid #BBB';
+  fbSelectBtn.style.border = '1px solid #BBB';
 
   // alter input
   prefix.removeAttribute('disabled');
@@ -109,9 +111,10 @@ engageSelectBtn.addEventListener('click', () => {
   // add/remove class for selection
   if (!engageSelectBtn.classList.contains('selected')) {
     engageSelectBtn.classList.toggle('selected');
-    if (buildSelectBtn.classList.contains('selected') || otherSelectBtn.classList.contains('selected')) {
+    if (buildSelectBtn.classList.contains('selected') || fbSelectBtn.classList.contains('selected') || otherSelectBtn.classList.contains('selected')) {
       buildSelectBtn.classList.remove('selected');
       otherSelectBtn.classList.remove('selected');
+      fbSelectBtn.classList.remove('selected');
     }
   }
 
@@ -119,6 +122,7 @@ engageSelectBtn.addEventListener('click', () => {
   engageSelectBtn.style.border = '1px solid #BC3339';
   buildSelectBtn.style.border = '1px solid #BBB';
   otherSelectBtn.style.border = '1px solid #BBB';
+  fbSelectBtn.style.border = '1px solid #BBB';
 
   // alter input
   prefix.removeAttribute('disabled');
@@ -135,6 +139,50 @@ engageSelectBtn.addEventListener('click', () => {
 
 
 
+// SELECT FB AD BEHAVIOR
+
+// fb ad select button/controls
+const fbSelectBtn  = document.getElementById('fb-select');
+const fbControls = document.getElementById('fb-controls');
+
+// switch to build behavior
+fbSelectBtn.addEventListener('click', () => {
+
+  // add/remove class for selection
+  if (!fbSelectBtn.classList.contains('selected')) {
+    fbSelectBtn.classList.toggle('selected');
+    if (engageSelectBtn.classList.contains('selected') || buildSelectBtn.classList.contains('selected') || otherSelectBtn.classList.contains('selected')) {
+      engageSelectBtn.classList.remove('selected');
+      buildSelectBtn.classList.remove('selected');
+      otherSelectBtn.classList.remove('selected');
+    }
+  }
+
+  // apply border color to active button and remove from inactive
+  fbSelectBtn.style.border = '1px solid #BC3339';
+  engageSelectBtn.style.border = '1px solid #BBB';
+  buildSelectBtn.style.border = '1px solid #BBB';
+  otherSelectBtn.style.border = '1px solid #BBB';
+
+  // alter inputs
+  prefix.removeAttribute('disabled');
+  prefix.style.backgroundColor = '#fff';
+  prefixLabel.style.color = 'black';
+  prefixLabel.textContent = 'CAMPAIGN NAME';
+  prefix.value = '';
+  prefix.focus();
+
+  emailTitleLabel.innerHTML = 'CTA TEXT&nbsp;&nbsp;';
+  numEmailsLabel.innerHTML = 'NUMBER OF SLIDES';
+  fbControls.style.display = 'block';
+
+  // hide 'choose one'
+  document.getElementById('choose').style.color = '#ffffff';
+
+});
+
+
+
 // SELECT OTHER BEHAVIOR
 
 // other select button
@@ -146,9 +194,10 @@ otherSelectBtn.addEventListener('click', () => {
   // add/remove class for selection
   if (!otherSelectBtn.classList.contains('selected')) {
     otherSelectBtn.classList.toggle('selected');
-    if (engageSelectBtn.classList.contains('selected') || buildSelectBtn.classList.contains('selected')) {
+    if (engageSelectBtn.classList.contains('selected') || buildSelectBtn.classList.contains('selected') || fbSelectBtn.classList.contains('selected')) {
       engageSelectBtn.classList.remove('selected');
       buildSelectBtn.classList.remove('selected');
+      fbSelectBtn.classList.remove('selected');
     }
   }
 
@@ -156,12 +205,13 @@ otherSelectBtn.addEventListener('click', () => {
   otherSelectBtn.style.border = '1px solid #BC3339';
   engageSelectBtn.style.border = '1px solid #BBB';
   buildSelectBtn.style.border = '1px solid #BBB';
+  fbSelectBtn.style.border = '1px solid #BBB';
 
   // alter input
   prefix.removeAttribute('disabled');
   prefix.style.backgroundColor = '#fff';
   prefixLabel.style.color = 'black';
-  prefixLabel.textContent = 'OTHER IDENTIFIER (FB ADS SOON™)';
+  prefixLabel.textContent = 'OTHER IDENTIFIER';
   prefix.value = '';
   prefix.focus();
 
@@ -174,9 +224,10 @@ otherSelectBtn.addEventListener('click', () => {
 
 // INSERT/REMOVE NEW TITLE FIELDS
 
-// number of emails input
+// number of emails input/label
 const numEmailsInput = document.getElementById('num-emails-input');
 numEmailsInput.value = 1;
+const numEmailsLabel = document.getElementById('num-emails-label');
 
 // base title input
 const emailTitle = document.getElementById('title-1');
@@ -242,20 +293,42 @@ numEmailsInput.addEventListener('change', (e) => {
   }
 
   // adds new inputs to DOM depending on value of numEmailsInput
-  for (i=1; i<((Number(numEmailsInput.value)) + 1); i++) {
+  if (fbSelectBtn.classList.contains('selected')) {
 
-    newTitle = document.createElement('li');
-    newTitle.innerHTML = `
-    <label for="title-${i}" id="title-${i}-label">TITLE ${i}</label>
-    <input type="text" name="title-${i}" id="title-${i}" class="title" data-lpignore="true" autocomplete="nope">`;
+    for (i=1; i<((Number(numEmailsInput.value)) + 1); i++) {
 
-    titlesList.appendChild(newTitle);
-    
-  }
+      newTitle = document.createElement('li');
+      newTitle.innerHTML = `
+      <label for="title-${i}" id="title-${i}-label">CTA TEXT ${i}</label>
+      <input type="text" name="title-${i}" id="title-${i}" class="title" data-lpignore="true" autocomplete="nope">`;
 
-  // Remove redundant '1' from title input label when only one email is needed
-  if (Number(numEmailsInput.value) === 1) {
-    document.getElementById('title-1-label').innerHTML = "TITLE&nbsp;&nbsp;";
+      titlesList.appendChild(newTitle);
+      
+    }
+
+    // Remove redundant '1' from title input label when only one email is needed
+    if (Number(numEmailsInput.value) === 1) {
+      document.getElementById('title-1-label').innerHTML = "CTA TEXT&nbsp;&nbsp;";
+    }
+
+  } else {
+
+    for (i=1; i<((Number(numEmailsInput.value)) + 1); i++) {
+
+      newTitle = document.createElement('li');
+      newTitle.innerHTML = `
+      <label for="title-${i}" id="title-${i}-label">TITLE ${i}</label>
+      <input type="text" name="title-${i}" id="title-${i}" class="title" data-lpignore="true" autocomplete="nope">`;
+
+      titlesList.appendChild(newTitle);
+      
+    }
+
+    // Remove redundant '1' from title input label when only one email is needed
+    if (Number(numEmailsInput.value) === 1) {
+      document.getElementById('title-1-label').innerHTML = "TITLE&nbsp;&nbsp;";
+    }
+
   }
 
 });
@@ -614,44 +687,19 @@ function generateUTMs(e) {
 
 
 
-// GENERATE HIDDEN OUTPUTS
-
-// hidden UTM output
-// const hiddenOutput = document.getElementById('hidden-output');
-
-// function generateHiddenOutputs() {
-
-//   // reset hidden outputs
-//   hiddenOutput.innerHTML = '';
-
-//   // dig into UTMs to generate storage
-//   UTMStore.forEach((item, inc) => {
-    
-//     // add new title row
-//     let newRow = document.createElement('pre');
-//     newRow.id = `hidden-utms-${inc+1}`;
-//     newRow.style.display = 'block';
-//     hiddenOutput.appendChild(newRow);
-
-//     // add UTMs to new title row
-//     item.forEach((item, i) => {
-
-//       let insertRow = document.getElementById(`hidden-utms-${inc+1}`);
-//       let newText = document.createElement('textarea');
-//       newText.classList.add(`hidden-utms-${i+1}-${UTMContent[i]}`);
-//       newText.textContent = `${item}`
-//       insertRow.appendChild(newText);
-      
-//     });
-//   });
-
-//   generateButtons();
-
-// }
-
-
-
 // GENERATE UTM COPY BUTTONS
+
+// scroll to top button
+
+const scrollTop = document.getElementById('scroll-top');
+
+scrollTop.addEventListener('click', () => {
+  window.scroll(0, -10000);
+});
+
+// click to copy headline
+
+const clickCopy = document.getElementById('click-copy');
 
 // div for insertion
 const outputArea = document.getElementById('output-area');
@@ -680,14 +728,11 @@ function generateButtons() {
       newDiv.innerHTML = `
         <button id="${UTMTerms[i]}-btn-${inc+1}" class="utm-btn ${UTMTerms[i]}">${UTMTerms[i]} ${inc+1}</button>`;
       insertRow.appendChild(newDiv);
-      console.log('fuck');
     });
-
-
-
   });
 
-  // display scroll top button
+  // display click to copy/scroll top button
+  clickCopy.style.display = 'inline-block';
   scrollTop.style.display = 'block';
 
   window.scroll(0, 10000);
@@ -764,15 +809,14 @@ outputArea.addEventListener('click', (e) => {
 
   } 
 });
-    
 
 
 
-// SCROLL TO TOP
+// CLEAR BUTTON
 
-const scrollTop = document.getElementById('scroll-top');
+document.getElementById('clear-select').addEventListener('click', () => {
 
-scrollTop.addEventListener('click', () => {
-  window.scroll(0, -10000);
+  document.location.reload();  
+
 });
 

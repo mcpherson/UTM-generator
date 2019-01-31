@@ -1,0 +1,9 @@
+html {
+  background-color: #404040;
+}
+
+label {
+  font-family: 'Anonymous Pro', monospace;
+  margin-top: 10px;
+  margin-bottom: 0;
+}

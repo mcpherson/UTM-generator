@@ -19,7 +19,8 @@ input[type="button"] {
 }
 
 input#docs-select, 
-input#dark-select {
+input#dark-select,
+input#clear-select {
   display: inline-block;
   margin-top: 34px;
 }
@@ -105,7 +106,7 @@ hr {
 }
 
 .centered {
-  margin:0 auto;
+  text-align: center;
 }
 
 .gen {
@@ -248,3 +249,24 @@ span {
   background: linear-gradient(to top, #BC3339, #404040);
 }
 
+#clear-select {
+  border: 1px solid #BC3339;
+  border-radius: 4px;
+  color: #BC3339
+}
+
+#click-copy {
+  margin-top: 25px;
+  margin-bottom: 0;
+  font-family: 'Anonymous Pro', monospace;
+  display: none;
+}
+
+.three {
+  font-size: 13px !important;
+}
+
+#fb-controls {
+  display: none;
+  font-family: 'Anonymous Pro', monospace;
+}

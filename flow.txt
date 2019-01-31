@@ -105,4 +105,4 @@ UTMs are generated in the following formats:
 {url}/?utm_source={company name}&utm_medium=email&utm_campaign={BUILD/ENGAGE}-{PREFIX}-{TITLE}&utm_content={CONTENT}
 <a href="{url}/?utm_source={company name}&utm_medium=email&utm_campaign={BUILD/ENGAGE}-{PREFIX}-{TITLE}&utm_content={CONTENT}" target="_blank">
 
-{url}/?utm_source={company name}&utm_medium=FB-AD&utm_campaign={C-TYPE}-{C-NAME}-{?C-SLIDE}-
+{url}/?utm_source=boomtime&utm_medium=FB-AD-{C-TYPE}&utm_campaign={C-NAME}-{?SLIDE# || FINAL}-{CTA-TEXT}
