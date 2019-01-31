@@ -27,6 +27,7 @@ function displayMsg(e, i) {
   // init CSS transition out
   setTimeout(() => {
     msgArea.blur();
+    msgArea.textContent = '';
 
     if (e) {
 
@@ -81,13 +82,17 @@ buildSelectBtn.addEventListener('click', () => {
   otherSelectBtn.style.border = '1px solid #BBB';
   fbSelectBtn.style.border = '1px solid #BBB';
 
-  // alter input
+  // alter inputs
   prefix.removeAttribute('disabled');
   prefix.style.backgroundColor = '#fff';
   prefixLabel.style.color = 'black';
   prefixLabel.textContent = 'BUILD CATEGORY (e.g. NEWSLETTER)';
   prefix.value = '';
   prefix.focus();
+
+  emailTitleLabel.innerHTML = 'TITLES&nbsp;&nbsp;';
+  numEmailsLabel.innerHTML = 'NUMBER OF EMAILS';
+  fbControls.style.display = 'none';
 
   // hide 'choose one'
   document.getElementById('choose').style.color = '#ffffff';
@@ -124,13 +129,17 @@ engageSelectBtn.addEventListener('click', () => {
   otherSelectBtn.style.border = '1px solid #BBB';
   fbSelectBtn.style.border = '1px solid #BBB';
 
-  // alter input
+  // alter inputs
   prefix.removeAttribute('disabled');
   prefix.style.backgroundColor = '#fff';
   prefixLabel.style.color = 'black';
   prefixLabel.textContent = 'ENGAGE STREAM (e.g. INTRO)';
   prefix.value = '';
   prefix.focus();
+
+  emailTitleLabel.innerHTML = 'TITLE&nbsp;&nbsp;';
+  numEmailsLabel.innerHTML = 'NUMBER OF EMAILS';
+  fbControls.style.display = 'none';
 
   // hide 'choose one'
   document.getElementById('choose').style.color = '#fff';
@@ -183,6 +192,21 @@ fbSelectBtn.addEventListener('click', () => {
 
 
 
+// FB AD TYPE BEHAVIOR
+
+const fbAdType = document.getElementById('fb-ad-type');
+
+fbAdType.addEventListener('change', (e) => {
+
+  let fbAdTypeVal = fbAdType.options[fbAdType.selectedIndex].value;
+
+  if (fbAdTypeVal == "CAROUSEL") {
+    alert('success');
+  }
+});
+
+
+
 // SELECT OTHER BEHAVIOR
 
 // other select button
@@ -207,13 +231,17 @@ otherSelectBtn.addEventListener('click', () => {
   buildSelectBtn.style.border = '1px solid #BBB';
   fbSelectBtn.style.border = '1px solid #BBB';
 
-  // alter input
+  // alter inputs
   prefix.removeAttribute('disabled');
   prefix.style.backgroundColor = '#fff';
   prefixLabel.style.color = 'black';
   prefixLabel.textContent = 'OTHER IDENTIFIER';
   prefix.value = '';
   prefix.focus();
+
+  emailTitleLabel.innerHTML = 'TITLE&nbsp;&nbsp;';
+  numEmailsLabel.innerHTML = 'NUMBER OF EMAILS';
+  fbControls.style.display = 'none';
 
   // hide 'choose one'
   document.getElementById('choose').style.color = '#ffffff';
@@ -506,7 +534,7 @@ function generateTitles(e) {
 
     });
 
-  } else if (otherSelectBtn.classList.contains('selected')) {
+  } else if (otherSelectBtn.classList.contains('selected') || fbSelectBtn.classList.contains('selected')) {
 
     // formats names for URLs
     emailTitles.forEach((name) => {
@@ -529,7 +557,7 @@ function generateTitles(e) {
 
   } else {
 
-    msgText.textContent = `SELECT BUILD, ENGAGE, OR OTHER.`;
+    msgText.textContent = `SELECT A CAMPAIGN TYPE.`;
 
     displayMsg();
 

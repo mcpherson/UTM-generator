@@ -270,3 +270,7 @@ span {
   display: none;
   font-family: 'Anonymous Pro', monospace;
 }
+
+select {
+  width: 100%;
+}
