@@ -853,6 +853,29 @@ function generateButtons() {
   clickCopy.style.display = 'inline-block';
   scrollTop.style.display = 'block';
 
+  // apply color to buttons (funsies)
+  let fbUTMs = document.getElementsByClassName('fb-utm-btn');
+  let fbUTMsArray = Array.from(fbUTMs);
+  let btnColors = [];
+
+  // generate colors
+  for (i=0; i<fbUTMs.length; i++) {
+    if(i === 0) {
+      btnColors.push('rgb(188,51,57');
+    } else {
+      let redDelta = (-124 / fbUTMs.length);
+      let greenDelta = (13 / fbUTMs.length);
+      let blueDelta = (7 / fbUTMs.length);
+      let newColor = `rgb(${Math.floor(188 + (redDelta*(i+1)))},${Math.floor(51 + (greenDelta*(i+1)))},${Math.floor(57 + (blueDelta*(i+1)))})`;
+      btnColors.push(newColor);
+    }
+  }
+  
+  fbUTMsArray.forEach((item, i) => {
+    item.style.backgroundColor = btnColors[i];
+
+  });
+
   window.scroll(0, 10000);
 
 }
