@@ -440,7 +440,7 @@ numURLsInput.addEventListener('change', (e) => {
       <label for="url-${i}" id="url-${i}-label">URL ${i}<pre>&#9;</pre>&nbsp;&nbsp;</label>
       <div class="row">
         <input type="url" name="url-${i}" id="url-${i}" class="url-input url-${i}" data-lpignore="true" autocomplete="nope">
-        <input type="button" id="gen-${i}" class="gen" value="GEN">
+        <input type="button" id="gen-${i}" class="gen" value="GEN" tabindex="-1">
       </div>`;
     
     newURL.setAttribute('class', 'url');
@@ -756,6 +756,7 @@ function generateUTMs(e) {
         });
       }
 
+    // non-FB UTMs
     } else {
 
       if (item.classList.contains(`url-${lastChar}`)) {
@@ -822,23 +823,43 @@ function generateButtons() {
   // dig into UTMs to generate buttons
   UTMStore.forEach((item, inc) => {
     
-    // add new title row
-    let newRow = document.createElement('div');
-    newRow.id = `utms-${inc+1}`;
-    newRow.classList.add('row', 'push-down');
-    // newRow.style.display = 'block';
-    outputArea.appendChild(newRow);
+    if (fbSelectBtn.classList.contains('selected')) {
 
-    // add UTM buttons to new title row
-    item.forEach((item, i) => {
+      // add new title row
+      let newRow = document.createElement('div');
+      newRow.id = `utms-${inc+1}`;
+      newRow.classList.add('row', 'push-down');
+      // newRow.style.display = 'block';
+      outputArea.appendChild(newRow);
 
+      // add UTM buttons to new title row
       let insertRow = document.getElementById(`utms-${inc+1}`);
       let newDiv = document.createElement('div');
-      newDiv.classList.add('two', 'columns');
+      newDiv.classList.add('twelve', 'columns');
       newDiv.innerHTML = `
-        <button id="${UTMTerms[i]}-btn-${inc+1}" class="utm-btn ${UTMTerms[i]}">${UTMTerms[i]} ${inc+1}</button>`;
-      insertRow.appendChild(newDiv);
-    });
+        <button id="fb-btn-${inc+1}" class="fb-utm-btn">${fbAdType.value} UTM ${inc+1}</button>`;
+      insertRow.appendChild(newDiv);   
+
+    } else {
+
+      // add new title row
+      let newRow = document.createElement('div');
+      newRow.id = `utms-${inc+1}`;
+      newRow.classList.add('row', 'push-down');
+      // newRow.style.display = 'block';
+      outputArea.appendChild(newRow);
+
+      // add UTM buttons to new title row
+      item.forEach((item, i) => {
+
+        let insertRow = document.getElementById(`utms-${inc+1}`);
+        let newDiv = document.createElement('div');
+        newDiv.classList.add('two', 'columns');
+        newDiv.innerHTML = `
+          <button id="${UTMTerms[i]}-btn-${inc+1}" class="utm-btn ${UTMTerms[i]}">${UTMTerms[i]} ${inc+1}</button>`;
+        insertRow.appendChild(newDiv);
+      });
+    }
   });
 
   // display click to copy/scroll top button
@@ -860,7 +881,7 @@ const currentUTM = document.getElementById('current-utm');
 outputArea.addEventListener('click', (e) => {
 
   // event delegation
-  if (e.target.classList.contains('utm-btn')) {
+  if (e.target.classList.contains('utm-btn') || e.target.classList.contains('fb-utm-btn')) {
     
     // grab info for copying from button ID 
     let tarIDType = String(e.target.id).charAt(0);
@@ -868,6 +889,11 @@ outputArea.addEventListener('click', (e) => {
     
     // determine which UTM to grab from UTMStore[]
     switch (tarIDType) {
+      case "f": // fb ads
+
+        currentUTM.textContent = UTMStore[tarIDNum];
+        break;
+
       case "H":
 
         let currentGroupH = UTMStore[tarIDNum];
@@ -875,11 +901,11 @@ outputArea.addEventListener('click', (e) => {
         break;
     
       case "F":
-    
+
         let currentGroupF = UTMStore[tarIDNum];
         currentUTM.textContent = currentGroupF[1];
         break;
-    
+
       case "I":
     
         let currentGroupI = UTMStore[tarIDNum];

@@ -274,3 +274,9 @@ span {
 select {
   width: 100%;
 }
+
+.fb-utm-btn {
+  background-color: #BC3339;
+  color: #fff;
+  width: 100%;
+}
