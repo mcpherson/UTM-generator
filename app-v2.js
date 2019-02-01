@@ -154,6 +154,9 @@ engageSelectBtn.addEventListener('click', () => {
 const fbSelectBtn  = document.getElementById('fb-select');
 const fbControls = document.getElementById('fb-controls');
 
+// fb ad type
+const fbAdType = document.getElementById('fb-ad-type');
+
 // switch to build behavior
 fbSelectBtn.addEventListener('click', () => {
 
@@ -188,21 +191,6 @@ fbSelectBtn.addEventListener('click', () => {
   // hide 'choose one'
   document.getElementById('choose').style.color = '#ffffff';
 
-});
-
-
-
-// FB AD TYPE BEHAVIOR
-
-const fbAdType = document.getElementById('fb-ad-type');
-
-fbAdType.addEventListener('change', (e) => {
-
-  let fbAdTypeVal = fbAdType.options[fbAdType.selectedIndex].value;
-
-  if (fbAdTypeVal == "CAROUSEL") {
-    
-  }
 });
 
 
@@ -789,7 +777,6 @@ function generateUTMs(e) {
         });
       }
     }
-    console.log(UTMStore);
   });
 
   // generateHiddenOutputs();
@@ -837,7 +824,7 @@ function generateButtons() {
       let newDiv = document.createElement('div');
       newDiv.classList.add('twelve', 'columns');
       newDiv.innerHTML = `
-        <button id="fb-btn-${inc+1}" class="fb-utm-btn">${fbAdType.value} UTM ${inc+1}</button>`;
+        <button id="fb-btn-${inc+1}" class="fb-utm-btn">${fbAdType.value} UTM ${inc+1} (${titlesFormatted[inc]})</button>`;
       insertRow.appendChild(newDiv);   
 
     } else {

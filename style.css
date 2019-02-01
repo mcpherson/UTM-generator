@@ -280,3 +280,8 @@ select {
   color: #fff;
   width: 100%;
 }
+
+#ph {
+  display: inline-block;
+  margin-top: 34px;
+}
