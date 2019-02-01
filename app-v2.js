@@ -27,7 +27,7 @@ function displayMsg(e, i) {
   // init CSS transition out
   setTimeout(() => {
     msgArea.blur();
-    msgArea.textContent = '';
+    msgText.textContent = '';
 
     if (e) {
 
@@ -201,7 +201,7 @@ fbAdType.addEventListener('change', (e) => {
   let fbAdTypeVal = fbAdType.options[fbAdType.selectedIndex].value;
 
   if (fbAdTypeVal == "CAROUSEL") {
-    alert('success');
+    
   }
 });
 
@@ -534,7 +534,28 @@ function generateTitles(e) {
 
     });
 
-  } else if (otherSelectBtn.classList.contains('selected') || fbSelectBtn.classList.contains('selected')) {
+  } else if (fbSelectBtn.classList.contains('selected')) {
+
+    // formats names for URLs
+    emailTitles.forEach((name) => {
+
+      // trim any sillyness
+      let nameTrimmed = name.trim();
+
+      // replace spaces with hyphens
+      let nameFormatted = nameTrimmed.replace(/ /g, "-");
+
+      // URI encode (encodes special characters)
+      let nameEncoded = escape(nameFormatted);
+
+      // add prefix string
+      let nameComplete = `${nameEncoded}`;
+
+      titlesFormatted.push(nameComplete);
+
+    });
+
+  } else if (otherSelectBtn.classList.contains('selected')) {
 
     // formats names for URLs
     emailTitles.forEach((name) => {
@@ -677,35 +698,97 @@ function generateUTMs(e) {
 
   // generate UTMs for clicked URL
   inputArray.forEach((item, i) => {
-    if (item.classList.contains(`url-${lastChar}`)) {
-      titlesFormatted.forEach((name) => {
-        let UTMGroup = [];
 
-        UTMContent.forEach((item) => {
-          
-          let newUTM = '';
+    // check for FB ADS toggle
+    if (fbSelectBtn.classList.contains('selected')) {
 
-          switch (item) {
-            case 'body-link':
-              newUTM = `<a href="${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}" target="_blank">`;
-              UTMGroup.push(newUTM);
+      // grab prefix value for insertion
+      let prefixRaw = prefix.value.toUpperCase();
+      let prefixText = prefixRaw.trim();
+      let prefixFormatted = prefixText.replace(/ /g, "-");
+      let prefixEncoded = escape(prefixFormatted);
+
+      // generates UTMs only for clicked ID
+      if (item.classList.contains(`url-${lastChar}`)) {
+        titlesFormatted.forEach((name, inc) => {
+
+          switch (fbAdType.value) {
+            case 'STATIC':
+
+              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-AD-STATIC&utm_campaign=${prefixEncoded}&utm_content=${name}`;
+              UTMStore.push(newUTM);
               break;
-            case 'signature':
-              newUTM = `<a href="${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}" target="_blank">`;
-              UTMGroup.push(newUTM);
+
+            case 'BOOST':
+
+              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-AD-BOOST&utm_campaign=${prefixEncoded}&utm_content=${name}`;
+              UTMStore.push(newUTM);
               break;
+
+            case 'VIDEO':
+
+              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-AD-VIDEO&utm_campaign=${prefixEncoded}&utm_content=${name}`;
+              UTMStore.push(newUTM);
+              break;
+
+            case 'CAROUSEL':
+
+              if (inc+1 == titlesFormatted.length && inc !== 0) {
+                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-AD-CAROUSEL&utm_campaign=${prefixEncoded}&utm_content=${name}-FINAL_SLIDE`;
+                UTMStore.push(newUTM);
+              } else {
+                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-AD-CAROUSEL&utm_campaign=${prefixEncoded}&utm_content=${name}-SLIDE_${inc+1}`;
+                UTMStore.push(newUTM);
+              }
+
+              break;
+
+            case 'LEAD':
+
+              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-AD-LEAD&utm_campaign=${prefixEncoded}&utm_content=${name}`;
+              UTMStore.push(newUTM);
+              break;
+
             default:
-              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}`;
-              UTMGroup.push(newUTM);
+
               break;
           }
-          
         });
+      }
 
-        UTMStore.push(UTMGroup);
+    } else {
 
-      });
+      if (item.classList.contains(`url-${lastChar}`)) {
+        titlesFormatted.forEach((name) => {
+          let UTMGroup = [];
+
+          UTMContent.forEach((item) => {
+            
+            let newUTM = '';
+
+            switch (item) {
+              case 'body-link':
+                newUTM = `<a href="${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}" target="_blank">`;
+                UTMGroup.push(newUTM);
+                break;
+              case 'signature':
+                newUTM = `<a href="${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}" target="_blank">`;
+                UTMGroup.push(newUTM);
+                break;
+              default:
+                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}`;
+                UTMGroup.push(newUTM);
+                break;
+            }
+            
+          });
+
+          UTMStore.push(UTMGroup);
+
+        });
+      }
     }
+    console.log(UTMStore);
   });
 
   // generateHiddenOutputs();
@@ -718,7 +801,6 @@ function generateUTMs(e) {
 // GENERATE UTM COPY BUTTONS
 
 // scroll to top button
-
 const scrollTop = document.getElementById('scroll-top');
 
 scrollTop.addEventListener('click', () => {
