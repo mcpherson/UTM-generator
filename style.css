@@ -279,9 +279,20 @@ select {
   background-color: #BC3339;
   color: #fff;
   width: 100%;
+  transition: background-color .5s, color .5s, border-color .5s;
+}
+
+.fb-utm-btn:hover {
+  background-color: #fff !important;
+  border-color: #BC3339;
+  color: #BC3339;
 }
 
 #ph {
   display: inline-block;
   margin-top: 34px;
+}
+
+::placeholder {
+  color: #ddd;
 }

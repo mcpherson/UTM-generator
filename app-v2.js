@@ -58,182 +58,116 @@ function displayMsg(e, i) {
 
 
 
-// SELECT BUILD BEHAVIOR
+// SELECT BEHAVIOR
 
-// build select button
-const buildSelectBtn  = document.getElementById('build-select');
+// behavior select buttons
+const buildSelectBtn  = document.getElementById('build-select'),
+      engageSelectBtn = document.getElementById('engage-select'),
+      fbSelectBtn     = document.getElementById('fb-select'),
+      otherSelectBtn  = document.getElementById('other-select');
 
-// switch to build behavior
-buildSelectBtn.addEventListener('click', () => {
+// prefix input/label
+const prefix      = document.getElementById('prefix'),
+      prefixLabel = document.getElementById('prefix-label');
 
-  // add/remove class for selection
-  if (!buildSelectBtn.classList.contains('selected')) {
-    buildSelectBtn.classList.toggle('selected');
-    if (engageSelectBtn.classList.contains('selected') || otherSelectBtn.classList.contains('selected') || fbSelectBtn.classList.contains('selected')) {
-      engageSelectBtn.classList.remove('selected');
-      otherSelectBtn.classList.remove('selected');
-      fbSelectBtn.classList.remove('selected');
-    }
-  }
-
-  // apply border color to active button and remove from inactive
-  buildSelectBtn.style.border = '1px solid #BC3339';
-  engageSelectBtn.style.border = '1px solid #BBB';
-  otherSelectBtn.style.border = '1px solid #BBB';
-  fbSelectBtn.style.border = '1px solid #BBB';
-
-  // alter inputs
-  prefix.removeAttribute('disabled');
-  prefix.style.backgroundColor = '#fff';
-  prefixLabel.style.color = 'black';
-  prefixLabel.textContent = 'BUILD CATEGORY (e.g. NEWSLETTER)';
-  prefix.value = '';
-  prefix.focus();
-
-  emailTitleLabel.innerHTML = 'TITLES&nbsp;&nbsp;';
-  numEmailsLabel.innerHTML = 'NUMBER OF EMAILS';
-  fbControls.style.display = 'none';
-
-  // hide 'choose one'
-  document.getElementById('choose').style.color = '#ffffff';
-
-});
-
-
-
-// SELECT ENGAGE BEHAVIOR
-
-// engage select button
-const engageSelectBtn = document.getElementById('engage-select');
-
-// engage stream title input
-const prefix = document.getElementById('prefix');
-const prefixLabel = document.getElementById('prefix-label');
-
-// switch to engage behavior
-engageSelectBtn.addEventListener('click', () => {
-
-  // add/remove class for selection
-  if (!engageSelectBtn.classList.contains('selected')) {
-    engageSelectBtn.classList.toggle('selected');
-    if (buildSelectBtn.classList.contains('selected') || fbSelectBtn.classList.contains('selected') || otherSelectBtn.classList.contains('selected')) {
-      buildSelectBtn.classList.remove('selected');
-      otherSelectBtn.classList.remove('selected');
-      fbSelectBtn.classList.remove('selected');
-    }
-  }
-
-  // apply border color to active button and remove from inactive
-  engageSelectBtn.style.border = '1px solid #BC3339';
-  buildSelectBtn.style.border = '1px solid #BBB';
-  otherSelectBtn.style.border = '1px solid #BBB';
-  fbSelectBtn.style.border = '1px solid #BBB';
-
-  // alter inputs
-  prefix.removeAttribute('disabled');
-  prefix.style.backgroundColor = '#fff';
-  prefixLabel.style.color = 'black';
-  prefixLabel.textContent = 'ENGAGE STREAM (e.g. INTRO)';
-  prefix.value = '';
-  prefix.focus();
-
-  emailTitleLabel.innerHTML = 'TITLE&nbsp;&nbsp;';
-  numEmailsLabel.innerHTML = 'NUMBER OF EMAILS';
-  fbControls.style.display = 'none';
-
-  // hide 'choose one'
-  document.getElementById('choose').style.color = '#fff';
-
-});
-
-
-
-// SELECT FB AD BEHAVIOR
-
-// fb ad select button/controls
-const fbSelectBtn  = document.getElementById('fb-select');
+// fb ad controls
 const fbControls = document.getElementById('fb-controls');
 
 // fb ad type
 const fbAdType = document.getElementById('fb-ad-type');
 
-// switch to build behavior
-fbSelectBtn.addEventListener('click', () => {
+// button container
+document.getElementById('selectors').addEventListener('click', (e) => {
 
-  // add/remove class for selection
-  if (!fbSelectBtn.classList.contains('selected')) {
-    fbSelectBtn.classList.toggle('selected');
-    if (engageSelectBtn.classList.contains('selected') || buildSelectBtn.classList.contains('selected') || otherSelectBtn.classList.contains('selected')) {
+  switch (e.target.id) {
+    case 'build-select':
+      // set selected class for other operations
+      if (!buildSelectBtn.classList.contains('selected')) {
+        buildSelectBtn.classList.toggle('selected');
+      }
+      engageSelectBtn.classList.remove('selected');
+      otherSelectBtn.classList.remove('selected');
+      fbSelectBtn.classList.remove('selected');
+
+      // apply border color to active button and remove from inactive
+      buildSelectBtn.style.border = '1px solid #BC3339';
+      engageSelectBtn.style.border = '1px solid #BBB';
+      otherSelectBtn.style.border = '1px solid #BBB';
+      fbSelectBtn.style.border = '1px solid #BBB';
+
+      // alter inputs
+      prefixLabel.textContent = 'BUILD CATEGORY (e.g. NEWSLETTER)';
+      emailTitleLabel.innerHTML = 'TITLE&nbsp;&nbsp;';
+      numEmailsLabel.innerHTML = 'NUMBER OF EMAILS';
+      fbControls.style.display = 'none';
+      break;
+    case 'engage-select':
+      if (!engageSelectBtn.classList.contains('selected')) {
+        engageSelectBtn.classList.toggle('selected');
+      }
+      buildSelectBtn.classList.remove('selected');
+      otherSelectBtn.classList.remove('selected');
+      fbSelectBtn.classList.remove('selected');
+
+      engageSelectBtn.style.border = '1px solid #BC3339';
+      buildSelectBtn.style.border = '1px solid #BBB';
+      otherSelectBtn.style.border = '1px solid #BBB';
+      fbSelectBtn.style.border = '1px solid #BBB';
+
+      prefixLabel.textContent = 'ENGAGE STREAM (e.g. INTRO)';
+      emailTitleLabel.innerHTML = 'TITLE&nbsp;&nbsp;';
+      numEmailsLabel.innerHTML = 'NUMBER OF EMAILS';
+      fbControls.style.display = 'none';
+      break;
+    case 'fb-select':
+      if (!fbSelectBtn.classList.contains('selected')) {
+        fbSelectBtn.classList.toggle('selected');
+      }
       engageSelectBtn.classList.remove('selected');
       buildSelectBtn.classList.remove('selected');
       otherSelectBtn.classList.remove('selected');
-    }
-  }
 
-  // apply border color to active button and remove from inactive
-  fbSelectBtn.style.border = '1px solid #BC3339';
-  engageSelectBtn.style.border = '1px solid #BBB';
-  buildSelectBtn.style.border = '1px solid #BBB';
-  otherSelectBtn.style.border = '1px solid #BBB';
+      fbSelectBtn.style.border = '1px solid #BC3339';
+      engageSelectBtn.style.border = '1px solid #BBB';
+      buildSelectBtn.style.border = '1px solid #BBB';
+      otherSelectBtn.style.border = '1px solid #BBB';
 
-  // alter inputs
-  prefix.removeAttribute('disabled');
-  prefix.style.backgroundColor = '#fff';
-  prefixLabel.style.color = 'black';
-  prefixLabel.textContent = 'CAMPAIGN NAME';
-  prefix.value = '';
-  prefix.focus();
-
-  emailTitleLabel.innerHTML = 'CTA TEXT&nbsp;&nbsp;';
-  numEmailsLabel.innerHTML = 'NUMBER OF SLIDES';
-  fbControls.style.display = 'block';
-
-  // hide 'choose one'
-  document.getElementById('choose').style.color = '#ffffff';
-
-});
-
-
-
-// SELECT OTHER BEHAVIOR
-
-// other select button
-const otherSelectBtn  = document.getElementById('other-select');
-
-// switch to build behavior
-otherSelectBtn.addEventListener('click', () => {
-
-  // add/remove class for selection
-  if (!otherSelectBtn.classList.contains('selected')) {
-    otherSelectBtn.classList.toggle('selected');
-    if (engageSelectBtn.classList.contains('selected') || buildSelectBtn.classList.contains('selected') || fbSelectBtn.classList.contains('selected')) {
+      prefixLabel.textContent = 'CAMPAIGN NAME';
+      emailTitleLabel.innerHTML = 'CTA TEXT&nbsp;&nbsp;';
+      numEmailsLabel.innerHTML = 'NUMBER OF SLIDES';
+      fbControls.style.display = 'block';
+      break;
+    case 'other-select':
+      if (!otherSelectBtn.classList.contains('selected')) {
+        otherSelectBtn.classList.toggle('selected');
+      }
       engageSelectBtn.classList.remove('selected');
       buildSelectBtn.classList.remove('selected');
       fbSelectBtn.classList.remove('selected');
-    }
+
+      otherSelectBtn.style.border = '1px solid #BC3339';
+      engageSelectBtn.style.border = '1px solid #BBB';
+      buildSelectBtn.style.border = '1px solid #BBB';
+      fbSelectBtn.style.border = '1px solid #BBB';
+
+      prefixLabel.textContent = 'OTHER IDENTIFIER';
+      emailTitleLabel.innerHTML = 'TITLE&nbsp;&nbsp;';
+      numEmailsLabel.innerHTML = 'NUMBER OF EMAILS';
+      fbControls.style.display = 'none';
+      break;
+    default:
+
+      return;
   }
 
-  // apply border color to active button and remove from inactive
-  otherSelectBtn.style.border = '1px solid #BC3339';
-  engageSelectBtn.style.border = '1px solid #BBB';
-  buildSelectBtn.style.border = '1px solid #BBB';
-  fbSelectBtn.style.border = '1px solid #BBB';
-
-  // alter inputs
+  // case-independent changes
   prefix.removeAttribute('disabled');
   prefix.style.backgroundColor = '#fff';
   prefixLabel.style.color = 'black';
-  prefixLabel.textContent = 'OTHER IDENTIFIER';
   prefix.value = '';
   prefix.focus();
-
-  emailTitleLabel.innerHTML = 'TITLE&nbsp;&nbsp;';
-  numEmailsLabel.innerHTML = 'NUMBER OF EMAILS';
-  fbControls.style.display = 'none';
-
   // hide 'choose one'
   document.getElementById('choose').style.color = '#ffffff';
-
 });
 
 
@@ -427,7 +361,7 @@ numURLsInput.addEventListener('change', (e) => {
     newURL.innerHTML = `
       <label for="url-${i}" id="url-${i}-label">URL ${i}<pre>&#9;</pre>&nbsp;&nbsp;</label>
       <div class="row">
-        <input type="url" name="url-${i}" id="url-${i}" class="url-input url-${i}" data-lpignore="true" autocomplete="nope">
+        <input type="url" name="url-${i}" id="url-${i}" class="url-input url-${i}" data-lpignore="true" autocomplete="nope" placeholder="CAUTION: NO VALIDATION">
         <input type="button" id="gen-${i}" class="gen" value="GEN" tabindex="-1">
       </div>`;
     
@@ -602,26 +536,27 @@ function formatURLs(e) {
     let nodeItem = urlList.item(i);
 
     baseURLs.push(nodeItem.value);
+    // validURLs.push(nodeItem.value);
   }
 
   // validate URL (from stackoverflow)
   for (i=0; i<baseURLs.length; i++) {
-    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-    if(!pattern.test(baseURLs[i])) {
+    // var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    // '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
+    // '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    // '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    // '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    // '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    // if(!pattern.test(baseURLs[i])) {
 
-      msgText.textContent = `URL ${i+1} IS INVALID.`;
+    //   msgText.textContent = `URL ${i+1} IS INVALID.`;
 
-      displayMsg(e, i);
+    //   displayMsg(e, i);
 
-      baseURLs = [];
-      validURLs = [];
-      return;
-    } else {
+    //   baseURLs = [];
+    //   validURLs = [];
+    //   return;
+    // } else {
       
       let validURL = baseURLs[i];
 
@@ -632,7 +567,7 @@ function formatURLs(e) {
       }
       validURLs.push(validURL);
 
-    }
+    // }
   }
 
   // reset validURLs if something went wrong
