@@ -396,8 +396,11 @@ function generateTitles(e) {
   // init array for email name storage
   let emailTitles = [];
 
+  // prefix type value
+  let prefixType = '';
 
-  // pulls values out of nested inputs in titleList[]
+
+  // pulls values out of inputs in titleList[]
   for (i=0; i<titleList.length; i++) {
     let nodeItem = titleList.item(i)
 
@@ -405,111 +408,49 @@ function generateTitles(e) {
   }
 
   // grab prefix value for insertion
-  let prefixRaw = prefix.value.toUpperCase();
+  let prefixRaw = prefix.value.toLowerCase();
   let prefixText = prefixRaw.trim();
   let prefixFormatted = prefixText.replace(/ /g, "-");
   let prefixEncoded = escape(prefixFormatted);
 
   if (buildSelectBtn.classList.contains('selected')) {
-
-    let prefixType = 'BUILD-';
-
-    // formats names for URLs
-    emailTitles.forEach((name) => {
-
-      // trim any sillyness
-      let nameTrimmed = name.trim();
-
-      // replace spaces with hyphens
-      let nameFormatted = nameTrimmed.replace(/ /g, "-");
-
-      // URI encode (encodes special characters)
-      let nameEncoded = escape(nameFormatted);
-
-      // add prefix string
-      let nameComplete = `${prefixType}${prefixEncoded}-${nameEncoded}`;
-
-      titlesFormatted.push(nameComplete);
-
-    });
-
+    prefixType = 'Build-';
   } else if (engageSelectBtn.classList.contains('selected')) {
-
-    let prefixType = 'ENGAGE-';
-
-    // formats names for URLs
-    emailTitles.forEach((name) => {
-
-      // trim any sillyness
-      let nameTrimmed = name.trim();
-
-      // replace spaces with hyphens
-      let nameFormatted = nameTrimmed.replace(/ /g, "-");
-
-      // URI encode (encodes special characters)
-      let nameEncoded = escape(nameFormatted);
-
-      // add prefix string
-      let nameComplete = `${prefixType}${prefixEncoded}-${nameEncoded}`;
-
-      titlesFormatted.push(nameComplete);
-
-    });
-
-  } else if (fbSelectBtn.classList.contains('selected')) {
-
-    // formats names for URLs
-    emailTitles.forEach((name) => {
-
-      // trim any sillyness
-      let nameTrimmed = name.trim();
-
-      // replace spaces with hyphens
-      let nameFormatted = nameTrimmed.replace(/ /g, "-");
-
-      // URI encode (encodes special characters)
-      let nameEncoded = escape(nameFormatted);
-
-      // add prefix string
-      let nameComplete = `${nameEncoded}`;
-
-      titlesFormatted.push(nameComplete);
-
-    });
-
+    prefixType = 'Engage-';
   } else if (otherSelectBtn.classList.contains('selected')) {
-
-    // formats names for URLs
-    emailTitles.forEach((name) => {
-
-      // trim any sillyness
-      let nameTrimmed = name.trim();
-
-      // replace spaces with hyphens
-      let nameFormatted = nameTrimmed.replace(/ /g, "-");
-
-      // URI encode (encodes special characters)
-      let nameEncoded = escape(nameFormatted);
-
-      // add prefix string
-      let nameComplete = `${prefixEncoded}-${nameEncoded}`;
-
-      titlesFormatted.push(nameComplete);
-
-    });
-
+    prefixType = '';
+  } else if (fbSelectBtn.classList.contains('selected')) {
+    prefixType = '';
   } else {
-
     msgText.textContent = `SELECT A CAMPAIGN TYPE.`;
-
     displayMsg();
-
     return;
-
   }
 
-  generateUTMs(e);
+  // formats names for URLs
+  emailTitles.forEach((name) => {
 
+    // trim any sillyness
+    let nameTrimmed = name.trim();
+
+    // replace spaces with hyphens
+    let nameFormatted = nameTrimmed.replace(/ /g, "-");
+
+    // URI encode (encodes special characters)
+    let nameEncoded = escape(nameFormatted);
+
+    // add prefix string
+    let nameComplete = '';
+    if (fbSelectBtn.classList.contains('selected')) {
+      nameComplete = `${nameEncoded}`;
+    } else {
+      nameComplete = `${prefixType}${prefixEncoded}-${nameEncoded}`;
+    }
+
+    titlesFormatted.push(nameComplete);
+
+  });
+  generateUTMs(e);
 }
 
 
@@ -587,7 +528,6 @@ function formatURLs(e) {
 // const businessInput = document.getElementById('business-input');
 // let businessName = businessInput.value;
 
-
 // listener on URL list - generates UTMs from clicked GEN button
 document.getElementById('urls').addEventListener('click', (e) => {
 
@@ -626,7 +566,7 @@ function generateUTMs(e) {
     if (fbSelectBtn.classList.contains('selected')) {
 
       // grab prefix value for insertion
-      let prefixRaw = prefix.value.toUpperCase();
+      let prefixRaw = prefix.value.toLowerCase();
       let prefixText = prefixRaw.trim();
       let prefixFormatted = prefixText.replace(/ /g, "-");
       let prefixEncoded = escape(prefixFormatted);
@@ -638,29 +578,29 @@ function generateUTMs(e) {
           switch (fbAdType.value) {
             case 'STATIC':
 
-              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-AD-STATIC&utm_campaign=${prefixEncoded}&utm_content=${name}`;
+              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-static&utm_campaign=${prefixEncoded}&utm_content=${name}`;
               UTMStore.push(newUTM);
               break;
 
             case 'BOOST':
 
-              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-AD-BOOST&utm_campaign=${prefixEncoded}&utm_content=${name}`;
+              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-boost&utm_campaign=${prefixEncoded}&utm_content=${name}`;
               UTMStore.push(newUTM);
               break;
 
             case 'VIDEO':
 
-              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-AD-VIDEO&utm_campaign=${prefixEncoded}&utm_content=${name}`;
+              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-video&utm_campaign=${prefixEncoded}&utm_content=${name}`;
               UTMStore.push(newUTM);
               break;
 
             case 'CAROUSEL':
 
               if (inc+1 == titlesFormatted.length && inc !== 0) {
-                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-AD-CAROUSEL&utm_campaign=${prefixEncoded}&utm_content=${name}-FINAL_SLIDE`;
+                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-carousel&utm_campaign=${prefixEncoded}&utm_content=${name}-Final_slide`;
                 UTMStore.push(newUTM);
               } else {
-                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-AD-CAROUSEL&utm_campaign=${prefixEncoded}&utm_content=${name}-SLIDE_${inc+1}`;
+                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-carousel&utm_campaign=${prefixEncoded}&utm_content=${name}-Slide_${inc+1}`;
                 UTMStore.push(newUTM);
               }
 
@@ -668,7 +608,7 @@ function generateUTMs(e) {
 
             case 'LEAD':
 
-              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-AD-LEAD&utm_campaign=${prefixEncoded}&utm_content=${name}`;
+              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-lead&utm_campaign=${prefixEncoded}&utm_content=${name}`;
               UTMStore.push(newUTM);
               break;
 
