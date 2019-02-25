@@ -132,7 +132,7 @@ document.getElementById('selectors').addEventListener('click', (e) => {
       buildSelectBtn.style.border = '1px solid #BBB';
       otherSelectBtn.style.border = '1px solid #BBB';
 
-      prefixLabel.textContent = 'CAMPAIGN NAME';
+      prefixLabel.textContent = 'CAMPAIGN NAME (e.g. "Recruitment Feb 2019")';
       emailTitleLabel.innerHTML = 'CTA TEXT&nbsp;&nbsp;';
       numEmailsLabel.innerHTML = 'NUMBER OF SLIDES';
       fbControls.style.display = 'block';
@@ -399,7 +399,6 @@ function generateTitles(e) {
   // prefix type value
   let prefixType = '';
 
-
   // pulls values out of inputs in titleList[]
   for (i=0; i<titleList.length; i++) {
     let nodeItem = titleList.item(i)
@@ -443,6 +442,8 @@ function generateTitles(e) {
     let nameComplete = '';
     if (fbSelectBtn.classList.contains('selected')) {
       nameComplete = `${nameEncoded}`;
+    } else if (prefixEncoded == '') {
+      nameComplete = `${prefixType}${nameEncoded}`;
     } else {
       nameComplete = `${prefixType}${prefixEncoded}-${nameEncoded}`;
     }
@@ -698,10 +699,14 @@ function generateButtons() {
       let insertRow = document.getElementById(`utms-${inc+1}`);
       let newDiv = document.createElement('div');
       newDiv.classList.add('twelve', 'columns');
-      newDiv.innerHTML = `
+      if (titleList.length === 1) {
+        newDiv.innerHTML = `
+        <button id="fb-btn-${inc+1}" class="fb-utm-btn">${fbAdType.value} UTM (${titlesFormatted[inc]})</button>`;
+      } else {
+        newDiv.innerHTML = `
         <button id="fb-btn-${inc+1}" class="fb-utm-btn">${fbAdType.value} UTM ${inc+1} (${titlesFormatted[inc]})</button>`;
+      }
       insertRow.appendChild(newDiv);   
-
     } else {
 
       // add new title row
@@ -717,8 +722,13 @@ function generateButtons() {
         let insertRow = document.getElementById(`utms-${inc+1}`);
         let newDiv = document.createElement('div');
         newDiv.classList.add('two', 'columns');
-        newDiv.innerHTML = `
+        if (titleList.length === 1) {
+          newDiv.innerHTML = `
+          <button id="${UTMTerms[i]}-btn-${inc+1}" class="utm-btn ${UTMTerms[i]}">${UTMTerms[i]}</button>`;
+        } else {
+          newDiv.innerHTML = `
           <button id="${UTMTerms[i]}-btn-${inc+1}" class="utm-btn ${UTMTerms[i]}">${UTMTerms[i]} ${inc+1}</button>`;
+        }
         insertRow.appendChild(newDiv);
       });
     }
@@ -840,4 +850,3 @@ document.getElementById('clear-select').addEventListener('click', () => {
   document.location.reload();  
 
 });
-
