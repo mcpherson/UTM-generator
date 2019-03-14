@@ -838,6 +838,12 @@ outputArea.addEventListener('click', (e) => {
 
     window.scroll(0, 10000);
 
+    // display confirmation
+    clickCopy.textContent = "COPIED";
+    setTimeout(() => {
+      clickCopy.textContent = "CLICK TO COPY";
+    }, 1000);
+
   } 
 });
 
@@ -847,6 +853,6 @@ outputArea.addEventListener('click', (e) => {
 
 document.getElementById('clear-select').addEventListener('click', () => {
 
-  document.location.reload();  
+  document.location.reload();
 
 });
