@@ -1,16 +1,3 @@
-const docsSelectBtn = document.getElementById('docs-select');
-const darkSelectBtn = document.getElementById('dark-select');
-
-docsSelectBtn.addEventListener('click', () => {
-
-});
-
-// darkSelectBtn.addEventListener('click', () => {
-  
-// });
-
-
-
 // DISPLAY ERROR MESSAGE
 
 // error fields
@@ -170,6 +157,53 @@ document.getElementById('selectors').addEventListener('click', (e) => {
   document.getElementById('choose').style.color = '#ffffff';
 });
 
+
+
+// SHOW/HIDE OPT-INS
+
+let optinSelect = document.getElementById('opt-in-select');
+optinSelect.addEventListener('click', (e) => {
+  if (optinSelect.classList.contains('hide-opt-in')) {
+    optinSelect.classList.add('show-opt-in');
+    optinSelect.classList.remove('hide-opt-in');
+    optinSelect.value = 'HIDE OPT-INS';
+    optinSelect.style.color = 'black';
+    msgText.textContent = "OPT-INS WILL BE DISPLAYED.";
+
+    displayMsg(e);
+  } else {
+    optinSelect.classList.add('hide-opt-in');
+    optinSelect.classList.remove('show-opt-in');
+    optinSelect.value = 'SHOW OPT-INS';  
+    optinSelect.style.color = 'white';
+    msgText.textContent = "OPT-INS WILL BE BLOCKED.";
+
+    displayMsg(e);
+  }
+});
+
+
+
+// GENERATE ANCHOR TAGS (AKA THE SHEENA BUTTON)
+
+let tagsSelect = document.getElementById('tags-select');
+tagsSelect.addEventListener('click', (e) => {
+  if (tagsSelect.classList.contains('tags')) {
+    tagsSelect.classList.add('no-tags');
+    tagsSelect.classList.remove('tags');
+    tagsSelect.value = '<TAGS>';
+    msgText.textContent = "HTML TAGS WILL NOT BE INCLUDED.";
+    
+    displayMsg(e);
+  } else {
+    tagsSelect.classList.add('tags');
+    tagsSelect.classList.remove('no-tags');
+    tagsSelect.value = 'NO TAGS';  
+    msgText.textContent = "AN HTML ANCHOR TAG WILL ENCASE BODY AND SIGNATURE UTMS.";
+
+    displayMsg(e);
+  }
+});
 
 
 // INSERT/REMOVE NEW TITLE FIELDS
@@ -535,6 +569,15 @@ document.getElementById('urls').addEventListener('click', (e) => {
   if (e.target.classList.contains('gen')) {
 
     UTMStore = [];
+
+    // grab last character of clicked ID
+    let clicked = String(e.target.id);
+    let lastChars = clicked.split('-');
+    let lastChar = lastChars[lastChars.length - 1];
+
+    msgText.textContent = `GENERATED UTMS FOR URL ${lastChar}.`;
+
+    displayMsg(e);
     
     // begins the chain (URLs -> titles -> UTMs)
     formatURLs(e);
@@ -554,7 +597,8 @@ function generateUTMs(e) {
 
   // grab last character of clicked ID
   let clicked = String(e.target.id);
-  let lastChar = clicked.charAt(clicked.length-1);
+  let lastChars = clicked.split('-');
+  let lastChar = lastChars[lastChars.length - 1];
 
   // grab all active URL inputs
   let inputList = document.getElementsByClassName('url-input');
@@ -576,46 +620,94 @@ function generateUTMs(e) {
       if (item.classList.contains(`url-${lastChar}`)) {
         titlesFormatted.forEach((name, inc) => {
 
-          switch (fbAdType.value) {
-            case 'STATIC':
+          // check for opt-in
+          if (optinSelect.classList.contains('show-opt-in')) {
 
-              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-static&utm_campaign=${prefixEncoded}&utm_content=${name}`;
-              UTMStore.push(newUTM);
-              break;
+            switch (fbAdType.value) {
+              case 'STATIC':
 
-            case 'BOOST':
-
-              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-boost&utm_campaign=${prefixEncoded}&utm_content=${name}`;
-              UTMStore.push(newUTM);
-              break;
-
-            case 'VIDEO':
-
-              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-video&utm_campaign=${prefixEncoded}&utm_content=${name}`;
-              UTMStore.push(newUTM);
-              break;
-
-            case 'CAROUSEL':
-
-              if (inc+1 == titlesFormatted.length && inc !== 0) {
-                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-carousel&utm_campaign=${prefixEncoded}&utm_content=${name}-Final_slide`;
+                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-static&utm_campaign=${prefixEncoded}&utm_content=${name}`;
                 UTMStore.push(newUTM);
-              } else {
-                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-carousel&utm_campaign=${prefixEncoded}&utm_content=${name}-Slide_${inc+1}`;
+                break;
+
+              case 'BOOST':
+
+                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-boost&utm_campaign=${prefixEncoded}&utm_content=${name}`;
                 UTMStore.push(newUTM);
-              }
+                break;
 
-              break;
+              case 'VIDEO':
 
-            case 'LEAD':
+                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-video&utm_campaign=${prefixEncoded}&utm_content=${name}`;
+                UTMStore.push(newUTM);
+                break;
 
-              newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-lead&utm_campaign=${prefixEncoded}&utm_content=${name}`;
-              UTMStore.push(newUTM);
-              break;
+              case 'CAROUSEL':
 
-            default:
+                if (inc+1 == titlesFormatted.length && inc !== 0) {
+                  newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-carousel&utm_campaign=${prefixEncoded}&utm_content=${name}-Final_slide`;
+                  UTMStore.push(newUTM);
+                } else {
+                  newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-carousel&utm_campaign=${prefixEncoded}&utm_content=${name}-Slide_${inc+1}`;
+                  UTMStore.push(newUTM);
+                }
 
-              break;
+                break;
+
+              case 'LEAD':
+
+                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-lead&utm_campaign=${prefixEncoded}&utm_content=${name}`;
+                UTMStore.push(newUTM);
+                break;
+
+              default:
+
+                break;
+            }
+
+          } else {
+
+            switch (fbAdType.value) {
+              case 'STATIC':
+
+                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-static&utm_campaign=${prefixEncoded}&utm_content=${name}&omhide=true`;
+                UTMStore.push(newUTM);
+                break;
+
+              case 'BOOST':
+
+                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-boost&utm_campaign=${prefixEncoded}&utm_content=${name}&omhide=true`;
+                UTMStore.push(newUTM);
+                break;
+
+              case 'VIDEO':
+
+                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-video&utm_campaign=${prefixEncoded}&utm_content=${name}&omhide=true`;
+                UTMStore.push(newUTM);
+                break;
+
+              case 'CAROUSEL':
+
+                if (inc+1 == titlesFormatted.length && inc !== 0) {
+                  newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-carousel&utm_campaign=${prefixEncoded}&utm_content=${name}-Final_slide&omhide=true`;
+                  UTMStore.push(newUTM);
+                } else {
+                  newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-carousel&utm_campaign=${prefixEncoded}&utm_content=${name}-Slide_${inc+1}&omhide=true`;
+                  UTMStore.push(newUTM);
+                }
+
+                break;
+
+              case 'LEAD':
+
+                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=FB-ad-lead&utm_campaign=${prefixEncoded}&utm_content=${name}&omhide=true`;
+                UTMStore.push(newUTM);
+                break;
+
+              default:
+
+                break;
+            }
           }
         });
       }
@@ -631,19 +723,65 @@ function generateUTMs(e) {
             
             let newUTM = '';
 
-            switch (item) {
-              case 'body-link':
-                newUTM = `<a href="${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}" target="_blank">`;
-                UTMGroup.push(newUTM);
-                break;
-              case 'signature':
-                newUTM = `<a href="${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}" target="_blank">`;
-                UTMGroup.push(newUTM);
-                break;
-              default:
-                newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}`;
-                UTMGroup.push(newUTM);
-                break;
+            // check for opt-in
+            if (optinSelect.classList.contains('show-opt-in')) {
+
+              switch (item) {
+                case 'body-link':
+                  // check tags select
+                  if (tagsSelect.classList.contains('no-tags')) {                   
+                    newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}`;
+                    UTMGroup.push(newUTM);
+                  } else {
+                    newUTM = `<a href="${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}" target="_blank">`;
+                    UTMGroup.push(newUTM);
+                  }
+                  break;
+                case 'signature':
+                  // check tags select
+                  if (tagsSelect.classList.contains('no-tags')) {                   
+                    newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}`;
+                    UTMGroup.push(newUTM);
+                  } else {
+                    newUTM = `<a href="${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}" target="_blank">`;
+                    UTMGroup.push(newUTM);
+                  }
+                  break;
+                default:
+                  newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}`;
+                  UTMGroup.push(newUTM);
+                  break;
+              }
+
+            } else {
+
+              switch (item) {
+                case 'body-link':
+                  // check tags select
+                  if (tagsSelect.classList.contains('no-tags')) {                   
+                    newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}&omhide=true`;
+                    UTMGroup.push(newUTM);
+                  } else {
+                    newUTM = `<a href="${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}&omhide=true" target="_blank">`;
+                    UTMGroup.push(newUTM);
+                  }
+                  break;
+                case 'signature':
+                  // check tags select
+                  if (tagsSelect.classList.contains('no-tags')) {                   
+                    newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}&omhide=true`;
+                    UTMGroup.push(newUTM);
+                  } else {
+                    newUTM = `<a href="${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}&omhide=true" target="_blank">`;
+                    UTMGroup.push(newUTM);
+                  }
+                  break;
+                default:
+                  newUTM = `${validURLs[i]}?utm_source=boomtime&utm_medium=email&utm_campaign=${name}&utm_content=${item}&omhide=true`;
+                  UTMGroup.push(newUTM);
+                  break;
+              }
+
             }
             
           });

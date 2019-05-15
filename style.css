@@ -15,11 +15,18 @@ label#url-input-label {
 input[type="button"] {
   /* display: inline; */
   font-family: 'Anonymous Pro', monospace;
-  font-size: 18px;
+  font-size: 12px;
 }
 
-input#docs-select, 
-input#dark-select,
+input#opt-in-select {
+  background-color: #BC3339;
+  color: #FFF;
+  border-color: #404040;
+  padding: 0 !important;
+}
+
+input#opt-in-select, 
+input#tags-select,
 input#clear-select {
   display: inline-block;
   margin-top: 34px;
@@ -37,11 +44,6 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
   color: #BC3339 !important;
   
-}
-
-#dark-select {
-  color: white;
-  background-color: #404040;
 }
 
 input#generate {
